@@ -1,10 +1,14 @@
 */docs/*
-*/build/*
+CROSS/build/*
 CROSS/downloads/*
 CROSS/binutils-**
 CROSS/gcc-**
 CROSS/bin/*
+CROSS/src/*
+
 CROSS/include/*
 CROSS/i386-elf/*
 CROSS/lib*/*
 CROSS/share/*
+dist/*
+*.iso
