@@ -1,2 +1,4 @@
-docs/*
-build/*
+*/docs/*
+*/build/*
+CROSS-COMPILER/gcc-*/*
+CROSS-COMPILER
