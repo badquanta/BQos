@@ -1,4 +1,10 @@
 */docs/*
 */build/*
-CROSS-COMPILER/gcc-*/*
-CROSS-COMPILER
+CROSS/downloads/*
+CROSS/binutils-**
+CROSS/gcc-**
+CROSS/bin/*
+CROSS/include/*
+CROSS/i386-elf/*
+CROSS/lib*/*
+CROSS/share/*

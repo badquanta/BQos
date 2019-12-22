@@ -2,7 +2,7 @@ PREFIX :=$(shell pwd)
 TARGET :=i386-elf
 PATH   :=$(PREFIX)/bin:$(PATH)
 
-all: $(BINUTILS_SRC) $(GCC_SRC) binutils gcc
+all: download-all unpack-all binutils preparation build/gcc downloads binutils gcc
 
 downloads:
 	mkdir -p downloads
@@ -27,7 +27,7 @@ BINUTILS_DOWNLOAD_TO := downloads/binutils.tar.gz
 
 $(BINUTILS_DOWNLOAD_TO): downloads 
 	wget -N $(BINUTILS_DOWNLOAD_URL) -O $(BINUTILS_DOWNLOAD_TO)
-	
+
 BINUTILS_SRC := binutils-$(BINUTILS_VERSION)
 
 $(BINUTILS_SRC): $(BINUTILS_DOWNLOAD_TO)
@@ -45,10 +45,13 @@ binutils: preparation build/binutils downloads
 	cd build/binutils && make -j 16
 	cd build/binutils && make install
 
+download-all: $(BINUTILS_DOWNLOAD_TO) $(GCC_DOWNLOAD_TO)
+
+unpack-all: $(BINUTILS_SRC) $(GCC_SRC)
 
 build/gcc:
 	mkdir -p build/gcc
-gcc: binutils preparation build/gcc downloads 
+gcc: preparation build/gcc downloads 
 	
 	./preparation.sh && cd build/gcc && ../../$(GCC_SRC)/configure --target=$(TARGET) --prefix="$(PREFIX)" --disable-nls --enable-languages=c,c++ --without-headers
 	./preparation.sh && cd build/gcc && make all-gcc -j 16
