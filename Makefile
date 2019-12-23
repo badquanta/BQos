@@ -1,25 +1,5 @@
-
 default: all
-include FLAGS.mk
-#include CROSS.mk
-
-include SOURCES.mk
-export PATH:=$(CROSS_PATH):$(PATH)
-TARGET  		:= i386
-DIST_DIR		:= dist
-
-DIST_OBJ_DIR	:= $(DIST_DIR)/lib-$(TARGET)
-DIST_CPP_OBJS	:= $(CPP_SOURCES:src/%.cpp=$(DIST_OBJ_DIR)/%.o)
-DIST_GAS_OBJS	:= $(GAS_SOURCES:src/%.s=$(DIST_OBJ_DIR)/%.o)
-DIST_ALL_OBJS	:= $(DIST_CPP_OBJS)
-DIST_ALL_OBJS 	+= $(DIST_GAS_OBJS)
-DIST_BOOT_DIR := $(DIST_DIR)/boot
-DIST_BOOT_KERNEL:= $(DIST_BOOT_DIR)/$(TARGET).kernel
-DIST_BOOT_GRUB_DIR := $(DIST_BOOT_DIR)/grub
-DIST_BOOT_GRUB_CONFIG := $(DIST_BOOT_GRUB_DIR)/grub.cfg
-DIST_INCLUDE_DIR := $(DIST_DIR)/include
-DIST_SOURCES_DIR := $(DIST_DIR)/src
-#
+include BUILD.mk
 .PHONY: default clean clean-all
 
 clean:

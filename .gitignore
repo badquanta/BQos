@@ -10,5 +10,5 @@ CROSS/include/*
 CROSS/i386-elf/*
 CROSS/lib*/*
 CROSS/share/*
-dist/*
+dist-*/*
 *.iso
