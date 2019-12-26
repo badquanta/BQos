@@ -1,20 +1,23 @@
 # Support for the cross compiler.
-include CROSS.mk
+include CROSSBUILD.mk
 # Index of sources.
 include SOURCES.mk
-
-DIST_DIR				:= dist-$(TARGET)
-DIST_OBJ_DIR			:= $(DIST_DIR)/lib-$(TARGET)
-DIST_CPP_OBJS			:= $(CPP_SOURCES:src/%.cpp=$(DIST_OBJ_DIR)/%.o)
-DIST_GAS_OBJS			:= $(GAS_SOURCES:src/%.s=$(DIST_OBJ_DIR)/%.o)
+TARGET					= $(CB_TARGET)
+TARGET_DIR				=  ../BQos-$(TARGET)
+DIST_OBJ_DIR			=  $(TARGET_DIR)/lib-$(TARGET)
+DIST_CPP_OBJS			:= $(BQos_CPP_SRCS:src/%.cpp=$(DIST_OBJ_DIR)/%.o)
+DIST_LIBC_OBJS			:= $(LIBC_C_SRCS:src/%.c=$(DIST_OBJ_DIR)/%.o)
+DIST_TST_OBJS			:= $(BQos_CPP_SRCS:src/%.cpp=$(DIST_OBJ_DIR)/%_TEST)
+DIST_GAS_OBJS			:= $(BQos_GAS_SRCS:src/%.s=$(DIST_OBJ_DIR)/%.o)
 DIST_ALL_OBJS			:= $(DIST_CPP_OBJS)
 DIST_ALL_OBJS 			+= $(DIST_GAS_OBJS)
-DIST_BOOT_DIR 			:= $(DIST_DIR)/boot
+DIST_ALL_OBJS			+= $(DIST_LIBC_OBJS)
+DIST_BOOT_DIR 			:= $(TARGET_DIR)/boot
 DIST_BOOT_KERNEL		:= $(DIST_BOOT_DIR)/$(TARGET).kernel
 DIST_BOOT_GRUB_DIR 		:= $(DIST_BOOT_DIR)/grub
 DIST_BOOT_GRUB_CONFIG 	:= $(DIST_BOOT_GRUB_DIR)/grub.cfg
-DIST_INCLUDE_DIR := $(DIST_DIR)/include
-DIST_SOURCES_DIR := $(DIST_DIR)/src
+DIST_INCLUDE_DIR 		:= $(TARGET_DIR)/include
+DIST_SOURCES_DIR 		:= $(TARGET_DIR)/src
 #
 
 ## Flags for the GPP compiler
@@ -39,8 +42,7 @@ GPP_FLAGS:=     	\
 					-fno-rtti\
 					-fno-exceptions\
 					-fno-leading-underscore\
-					-Wno-write-strings\
-					-I$(Xi386_INCLUDE)
+					-Wno-write-strings
 ## GNU Assembler Parameters:
 GAS_FLAGS:=			--32		
 

@@ -1,10 +1,17 @@
+/***
+ * This soure code was originally from 
+ * @link https://wiki.osdev.org/Bare_Bones
+ * @CHANGES@
+ * - Renamed to multiboot.s to reflect it's speciality.
+ * - changed boot and kernel_main to multiboot & multibootMain
+ * - increased boot-time stack size from 16KB to 2MB
+ **/
 /* Declare constants for the multiboot header. */
 .set ALIGN,    1<<0             /* align loaded modules on page boundaries */
 .set MEMINFO,  1<<1             /* provide memory map */
 .set FLAGS,    ALIGN | MEMINFO  /* this is the Multiboot 'flag' field */
 .set MAGIC,    0x1BADB002       /* 'magic number' lets bootloader find the header */
 .set CHECKSUM, -(MAGIC + FLAGS) /* checksum of above, to prove we are multiboot */
- 
 /* 
 Declare a multiboot header that marks the program as a kernel. These are magic
 values that are documented in the multiboot standard. The bootloader will
@@ -13,11 +20,10 @@ search for this signature in the first 8 KiB of the kernel file, aligned at a
 forced to be within the first 8 KiB of the kernel file.
 */
 .section .multiboot
-.align 4
-.long MAGIC
-.long FLAGS
-.long CHECKSUM
- 
+	.align 4
+	.long MAGIC
+	.long FLAGS
+	.long CHECKSUM 
 /*
 The multiboot standard does not define the value of the stack pointer register
 (esp) and it is up to the kernel to provide a stack. This allocates room for a
@@ -32,16 +38,13 @@ undefined behavior.
 */
 .section .bss
 .align 16
-stack_bottom:
-.skip 16384 # 16 KiB
-stack_top:
- 
 /*
 The linker script specifies _start as the entry point to the kernel and the
 bootloader will jump to this position once the kernel has been loaded. It
 doesn't make sense to return from this function as the bootloader is gone.
 */
 .section .text
+.extern multiboot_main
 .global _start
 .type _start, @function
 _start:
@@ -84,7 +87,7 @@ _start:
 	stack since (pushed 0 bytes so far), so the alignment has thus been
 	preserved and the call is well defined.
 	*/
-	call _Z11kernel_mainv
+	call multiboot_main
  
 	/*
 	If the system has nothing more to do, put the computer into an
@@ -107,4 +110,9 @@ Set the size of the _start symbol to the current location '.' minus its start.
 This is useful when debugging or when you implement call tracing.
 */
 .size _start, . - _start
-
+.section .bss
+stack_bottom:
+#.skip 16384 # 16 KiB or 16*1024
+# TODO: Review boot stack size of 2MB
+.space 2*1024*1024;
+stack_top:

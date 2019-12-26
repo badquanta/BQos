@@ -1,0 +1,41 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "defines": [],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "compilerArgs": [
+                "-Wall",
+                "-static",
+                "-Wfatal-errors",
+                "-Wextra",
+                "-pedantic",
+                "-Wshadow",
+                "-Wpointer-arith",
+                "-Wcast-align",
+                "-Wwrite-strings ",
+                "-Wmissing-declarations",
+                "-Wredundant-decls ",
+                "-Winline ",
+                "-Wno-long-long",
+                "-Wconversion",
+                "-m32",
+                "-fcheck-new",
+                "-fno-omit-frame-pointer",
+                "-fno-use-cxa-atexit",
+                "-nostdlib",
+                "-fno-rtti",
+                "-fno-exceptions",
+                "-fno-leading-underscore",
+                "-Wno-write-strings",
+                "-I$(Xi386_INCLUDE)"
+            ],
+            "includePath": [
+                "${workspaceFolder}/src"
+            ]
+        }
+    ],
+    "version": 4
+}
