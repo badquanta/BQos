@@ -1,5 +1,6 @@
 #ifndef libBQ_XY_hpp
-#define libBQ_XY_hpp 1#include <libc/types.h>
+#define libBQ_XY_hpp 1
+#include <libc/types.h>
 namespace BQ {
     template<typename Dimension>
     struct XY {
