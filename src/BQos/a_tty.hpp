@@ -53,15 +53,20 @@ namespace BQos
     class a_tty 
     {   
         /** Generic control character handler. **/
-        public: class a_ASCII_Control_handler {public:virtual int handle(a_tty*)=0;};
+        public: class a_ASCII_Control_handler {
+        	public:virtual int handle(a_tty*)=0;
+        	public:virtual ~a_ASCII_Control_handler();
+        };
         /** Default line feed handler **/
         public: class ASCII_LineFeed_handler : public a_ASCII_Control_handler {
             public:virtual int handle(a_tty* tty);
-        } static line_feed;
+        };
+        public: static ASCII_LineFeed_handler line_feed();
         /** ASCII_CarriageReturn handler **/
         public: class ASCII_CarriageReturn_handler : public a_ASCII_Control_handler {
             public:virtual int handle(a_tty* tty);
-        } static carriage_return;;
+        };
+        public: static ASCII_CarriageReturn_handler carriage_return();
         /**
          * @brief This defines the "Line Discipline" of this abstract TTY.
          * A "Line Discipline" will define if the TTY will handle the control
@@ -73,6 +78,7 @@ namespace BQos
         * 
         */
         public:a_tty();        
+        public:virtual ~a_tty();
         /**
          * @brief query the dimensions of the tty screen.
          * 
@@ -136,7 +142,7 @@ namespace BQos
          * @note This does not interpret the character; it simply places whatever value
          * specified by the `char` into the tty buffer.
          */
-        public:virtual int put_at(int, char);
+        public:virtual int put_at(size_t, char);
         /**
          * @brief Place a character at a certain `size_xy` position within the tty buffer.
          * @note the `position` may be clipped if outside of the `screen_size()` of the buffer.
@@ -145,24 +151,31 @@ namespace BQos
         /**
          * @brief Convert a `size_xy` 2D position into a `size_t` linear index.
          * @note for each point within `{0,0}` & `screen_size()` will have a unique
-         * value between 0 & the length of the tty buffer indexies.
+         * value between 0 & the length of the tty buffer indexes.
          * @note this will return -1 if the size_xy value is greater than `screen_size()`
          * or has either negative X or Y.
          * @return {int} index of xy position in tty linear buffer. `-1` if clipped.
          */
-        public:virtual int index_at(size_xy);
+        public:virtual size_t index_at(size_xy);
         /**
          * @brief Declares if a particular index is valid or invalid.
          * @note indexes should start at 0; so -1 should be a save value for invalids.
          * @note indexes generally have a maximum value as well.
          */
         public:virtual bool valid_index(size_t);
+        /**
+         * @brief Declares the Min Index.
+         *
+         *
+         */
+        public:virtual size_t min_index();
+        public:virtual size_t max_index();
         /** Place an individual character onto the TTY.
          * This should also advance the cursor. 
          * @returns 0 or 1; 1 if the character is "visible" 
          *                  or 0 if it was an unprintable "control"
          *                  character.
-         * @note: For extenders of abstract tty; this routine is all that
+         * @note: For extender of abstract tty; this routine is all that
          *          must be extended but remember that calling this base class's
          *          implementation will ensure control characters are handled.
          *          If this routine returns 0; the character was a control character
@@ -173,7 +186,7 @@ namespace BQos
         /**
          * This will copy `length` number of characters from the buffer
          * and `put` them onto the TTY.  This should return the total
-         * number returned by `put`; which corrisponds to the total
+         * number returned by `put`; which corresponds to the total
          * number of 'non-control' characters present in the buffer.
          * @returns int
          */

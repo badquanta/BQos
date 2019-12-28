@@ -36,10 +36,20 @@ a_tty::a_tty(){
     //TODO: Handle other ASCII control characters?    
 }
 
+a_tty::~a_tty(){
+
+}
+
 /** Base implementation returns {1,1} always. **/
 size_xy a_tty::screen_size(){     return {1,1}; }
 /** Base implementation always {0,0}**/
 size_xy a_tty::cursor_position(){ return {0,0}; }
+size_t a_tty::cursor_move(signed int relative){
+    size_t last, next = cursor_index(
+        (last=cursor_index())+relative
+    );
+    return next-last;
+}
 /** Base implementation always true **/
 bool a_tty::left_to_right(){ return true; }
 /** Base implementation cannot change the direction. */
@@ -62,7 +72,7 @@ size_t a_tty::v_tabulation_size(){return 8;}
  * @returns if `index` is not a `valid_index(index)`
  *              then `0` else `1`
  */
-int a_tty::put_at(int index, char value){
+int a_tty::put_at(size_t index, char value){
     if(valid_index(index))
     {
         return 1;
@@ -82,7 +92,7 @@ int a_tty::put_at(size_xy pos, char value){
 /** Base implementation assumes column major ordering:
  * `(y*column_width)+x`
  */
-int a_tty::index_at(size_xy pos){    
+size_t a_tty::index_at(size_xy pos){
     if(pos.x < 0 || pos.y < 0) return -1;// Clip anything outside of screen top-left.
     size_xy size = screen_size();
     if(pos.x >= size.x || pos.y >= size.y) return -1;// also outside of bottom-right.
@@ -92,7 +102,7 @@ int a_tty::index_at(size_xy pos){
 /** Base implementation assumes only valid index is 0
  */
 bool a_tty::valid_index(size_t idx){
-    return (0 <= idx) && (idx < 1);
+    return (min_index() <= idx) && (idx <= max_index());
 }
 /** Base implementation will handle control characters. **/
 int a_tty::put(char c){
@@ -126,4 +136,12 @@ int a_tty::put(const char *buf){
         cnt+=put(buf[idx]);
     }
     return cnt;
+}
+
+size_t a_tty::min_index(){
+  return 0;
+}
+
+size_t a_tty::max_index(){
+  return 1;
 }
