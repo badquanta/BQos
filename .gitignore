@@ -12,3 +12,7 @@ CROSS/lib*/*
 CROSS/share/*
 dist-*/*
 *.iso
+.cproject
+.buildconfig
+.project
+.settings/language.settings.xml

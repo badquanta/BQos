@@ -4,9 +4,8 @@
 #include <BQos/HW/VGA/text_mode.hpp>
 #include <GNU/multiboot.h>
 namespace BQos::ARCH {
-    using namespace BQ;
-    /** Support of i386 class hardware **/
-    class i386: public hardware {
+    /** Support of x86_32 class hardware **/
+    class x86_32: public hardware {
     public:
         /**
          * 
@@ -15,7 +14,7 @@ namespace BQos::ARCH {
          * @param mbm {uint32_t}
          *        `multiboot magic` signature
          **/
-        i386(multiboot_info_t* mbi, uint32_t mbm);        
+        x86_32(multiboot_info_t* mbi, uint32_t mbm);        
         virtual a_tty *tty(int=0);
     protected:
         BQos::HW::VGA::text_mode _tty;

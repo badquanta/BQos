@@ -2,11 +2,11 @@
 
 using namespace BQos::ARCH;
 
-i386::i386(multiboot_info_t* info, uint32_t mbm){
+x86_32::x86_32(multiboot_info_t* info, uint32_t mbm){
     
 }
 /** TODO: Current implementat only returns VGA TTY if idx=0; else NULL **/
-BQos::a_tty *i386::tty(int idx=0){
+BQos::a_tty *x86_32::tty(int idx){
     if(idx==0){
         return &_tty;
     } else {

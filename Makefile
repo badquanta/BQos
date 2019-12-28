@@ -100,3 +100,6 @@ testdrivers: $(DIST_TST_OBJS)
 #####################################################################
 todolist:
 	-@for file in $(ALLFILES:Makefile=); do fgrep -H -e TODO -e FIXME $$file; done; true
+#####################################################################
+build-deps:
+	sudo apt-get install build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev libisl-dev texinfo -y
