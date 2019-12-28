@@ -1,5 +1,6 @@
 #ifndef __OPEN__CTYPE_H
-#define __OPEN__CTYPE_H 1/**http://www.cplusplus.com/reference/cctype/**/
+#define __OPEN__CTYPE_H 1
+/**http://www.cplusplus.com/reference/cctype/**/
 
 #define C_NUL 0x00
 #define C_TAB 0x09

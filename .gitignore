@@ -16,3 +16,4 @@ dist-*/*
 .buildconfig
 .project
 .settings/language.settings.xml
+/bqos/

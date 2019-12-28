@@ -1,10 +1,13 @@
 #include <BQos/a_tty.hpp>
 
 using namespace BQos;
+
+
+
 /** handle a new line by advancing the cursor position
  * @returns `0`
  ***/  
-int a_tty::ASCII_LineFeed_handler::handle(a_tty*tty){
+int BQos::ASCII_LineFeed_handler(a_tty*tty){
     tty->cursor_position({
         // Set X to start of line
         0,
@@ -20,7 +23,7 @@ int a_tty::ASCII_LineFeed_handler::handle(a_tty*tty){
  * @param tty* A specific tty to control
  * @return int `0`
  */
-int a_tty::ASCII_CarriageReturn_handler::handle(a_tty*tty){
+int  BQos::ASCII_CarriageReturn_handler(a_tty*tty){
     tty->cursor_position({
         // Start of line
         0,
@@ -29,10 +32,11 @@ int a_tty::ASCII_CarriageReturn_handler::handle(a_tty*tty){
     });
     return 0;//Because we handled the move.
 }
+
 /** Base implementation will handle ASCII control characters. **/
 a_tty::a_tty(){
-    line_discipline[ASCII_LineFeed] = &line_feed;
-    line_discipline[ASCII_CarriageReturn] = &carriage_return;
+    line_discipline[ASCII_LineFeed] = &ASCII_LineFeed_handler;
+    line_discipline[ASCII_CarriageReturn] = &ASCII_CarriageReturn_handler;
     //TODO: Handle other ASCII control characters?    
 }
 
@@ -42,10 +46,18 @@ a_tty::~a_tty(){
 
 /** Base implementation returns {1,1} always. **/
 size_xy a_tty::screen_size(){     return {1,1}; }
+/** Base Implementation returns 0 always. **/
+int a_tty::cursor_index(){
+	return 0;
+}
+/** Base implementation does not allow changing of the cursor index. **/
+int a_tty::cursor_index(int newval){
+	return cursor_index();
+}
 /** Base implementation always {0,0}**/
 size_xy a_tty::cursor_position(){ return {0,0}; }
-size_t a_tty::cursor_move(signed int relative){
-    size_t last, next = cursor_index(
+int a_tty::cursor_move(signed int relative){
+    int last, next = cursor_index(
         (last=cursor_index())+relative
     );
     return next-last;
@@ -61,9 +73,9 @@ bool a_tty::line_feeds_up(){return true;}
 /** Base implementation always returns !(line_feeds_up())**/
 bool a_tty::line_feeds_down(){return !line_feeds_up();}
 /** Base implementation always returns 8. **/
-size_t a_tty::h_tabulation_size(){return 8;}
+int a_tty::h_tabulation_size(){return 8;}
 /** Base implementation always returns 8. **/
-size_t a_tty::v_tabulation_size(){return 8;}
+int a_tty::v_tabulation_size(){return 8;}
 /**
  * @brief Place a character at a particular index.
  * @note Base implementation has no control character handling.
@@ -72,7 +84,7 @@ size_t a_tty::v_tabulation_size(){return 8;}
  * @returns if `index` is not a `valid_index(index)`
  *              then `0` else `1`
  */
-int a_tty::put_at(size_t index, char value){
+int a_tty::put_at(int index, char value){
     if(valid_index(index))
     {
         return 1;
@@ -92,8 +104,8 @@ int a_tty::put_at(size_xy pos, char value){
 /** Base implementation assumes column major ordering:
  * `(y*column_width)+x`
  */
-size_t a_tty::index_at(size_xy pos){
-    if(pos.x < 0 || pos.y < 0) return -1;// Clip anything outside of screen top-left.
+int a_tty::index_at(size_xy pos){
+    if((pos.x < 0) || (pos.y < 0)) return -1;// Clip anything outside of screen top-left.
     size_xy size = screen_size();
     if(pos.x >= size.x || pos.y >= size.y) return -1;// also outside of bottom-right.
     // Otherwise use basic math to make a unique index for each 2d position.
@@ -101,13 +113,13 @@ size_t a_tty::index_at(size_xy pos){
 }
 /** Base implementation assumes only valid index is 0
  */
-bool a_tty::valid_index(size_t idx){
+bool a_tty::valid_index(int idx){
     return (min_index() <= idx) && (idx <= max_index());
 }
 /** Base implementation will handle control characters. **/
 int a_tty::put(char c){
     if(line_discipline[c]!=NULL){
-        return line_discipline[c]->handle(this);
+        return line_discipline[c](this);
     } else {
         return cursor_move(put_at(cursor_index(),c));
     }
@@ -138,10 +150,10 @@ int a_tty::put(const char *buf){
     return cnt;
 }
 
-size_t a_tty::min_index(){
+int a_tty::min_index(){
   return 0;
 }
 
-size_t a_tty::max_index(){
+int a_tty::max_index(){
   return 1;
 }

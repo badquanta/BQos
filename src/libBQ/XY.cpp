@@ -1,4 +1,4 @@
-#include <libBQ/types.hpp>
+#include <libc/types.h>
 #include <libBQ/XY.hpp>
 using namespace BQ;
 

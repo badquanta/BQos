@@ -2,46 +2,14 @@
 #define BQos_HW_a_tty_hpp 1
 #include <libc/types.h>
 #include <libBQ/XY.hpp>
-/**
- * @brief These defines simply name various ASCII control character values.
- */
-#define ASCII_NUL                       0x00
-#define ASCII_StartOfHeading            0x01
-#define ASCII_StartOfText               0x02
-#define ASCII_EndOfText                 0x03
-#define ASCII_EndOfTransmission         0x04
-#define ASCII_Enquiry                   0x05
-#define ASCII_Acknowledge               0x06
-#define ASCII_Bell                      0x07
-#define ASCII_Backspace                 0x08
-#define ASCII_H_Tabulation              0x09
-#define ASCII_LineFeed                  0x0A
-#define ASCII_V_Tabulation              0x0B
-#define ASCII_FormFeed                  0x0C
-#define ASCII_CarriageReturn            0x0D
-#define ASCII_ShiftOut                  0x0E
-#define ASCII_ShiftIn                   0x0F
-#define ASCII_DataLinkEscape            0x10
-#define ASCII_DeviceControl1            0x11
-#define ASCII_DeviceControl2            0x12
-#define ASCII_DeviceControl3            0x13
-#define ASCII_DeviceControl4            0x14
-#define ASCII_NegativeAcknowledge       0x15
-#define ASCII_SynchronousIdle           0x16
-#define ASCII_EndOfTransmissionBlock    0x17
-#define ASCII_Cancel                    0x18
-#define ASCII_EndOfMedium               0x19
-#define ASCII_Substitute                0x1A
-#define ASCII_Escape                    0x1B
-#define ASCII_FileSeparator             0x1C
-#define ASCII_GroupSeparator            0x1D
-#define ASCII_RecordSeparator           0x1E
-#define ASCII_UnitSeparator             0x1F
-#define ASCII_Delete                    0x7F
-
-namespace BQos 
+#include <BQos/ascii_defs.hpp>
+namespace BQos
 {    
     using namespace BQ;
+    class a_tty;
+    typedef int (*ASCII_ControlChar_handler_t)(a_tty *);
+    int ASCII_LineFeed_handler(a_tty*);
+    int ASCII_CarriageReturn_handler(a_tty*);
     /**
      * Provide a generic interface to different "teletype"
      * devices.  While intended to be the abstract interface,
@@ -52,27 +20,7 @@ namespace BQos
      **/
     class a_tty 
     {   
-        /** Generic control character handler. **/
-        public: class a_ASCII_Control_handler {
-        	public:virtual int handle(a_tty*)=0;
-        	public:virtual ~a_ASCII_Control_handler();
-        };
-        /** Default line feed handler **/
-        public: class ASCII_LineFeed_handler : public a_ASCII_Control_handler {
-            public:virtual int handle(a_tty* tty);
-        };
-        public: static ASCII_LineFeed_handler line_feed();
-        /** ASCII_CarriageReturn handler **/
-        public: class ASCII_CarriageReturn_handler : public a_ASCII_Control_handler {
-            public:virtual int handle(a_tty* tty);
-        };
-        public: static ASCII_CarriageReturn_handler carriage_return();
-        /**
-         * @brief This defines the "Line Discipline" of this abstract TTY.
-         * A "Line Discipline" will define if the TTY will handle the control
-         * character; or pass it onto the TTY medium via `put_at()`
-         */
-        protected:a_ASCII_Control_handler *line_discipline[0x20]{NULL};
+        protected:ASCII_ControlChar_handler_t line_discipline[0x20]{NULL};
         /**
         * @brief  Make a "Teletype". 
         * 
@@ -88,14 +36,14 @@ namespace BQos
          * @brief Get the `size_t` index of the current cursor.
          * 
          */
-        public:virtual size_t cursor_index();
+        public:virtual int cursor_index();
         /**
          * @brief Attempt to change where the cursor is
          * @note may not work; depending on actually tty device
          * @returns actual index location of cursor.
          * 
          */        
-        public:virtual size_t cursor_index(size_t);
+        public:virtual int cursor_index(int);
         /**
          * @brief Attempt to change the cursor relative to it's
          * current location.
@@ -103,7 +51,7 @@ namespace BQos
          * @returns actually distance location moved.
          * 
          */
-        public:virtual size_t cursor_move(signed int);
+        public:virtual signed int cursor_move(signed int);
         /**
          * @brief query the position of the tty cursor.
          * 
@@ -123,8 +71,8 @@ namespace BQos
         /**
          * @brief Attempts to set the printing order.
          * @note May not be supported.
-         * @param {bool} desired setting
-         * @returns {bool} actual setting
+         * @param  desired setting
+         * @returns actual setting
          */
         public:virtual bool left_to_right(bool);
         /**
@@ -132,17 +80,20 @@ namespace BQos
          * @note Controlled via `left_to_right(bool)`
          */
         public:virtual bool right_to_left();
+        /** @brief Does the text scroll upwards towards Y=0 or away from Y=0?**/
         public:virtual bool line_feeds_up();
+        /** @brief Does the text scroll upwards towards Y=0 or away from Y=0?**/
         public:virtual bool line_feeds_down();
-        public:virtual size_t h_tabulation_size();
-        public:virtual size_t v_tabulation_size();      
-        
+        /** How wide are tabulations on this TTY? */
+        public:virtual int h_tabulation_size();
+        /** How wide are vertical tabulations on this TTY? */
+        public:virtual int v_tabulation_size();
         /**
          * @brief Place a character at a certain linear `size_t` index in the tty buffer.
          * @note This does not interpret the character; it simply places whatever value
          * specified by the `char` into the tty buffer.
          */
-        public:virtual int put_at(size_t, char);
+        public:virtual int put_at(int, char);
         /**
          * @brief Place a character at a certain `size_xy` position within the tty buffer.
          * @note the `position` may be clipped if outside of the `screen_size()` of the buffer.
@@ -156,20 +107,20 @@ namespace BQos
          * or has either negative X or Y.
          * @return {int} index of xy position in tty linear buffer. `-1` if clipped.
          */
-        public:virtual size_t index_at(size_xy);
+        public:virtual int index_at(size_xy);
         /**
          * @brief Declares if a particular index is valid or invalid.
          * @note indexes should start at 0; so -1 should be a save value for invalids.
          * @note indexes generally have a maximum value as well.
          */
-        public:virtual bool valid_index(size_t);
+        public:virtual bool valid_index(int index);
         /**
          * @brief Declares the Min Index.
          *
          *
          */
-        public:virtual size_t min_index();
-        public:virtual size_t max_index();
+        public:virtual int min_index();
+        public:virtual int max_index();
         /** Place an individual character onto the TTY.
          * This should also advance the cursor. 
          * @returns 0 or 1; 1 if the character is "visible" 

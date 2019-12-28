@@ -44,12 +44,12 @@ namespace BQos::HW::VGA
          * TODO: The screen size should be set by the Driver.
          */
         public:     virtual size_xy screen_size(size_xy);
-        public:     virtual size_t cursor_index();
-        public:     virtual size_t cursor_index(size_t);
+        public:     virtual int cursor_index();
+        public:     virtual int cursor_index(int);
         public:     virtual size_xy cursor_position();
         public:     virtual size_xy cursor_position(size_xy);        public:     int set_color(uint8_t color);
         //public:     int put_entry_at(unsigned char, uint8_t, size_xy);
-        public:     virtual int put_at(size_t,char);
+        public:     virtual int put_at(int,char);
         
     };
 }

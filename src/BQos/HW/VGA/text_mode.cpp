@@ -18,7 +18,7 @@ size_xy text_mode::screen_size(size_xy){
     //TODO: Not current redefinable.
     return screen_size();
 }
-size_t text_mode::cursor_index(){
+int text_mode::cursor_index(){
     return _cursor_index;
 }
 
@@ -31,12 +31,12 @@ size_xy text_mode::cursor_position(size_xy position){
   return cursor_position();
 }
 
-size_t text_mode::cursor_index(size_t new_index){
+int text_mode::cursor_index(int new_index){
     _cursor_index = new_index;
     return _cursor_index;
 }
 
-int text_mode::put_at(size_t idx, char c){
+int text_mode::put_at(int idx, char c){
     if(a_tty::put_at(idx, c)){
         buffer[idx].txt=c;
         return 1;
