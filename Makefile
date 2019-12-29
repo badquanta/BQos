@@ -77,9 +77,9 @@ run-kernel: $(DIST_BOOT_KERNEL) is-multiboot-kernel
 	@echo "########## RUN-KERNEL ############"
 	qemu-system-i386 -kernel $(DIST_BOOT_KERNEL) 
 #####################################################################
-run-iso: $(TARGET).iso
+run-iso: $(TARGET_DIR).iso
 	@echo "########## RUN-ISO ############"
-	qemu-system-i386 -cdrom $(TARGET).iso
+	qemu-system-i386 -cdrom ../BQos-$(TARGET).iso
 #####################################################################
 check: testdrivers
 	@echo "########## CHECK ############"
@@ -103,6 +103,7 @@ todolist:
 #####################################################################
 build-deps:
 	sudo apt-get install build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev libisl-dev texinfo doxygen graphviz xorriso -y
-
+run-deps:
+	sudo apt-get install qemu-system-x86 -y
 docs:
 	doxygen
