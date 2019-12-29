@@ -4,7 +4,7 @@
 #include <libBQ/XY.hpp>
 #include <BQos/ascii_defs.hpp>
 namespace BQos
-{    
+{
     using namespace BQ;
     class a_tty;
     typedef int (*ASCII_ControlChar_handler_t)(a_tty *);
@@ -13,57 +13,57 @@ namespace BQos
     /**
      * Provide a generic interface to different "teletype"
      * devices.  While intended to be the abstract interface,
-     * this base class also happens to instantiate usefull
+     * this base class also happens to instantiate useful
      * "NULL" ttys that are safe to dump data to but
-     * 
+     *
      * @note all data written will be lost; unless extended.
      **/
-    class a_tty 
-    {   
+    class a_tty
+    {
         protected:ASCII_ControlChar_handler_t line_discipline[0x20]{NULL};
         /**
-        * @brief  Make a "Teletype". 
-        * 
+        * @brief  Make a "Teletype".
+        *
         */
-        public:a_tty();        
+        public:a_tty();
         public:virtual ~a_tty();
         /**
          * @brief query the dimensions of the tty screen.
-         * 
-         */        
-        public:virtual size_xy screen_size();
+         *
+         */
+        public:virtual int32_xy screen_size();
         /**
          * @brief Get the `size_t` index of the current cursor.
-         * 
+         *
          */
         public:virtual int cursor_index();
         /**
          * @brief Attempt to change where the cursor is
          * @note may not work; depending on actually tty device
          * @returns actual index location of cursor.
-         * 
-         */        
+         *
+         */
         public:virtual int cursor_index(int);
         /**
          * @brief Attempt to change the cursor relative to it's
          * current location.
          * @note may not actually work; should return 0 to indicate.
          * @returns actually distance location moved.
-         * 
+         *
          */
         public:virtual signed int cursor_move(signed int);
         /**
          * @brief query the position of the tty cursor.
-         * 
+         *
          */
-        public:virtual size_xy cursor_position();
+        public:virtual int32_xy cursor_position();
         /**
          * @brief attempt to set the position of the tty cursor;
          * @returns the actuall value of the cursor position after the attempt.
          * @note may be ignored
          * @note may be clipped to nearest valid position
          */
-        public:virtual size_xy cursor_position(size_xy);
+        public:virtual int32_xy cursor_position(int32_xy);
         /**
          * @brief Defines if printing order is "ABCDEF"...-> (true) or <-..."FEDCBA" (false)
          */
@@ -95,19 +95,19 @@ namespace BQos
          */
         public:virtual int put_at(int, char);
         /**
-         * @brief Place a character at a certain `size_xy` position within the tty buffer.
+         * @brief Place a character at a certain `int32_xy` position within the tty buffer.
          * @note the `position` may be clipped if outside of the `screen_size()` of the buffer.
          */
-        public:virtual int put_at(size_xy, char);
+        public:virtual int put_at(int32_xy, char);
         /**
-         * @brief Convert a `size_xy` 2D position into a `size_t` linear index.
+         * @brief Convert a `int32_xy` 2D position into a `size_t` linear index.
          * @note for each point within `{0,0}` & `screen_size()` will have a unique
          * value between 0 & the length of the tty buffer indexes.
-         * @note this will return -1 if the size_xy value is greater than `screen_size()`
+         * @note this will return -1 if the int32_xy value is greater than `screen_size()`
          * or has either negative X or Y.
          * @return {int} index of xy position in tty linear buffer. `-1` if clipped.
          */
-        public:virtual int index_at(size_xy);
+        public:virtual int index_at(int32_xy);
         /**
          * @brief Declares if a particular index is valid or invalid.
          * @note indexes should start at 0; so -1 should be a save value for invalids.
@@ -122,8 +122,8 @@ namespace BQos
         public:virtual int min_index();
         public:virtual int max_index();
         /** Place an individual character onto the TTY.
-         * This should also advance the cursor. 
-         * @returns 0 or 1; 1 if the character is "visible" 
+         * This should also advance the cursor.
+         * @returns 0 or 1; 1 if the character is "visible"
          *                  or 0 if it was an unprintable "control"
          *                  character.
          * @note: For extender of abstract tty; this routine is all that
@@ -143,10 +143,10 @@ namespace BQos
          */
         public:virtual int put(const char *buffer, size_t length);
         /**
-         * This will copy characters from the buffer until it is null 
+         * This will copy characters from the buffer until it is null
          * terminated.  This should return the total number that is
-         * returned by the individual calls to `put`; reflecting the 
-         * total number of 'non-control' characters that were put 
+         * returned by the individual calls to `put`; reflecting the
+         * total number of 'non-control' characters that were put
          * on the tty
          * @returns int
          */

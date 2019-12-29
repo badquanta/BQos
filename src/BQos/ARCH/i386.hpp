@@ -8,13 +8,14 @@ namespace BQos::ARCH {
     class x86_32: public hardware {
     public:
         /**
-         * 
-         * @param mbi {multiboot_info_t*} 
+         *
+         * @param mbi {multiboot_info_t*}
          *        pointer to multiboot_info structure provided by grub
          * @param mbm {uint32_t}
          *        `multiboot magic` signature
          **/
-        x86_32(multiboot_info_t* mbi, uint32_t mbm);        
+        x86_32(multiboot_info_t* mbi, uint32_t mbm);
+        virtual ~x86_32();
         virtual a_tty *tty(int=0);
     protected:
         BQos::HW::VGA::text_mode _tty;

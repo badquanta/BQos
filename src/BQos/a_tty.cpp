@@ -6,7 +6,7 @@ using namespace BQos;
 
 /** handle a new line by advancing the cursor position
  * @returns `0`
- ***/  
+ ***/
 int BQos::ASCII_LineFeed_handler(a_tty*tty){
     tty->cursor_position({
         // Set X to start of line
@@ -19,7 +19,7 @@ int BQos::ASCII_LineFeed_handler(a_tty*tty){
 /**
  * @brief by default will simple set the `cursor_position()`
  * to be at the beginning of the current line (`y` value.)
- * 
+ *
  * @param tty* A specific tty to control
  * @return int `0`
  */
@@ -37,7 +37,7 @@ int  BQos::ASCII_CarriageReturn_handler(a_tty*tty){
 a_tty::a_tty(){
     line_discipline[ASCII_LineFeed] = &ASCII_LineFeed_handler;
     line_discipline[ASCII_CarriageReturn] = &ASCII_CarriageReturn_handler;
-    //TODO: Handle other ASCII control characters?    
+    //TODO: Handle other ASCII control characters?
 }
 
 a_tty::~a_tty(){
@@ -45,30 +45,36 @@ a_tty::~a_tty(){
 }
 
 /** Base implementation returns {1,1} always. **/
-size_xy a_tty::screen_size(){     return {1,1}; }
+int32_xy a_tty::screen_size(){     return {1,1}; }
 /** Base Implementation returns 0 always. **/
 int a_tty::cursor_index(){
-	return 0;
+  return 0;
 }
 /** Base implementation does not allow changing of the cursor index. **/
-int a_tty::cursor_index(int newval){
-	return cursor_index();
+int a_tty::cursor_index(int){
+  return cursor_index();
 }
 /** Base implementation always {0,0}**/
-size_xy a_tty::cursor_position(){ return {0,0}; }
+int32_xy a_tty::cursor_position(){ return {0,0}; }
 int a_tty::cursor_move(signed int relative){
     int last, next = cursor_index(
         (last=cursor_index())+relative
     );
     return next-last;
 }
+
+int32_xy a_tty::cursor_position(int32_xy changed){
+  cursor_index(index_at(changed));
+  return cursor_position();
+}
+
 /** Base implementation always true **/
 bool a_tty::left_to_right(){ return true; }
 /** Base implementation cannot change the direction. */
 bool a_tty::left_to_right(bool){return left_to_right();}
 /** Base implementation always returns !left_to_right() */
 bool a_tty::right_to_left(){ return !left_to_right(); }
-/** Base implemetnation always returns true (feed up) **/
+/** Base implementation always returns true (feed up) **/
 bool a_tty::line_feeds_up(){return true;}
 /** Base implementation always returns !(line_feeds_up())**/
 bool a_tty::line_feeds_down(){return !line_feeds_up();}
@@ -84,7 +90,7 @@ int a_tty::v_tabulation_size(){return 8;}
  * @returns if `index` is not a `valid_index(index)`
  *              then `0` else `1`
  */
-int a_tty::put_at(int index, char value){
+int a_tty::put_at(int index, char){
     if(valid_index(index))
     {
         return 1;
@@ -98,15 +104,15 @@ int a_tty::put_at(int index, char value){
  * @param value a character to place on the tty
  * @return int the result of `put_at(index,value)`
  */
-int a_tty::put_at(size_xy pos, char value){    
+int a_tty::put_at(int32_xy pos, char value){
     return put_at(index_at(pos), value);
 }
 /** Base implementation assumes column major ordering:
  * `(y*column_width)+x`
  */
-int a_tty::index_at(size_xy pos){
+int a_tty::index_at(int32_xy pos){
     if((pos.x < 0) || (pos.y < 0)) return -1;// Clip anything outside of screen top-left.
-    size_xy size = screen_size();
+    int32_xy size = screen_size();
     if(pos.x >= size.x || pos.y >= size.y) return -1;// also outside of bottom-right.
     // Otherwise use basic math to make a unique index for each 2d position.
     return (pos.y*size.x)+pos.x;

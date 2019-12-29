@@ -11,10 +11,10 @@ text_mode::~text_mode(){
 
 }
 
-size_xy text_mode::screen_size(){
+int32_xy text_mode::screen_size(){
     return _screen_size;
 }
-size_xy text_mode::screen_size(size_xy){
+int32_xy text_mode::screen_size(int32_xy){
     //TODO: Not current redefinable.
     return screen_size();
 }
@@ -22,11 +22,11 @@ int text_mode::cursor_index(){
     return _cursor_index;
 }
 
-size_xy text_mode::cursor_position(){
+int32_xy text_mode::cursor_position(){
   return {(_cursor_index % _screen_size.x), (_cursor_index / _screen_size.x)};
 }
 
-size_xy text_mode::cursor_position(size_xy position){
+int32_xy text_mode::cursor_position(int32_xy position){
   _cursor_index = index_at(position);
   return cursor_position();
 }

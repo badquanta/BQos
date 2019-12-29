@@ -3,11 +3,12 @@
 #include <BQos/a_tty.hpp>
 namespace BQos {
     /** Abstract class representing common features
-     * of different hardware. 
+     * of different hardware.
      **/
     class hardware {
+    	public:virtual ~hardware();
         /** Request an interface to a tty **/
-        virtual a_tty *tty(int=0);
+    	public:virtual a_tty *tty(int=0);
     };
 }
 
