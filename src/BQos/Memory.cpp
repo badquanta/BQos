@@ -21,6 +21,13 @@ MemoryRegion::MemoryRegion(size_t start, size_t size){
   }
 }
 
+MemoryRegion::~MemoryRegion(){
+  // TODO: What should we do when a memory region goes away??
+  // When could that happen?
+  // Should we add a "remove" function to `Memory`?
+  // What happens to active pointers? Do we ignore the fact that they might still point here?
+}
+
 void *MemoryRegion::malloc(size_t size){
   memory_chunk *result = NULL;
   for(memory_chunk *chunk=chunks;chunk!=NULL&&result==NULL; chunk=chunk->next){
