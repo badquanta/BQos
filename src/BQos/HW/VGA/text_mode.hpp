@@ -50,7 +50,7 @@ namespace BQos::HW::VGA
         public:     virtual int32_xy cursor_position(int32_xy);        public:     int set_color(uint8_t color);
         //public:     int put_entry_at(unsigned char, uint8_t, int32_xy);
         public:     virtual int put_at(int,char);
-
+        public:     virtual int max_index();
     };
 }
 #endif

@@ -124,7 +124,7 @@ bool a_tty::valid_index(int idx){
 }
 /** Base implementation will handle control characters. **/
 int a_tty::put(char c){
-    if(line_discipline[c]!=NULL){
+    if((c<0x20) && line_discipline[c]!=NULL){
         return line_discipline[c](this);
     } else {
         return cursor_move(put_at(cursor_index(),c));
@@ -146,6 +146,7 @@ int a_tty::put(const char *buf, size_t length){
 /** Base implementation will simply call `put(buf[idx])` until buf[idx] == `\0`
  * (aka: `ASCII_NUL`)
  * @param *buf A pointer to the start of a char[] array.
+ * @calls
  * @returns the sum of each `put()`
  */
 int a_tty::put(const char *buf){

@@ -45,6 +45,7 @@ namespace BQos
          */
         public:virtual int cursor_index(int);
         /**
+         * \overload int a_tty::cursor_index()
          * @brief Attempt to change the cursor relative to it's
          * current location.
          * @note may not actually work; should return 0 to indicate.

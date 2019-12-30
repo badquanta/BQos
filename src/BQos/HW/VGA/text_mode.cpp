@@ -42,3 +42,7 @@ int text_mode::put_at(int idx, char c){
         return 1;
     } else return 0;
 }
+
+int text_mode::max_index(){
+    return screen_size().x*screen_size().y;
+}

@@ -3,6 +3,10 @@
 extern "C" {
 void multiboot_main(multiboot_info_t* info, uint32_t magic){
     BQos::ARCH::x86_32 hw = BQos::ARCH::x86_32(info,magic);
-    hw.tty(0)->put("Hello World.");
+    BQos::a_tty* out = hw.tty(0);
+    out->put("Hello World.\n");
+    out->put("New line.");
+
 }
 }
+
