@@ -16,7 +16,7 @@ namespace BQos::ARCH {
          **/
         x86_32(multiboot_info_t* mbi, uint32_t mbm);
         virtual ~x86_32();
-        virtual a_tty *tty(int=0);
+        virtual a_tty *tty(int=0);        
     protected:
         BQos::HW::VGA::text_mode _tty;
     };

@@ -1,3 +1,6 @@
+#### References:
+### https://wiki.osdev.org/Makefile
+
 -.PHONY: default all clean clean-all testdrivers todolist
 default: all
 	@echo "########## $(@) ############"
@@ -25,10 +28,15 @@ $(DIST_OBJ_DIR)/%.o			:	src/%.c
 	@mkdir -p $(@D)
 	$(CB_PATH_Gpp) $(GPP_FLAGS) -o $@ -c $<
 #####################################################################
-$(DIST_OBJ_DIR)/%_TEST: $(src)%.cpp Makefile $(DIST_BOOT_KERNEL)
+$(DIST_OBJ_DIR)/%.t: src/%.cpp
 	@echo "########## $(@) ############"
 	mkdir -p $(@D)
-	$(CB_PATH_Gpp) $(GPP_FLAGS) -DTEST $< $(DIST_BOOT_KERNEL) -o $@
+	$(CB_PATH_Gpp) -MMD $(GPP_TEST_FLAGS) $<  -o $@
+#####################################################################
+$(DIST_OBJ_DIR)/%_TEST: src/%.cpp $(DIST_TST_OBJS)
+	@echo "########## $(@) ############"
+	mkdir -p $(@D)
+	$(CB_PATH_Gpp) -MMD $(GPP_TEST_FLAGS) -DTEST $< $(DIST_TST_OBJS) -o $@
 #####################################################################
 $(DIST_OBJ_DIR)/%.o			:	src/%.s Makefile *.mk
 	@echo "########## $(@) ############"
@@ -90,8 +98,10 @@ check: testdrivers
 		done; \
 		echo; echo "Test executed: $$count		Tests failed: $$rc"
 #####################################################################
-testdrivers: $(DIST_TST_OBJS)
-	@echo "########## TESTDRIVERS ############"
+
+testdrivers: $(DIST_TSTS)
+
+	echo "########## TESTDRIVERS ############"
 	echo $(BQos__DIR)
 	echo $(BQos_CPP_S)
 	echo $(DIST_CPP_OBJS)

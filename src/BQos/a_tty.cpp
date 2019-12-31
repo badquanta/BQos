@@ -164,3 +164,10 @@ int a_tty::min_index(){
 int a_tty::max_index(){
   return 1;
 }
+
+#ifdef TEST
+extern "C" {
+int main(){
+    return 1;
+}}
+#endif

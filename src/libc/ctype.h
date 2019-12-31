@@ -27,7 +27,10 @@
 #define C_PUNCT4_START 0x7B
 #define C_PUNCT4_END 0x7E
 #define C_DEL 0x7F
-
+#ifdef __cplusplus
+extern "C" {
+#endif
+ 
 /**http://www.cplusplus.com/reference/cctype/isalnum/**/
 int isalnum(int);
 /**http://www.cplusplus.com/reference/cctype/isalpha/**/
@@ -48,4 +51,8 @@ int isspace(int);
 int isupper(int);
 /**http://www.cplusplus.com/reference/cctype/isdigit/**/
 int isxdigit(int);
+#ifdef __cplusplus
+}
+#endif
+ 
 #endif

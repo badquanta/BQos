@@ -132,3 +132,11 @@ void operator delete(void* allocated, size_t){
   // Todo: What happens if it tries to delete more than it allocated?
   return BQos::Memory::free(allocated);
 }
+
+
+#ifdef TEST
+extern "C" {
+int main(){
+    return 1;
+}}
+#endif

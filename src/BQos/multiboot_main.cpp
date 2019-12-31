@@ -15,3 +15,12 @@ void multiboot_main(multiboot_info_t* info, uint32_t magic){
 }
 }
 
+
+
+
+#ifdef TEST
+extern "C" {
+int main(){
+    return 1;
+}}
+#endif
