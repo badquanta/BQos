@@ -15,5 +15,5 @@ dist-*/*
 .cproject
 .buildconfig
 .project
-.settings/language.settings.xml
+.settings/
 /bqos/

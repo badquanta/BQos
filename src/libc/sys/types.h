@@ -6,25 +6,14 @@
 #ifndef __LIBBQ__TYPES_HPP
 #define __LIBBQ__TYPES_HPP 1
 #include <stddef.h>
-typedef char                               int8_t;
-typedef unsigned char                     uint8_t;
-typedef short                             int16_t;
-typedef unsigned short                   uint16_t;
-typedef int                               int32_t;
-typedef unsigned int                     uint32_t;
-typedef long long int                     int64_t;
-typedef unsigned long long int           uint64_t;  
+#include <stdint.h>
 
-// UNSIGNED POSIX INTEGER TYPES
-typedef uint32_t                           size_t;  
 /*Used for file system block counts.*/
 //LATER: typedef uint32_t                       fsblkcnt_t;
 /*Used for file system file counts.*/
 //LATER: typedef uint32_t                       fsfilcnt_t;
 /**Used for file serial numbers.**/
 //LATER: typedef uint32_t                            ino_t;
-
-
 /**Used as a general identifier; can be used to contain at least a pid_t, uid_t, or gid_t.**/
 typedef int32_t                              id_t;
 /**Used for group IDs.**/

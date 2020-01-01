@@ -51,6 +51,7 @@ int isspace(int);
 int isupper(int);
 /**http://www.cplusplus.com/reference/cctype/isdigit/**/
 int isxdigit(int);
+int tolower(int);
 #ifdef __cplusplus
 }
 #endif

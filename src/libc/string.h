@@ -9,13 +9,15 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-typedef uint32_t size_t;
 int memcmp(const void*, const void* size_t);
 void* memcpy(void* __restrict,const void*__restrict,size_t);
-void* memmove(void*const void*,size_t);
+void* memmove(void*,const void*,size_t);
 void* memset(void*,int,size_t);
-size_t strlen(const char);
+size_t strlen(const char*);
 char* strcpy(char*aDestination, const char *aSource);
+char* strncpy(char*aDestination, const char *aSource, size_t length);
+//const char *strchr( const char * aString, int aCharacter);
+char *strchr (char *aString, int aCharacter);
 #ifdef __cplusplus
 }
 #endif
