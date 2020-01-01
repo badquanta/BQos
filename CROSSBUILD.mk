@@ -73,19 +73,33 @@ $(CB_BUILD_GCC_DIR): cb-headers
 	
 
 cb-gcc: env $(CB_BUILD_GCC_DIR) $(CB_DOWNLOADS) 
-	
 	./env.sh && cd $(CB_BUILD_GCC_DIR) && $(CB_GCC_SRC)/configure \
 		--target=$(CB_TARGET) --prefix="$(CB_PREFIX)" --with-sysroot  \
 		--with-sysroot-build=$(CB_TARGET) \
 		--disable-nls \
 		--disable-bootstrap \
 		--disable-multilib \
-		--enable-languages=c		
-# TODO: Disabled multilibs; is this important?
-	./env.sh && cd $(CB_BUILD_GCC_DIR) && make all -j 16
-	./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-target-libgcc 
+		--enable-languages=c
+
+	./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-gcc -j 16
+	./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-target-libgcc -j 16
 	./env.sh && cd $(CB_BUILD_GCC_DIR) && make install-gcc 
 	./env.sh && cd $(CB_BUILD_GCC_DIR) && make install-target-libgcc
+
+	./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-gas
+	./env.sh && cd $(CB_BUILD_GCC_DIR) && $(CB_GCC_SRC)/configure \
+		--target=$(CB_TARGET) --prefix="$(CB_PREFIX)" --with-sysroot  \
+		--with-sysroot-build=$(CB_TARGET) \
+		--disable-nls \
+		--disable-bootstrap \
+		--disable-multilib \
+		--with-newlib \
+		--enable-languages=c,c++
+
+  #./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-gcc  
+	./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-target-libstdc++-v3 -j 16
+	./env.sh && cd $(CB_BUILD_GCC_DIR) && make install-target-libstdc++-v3
+
 
 $(CB_PATH_Gpp): cb-gcc
 
