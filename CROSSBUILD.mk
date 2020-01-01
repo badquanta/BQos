@@ -54,7 +54,7 @@ cb-binutils: env $(CB_BUILD_BINUTILS_DIR) $(CB_DOWNLOADS)
 		--with-sysroot \
 		--disable-nls \
 		--disable-werror
-	cd $(CB_BUILD_BINUTILS_DIR) && make 
+	cd $(CB_BUILD_BINUTILS_DIR) && make -j 16
 	cd $(CB_BUILD_BINUTILS_DIR) && make install
 
 sysroot:

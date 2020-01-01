@@ -46,9 +46,14 @@ extern "C" {
         Convert string to long double (function )
         strtoll 
         Convert string to long long integer (function )
-        strtoul
-        Convert string to unsigned long integer (function )
-        strtoull 
+        **/
+        /**
+         * strtoul
+         * Convert string to unsigned long integer (function )
+         **/
+        unsigned long int strtoul (const char* str, char** endptr, int base);
+        /**
+         * strtoull 
         Convert string to unsigned long long integer (function )
 
     Pseudo-random sequence generation
