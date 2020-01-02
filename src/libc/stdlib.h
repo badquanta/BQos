@@ -56,9 +56,13 @@ extern "C" {
          * strtoull 
         Convert string to unsigned long long integer (function )
 
-    Pseudo-random sequence generation
-        rand
-        Generate random number (function )
+    Pseudo-random sequence generation**/
+        /**
+         * rand
+         * Generate random number (function )
+         **/
+        int rand();
+        /**
         srand
         Initialize random number generator (function )
 

@@ -1,6 +1,10 @@
 #ifndef __BQLIBC__UNISTD_H
 #define __BQLIBC__UNISTD_H
 #include <sys/types.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 /** 
  * @link https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/unistd.h.html 
  * @link https://en.wikipedia.org/wiki/Unistd.h
@@ -119,4 +123,8 @@ pid_t        fork(void);
 //LATER: int          unlink(const char *);
 //LATER: int          unlinkat(int, const char *, int);
 //LATER: ssize_t      write(int, const void *, size_t);
+
+#ifdef __cplusplus
+}
+#endif
 #endif

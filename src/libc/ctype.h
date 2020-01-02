@@ -41,17 +41,23 @@ int isblank(int);
 int iscntrl(int);
 /**http://www.cplusplus.com/reference/cctype/isdigit/**/    
 int isdigit(int);
+int isgraph(int);
 /**http://www.cplusplus.com/reference/cctype/islower/**/
 int islower(int);
 /**http://www.cplusplus.com/reference/cctype/isprint/**/
 int isprint(int);
+/**http://www.cplusplus.com/reference/cctype/ispunct/**/
+int ispunct(int);
 /**http://www.cplusplus.com/reference/cctype/isspace/**/
 int isspace(int);
 /**http://www.cplusplus.com/reference/cctype/isupper/**/
 int isupper(int);
 /**http://www.cplusplus.com/reference/cctype/isdigit/**/
 int isxdigit(int);
+
 int tolower(int);
+int toupper(int);
+
 #ifdef __cplusplus
 }
 #endif

@@ -25,7 +25,7 @@ CB_BUILD_GCC_DIR 			:= $(CB_BUILD_DIR)/gcc
 
 CB_TAR_PARAMS				:= -m --keep-newer-files
 #############################################################################################
-cb-all: cb-get-sources cb-binutils env cb-gcc
+cb-all: cb-get-sources cb-binutils env cb-gcc cb-gpp
 
 $(CB_DOWNLOADS):
 	mkdir -p $(CB_DOWNLOADS)
@@ -72,7 +72,7 @@ $(CB_BUILD_GCC_DIR): cb-headers
 	mkdir -p $(CB_BUILD_GCC_DIR)
 	
 
-cb-gcc: env $(CB_BUILD_GCC_DIR) $(CB_DOWNLOADS) 
+cb-gcc: cb-headers env $(CB_BUILD_GCC_DIR) $(CB_DOWNLOADS) 
 	./env.sh && cd $(CB_BUILD_GCC_DIR) && $(CB_GCC_SRC)/configure \
 		--target=$(CB_TARGET) --prefix="$(CB_PREFIX)" --with-sysroot  \
 		--with-sysroot-build=$(CB_TARGET) \
@@ -81,11 +81,12 @@ cb-gcc: env $(CB_BUILD_GCC_DIR) $(CB_DOWNLOADS)
 		--disable-multilib \
 		--enable-languages=c
 
-	./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-gcc -j 16
-	./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-target-libgcc -j 16
+	./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-gcc -j 
+	./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-target-libgcc -j 
 	./env.sh && cd $(CB_BUILD_GCC_DIR) && make install-gcc 
 	./env.sh && cd $(CB_BUILD_GCC_DIR) && make install-target-libgcc
 
+cb-gpp: cb-headers
 	./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-gas
 	./env.sh && cd $(CB_BUILD_GCC_DIR) && $(CB_GCC_SRC)/configure \
 		--target=$(CB_TARGET) --prefix="$(CB_PREFIX)" --with-sysroot  \
@@ -95,13 +96,12 @@ cb-gcc: env $(CB_BUILD_GCC_DIR) $(CB_DOWNLOADS)
 		--disable-multilib \
 		--with-newlib \
 		--enable-languages=c,c++
-
-  #./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-gcc  
-	./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-target-libstdc++-v3 -j 16
+  	#./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-gcc -j
+	./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-target-libstdc++-v3 -j 
 	./env.sh && cd $(CB_BUILD_GCC_DIR) && make install-target-libstdc++-v3
 
 
-$(CB_PATH_Gpp): cb-gcc
+$(CB_PATH_Gpp): cb-gcc cb-gpp
 
 cb-clean: 
 	rm -rf $(CB_BUILD_DIR) $(CB_PREFIX)/bin $(CB_PREFIX)/*-elf $(CB_PREFIX)/include $(CB_PREFIX)/lib $(CB_PREFIX)/libexec $(CB_PREFIX)/share $(CB_BINUTILS_SRC) $(CB_GCC_SRC)
