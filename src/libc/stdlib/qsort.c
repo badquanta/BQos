@@ -1,5 +1,14 @@
 #include <stdlib.h>
 
+void swap(void*l, void*r,size_t size){
+   char t;
+   for(size_t idx = 0; idx<size;idx++){
+      t = ((char*) l)[idx];
+      ((char*)l)[idx]=((char*)r)[idx];
+      ((char*)r)[idx]=t;
+   }
+}
+
 static void sort(char *array, size_t size, int (*cmp)(void*,void*), int begin, int end) {
    if (end > begin) {
       void *pivot = array + begin;
@@ -23,6 +32,6 @@ static void sort(char *array, size_t size, int (*cmp)(void*,void*), int begin, i
 
 void qsort(void *array, size_t nitems, size_t size, int (*cmp)(void*,void*)) {
    if (nitems > 0) {
-      sort(array, size, cmp, 0, (nitems-1)*size);
+      sort((char*)array, size, cmp, 0, (nitems-1)*size);
    }
 }

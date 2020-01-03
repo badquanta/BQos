@@ -1,4 +1,4 @@
-/** Original code from: https://wiki.osdev.org/Meaty_Skeleton#libc_and_libk **/
+/** Original code from: http://wiki.osdev.org/Meaty_Skeleton#libc_and_libk **/
 #ifndef _BQLIBC_STRING_H
 #define _BQLIBC_STRING_H 1
 

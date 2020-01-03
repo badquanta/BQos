@@ -8,7 +8,7 @@
 #include <sys/cdefs.h>
 #include <sys/types.h> 
 #include <stdarg.h>
-
+#include <fcntl.h>
 #define EOF (-1)
 /** @see @link https://www.gnu.org/software/libc/manual/html_node/Controlling-Buffering.html 
  * 

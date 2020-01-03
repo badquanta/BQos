@@ -5,7 +5,6 @@
 extern "C" {
 #endif
 
-
 /*
  * File status flags: these are used by open(2), fcntl(2).
  * They are also used (indirectly) in the kernel file structure f_flags,
@@ -32,8 +31,7 @@ extern "C" {
 
 int  creat(const char *, mode_t);
 int  fcntl(int, int, ...);
-int open(const char *pathname, int flags);
-//int open(const char *pathname, int flags, mode_t mode);
+int  open(const char *pathname, int flags, ...);
 int  posix_fadvise(int, off_t, off_t, int);
 int  posix_fallocate(int, off_t, off_t);
 #ifdef __cplusplus

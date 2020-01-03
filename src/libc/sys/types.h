@@ -38,15 +38,15 @@ typedef int32_t                         blksize_t;
 /** Used for device IDs.**/
 typedef int32_t                             dev_t;
 /**Used for system times in clock ticks or CLOCKS_PER_SEC; see <time.h>.**/
-//LATER: typedef int32_t                           clock_t;//TODO: Maybe make 64 bits? or a float
+typedef int32_t                           clock_t;//TODO: Maybe make 64 bits? or a float
 /**Used for time in microseconds.**/
-//LATER: typedef int32_t                       suseconds_t;
+typedef int32_t                       suseconds_t;
 /**Used for time in seconds.**/
-//LATER: typedef int32_t                            time_t;
+typedef int32_t                            time_t;
 /**Used for timer ID returned by timer_create().**/
-//LATER: typedef int32_t                           timer_t;
+typedef int32_t                           timer_t;
 /**Used for clock ID type in the clock and timer functions.**/
-//LATER: typedef int32_t                         clockid_t;
+typedef int32_t                         clockid_t;
 
 
 

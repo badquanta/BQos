@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-typedef struct {
+typedef struct lconv {
     char *decimal_point, *thousands_sep, *grouping,
         *mon_decimal_point, *mon_thousands_sep, *mon_grouping,
         *positive_sign, *negative_sign,

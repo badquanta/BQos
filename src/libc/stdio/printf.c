@@ -18,7 +18,7 @@ static bool print(const char* data, size_t length){
     return true;
 }
 // TODO: Should I make this use snprintf instead?
-int printf(const char* restrict format, ...) {
+int printf(const char* format, ...) {
   va_list parameters;
   va_start(parameters, format);
 

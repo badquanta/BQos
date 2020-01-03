@@ -7,7 +7,7 @@
 
 #ifndef SRC_BQOS_MEMORY_HPP_
 #define SRC_BQOS_MEMORY_HPP_
-#include <libc/types.h>
+#include <sys/types.h>
 namespace BQos {
 /**
  * Individual chunk of managed memory.

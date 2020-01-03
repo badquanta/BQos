@@ -7,5 +7,5 @@ const lconv BQlocale={".",",","\003",
 };
 
 lconv *localeconv(void){
-    return &BQlocale;
+    return (lconv*)&BQlocale;
 }

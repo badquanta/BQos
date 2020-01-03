@@ -1,6 +1,6 @@
 #ifndef BQos_HW_a_tty_hpp
 #define BQos_HW_a_tty_hpp 1
-#include <libc/types.h>
+#include <sys/types.h>
 #include <libBQ/XY.hpp>
 #include <BQos/ascii_defs.hpp>
 namespace BQos

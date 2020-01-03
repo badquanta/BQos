@@ -3,10 +3,10 @@
 static int seeds[SEED_COUNT];
 static int count=0;
 int rand(){
-    int this = count++;
+    int current = count++;
     for(int idx=0;idx<SEED_COUNT;idx++){
-        this=(!this)|seeds[idx];
+        current=(!current)|seeds[idx];
     }
-    seeds[count%SEED_COUNT]=this;
-    return this; // TODO: Rand()
+    seeds[count%SEED_COUNT]=current;
+    return current; // TODO: Rand()
 }

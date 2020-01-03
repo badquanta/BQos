@@ -1,4 +1,4 @@
-#include <string.h>
+#include <stdio.h>
 #include <stdarg.h>
 #include <limits.h>
 /**
@@ -7,5 +7,5 @@
  **/
 
 int sprintf(char *aBuffer, const char* aFormat, ...){
-  return snprintf(aBuffer, INT_MAX, aFormat);
+  return snprintf(aBuffer, INT_MAX, (char*)aFormat);
 };

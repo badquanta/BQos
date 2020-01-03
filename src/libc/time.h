@@ -5,9 +5,10 @@
 extern "C" {
 #endif
 #include <stddef.h>
+#include <sys/types.h>
 // TODO: time.h
-typedef unsigned int time_t;
-typedef unsigned int clock_t;
+//typedef unsigned int time_t;
+//typedef unsigned int clock_t;
 typedef long long timespec;
 /**
  * @link https://en.cppreference.com/w/cpp/chrono/c/tm

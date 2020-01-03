@@ -62,7 +62,7 @@ int snprintf(char *aBuffer, size_t aNumBytes, char *aFormat, ...){
       written+=length;
       bufferPointer+=length;
     } else {
-      aFormat = format_start_at;
+      aFormat = (char*)format_start_at;
       size_t length = strlen(aFormat);
       if(maxrem<length){
         //TODO: Error EOVERFLOW
@@ -75,6 +75,6 @@ int snprintf(char *aBuffer, size_t aNumBytes, char *aFormat, ...){
     }
   }
   va_end(parameters);
-  bufferPointer='\0';
+  *bufferPointer='\0';
   return written;
 };

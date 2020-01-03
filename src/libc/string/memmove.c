@@ -2,6 +2,7 @@
 #include <string.h>
 void* memmove(void * dstptr, const void * srcptr, size_t size){
     unsigned char * dst = (unsigned char*) dstptr;
+    unsigned char * src = (unsigned char*) srcptr;
     if(dst<src){
         for (size_t i = 0; i < size; i++)
         {
