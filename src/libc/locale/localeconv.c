@@ -1,4 +1,5 @@
 #include <locale.h>
+
 const lconv BQlocale={".",",","\003",
 ".",",","\003",
 "","-",
