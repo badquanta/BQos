@@ -33,10 +33,10 @@ $(DIST_OBJ_DIR)/%.t: src/%.cpp
 	mkdir -p $(@D)
 	$(CB_PATH_Gpp) -MMD $(GPP_TEST_FLAGS) $<  -o $@
 #####################################################################
-$(DIST_OBJ_DIR)/%_TEST: src/%.cpp $(DIST_TST_OBJS)
+$(DIST_OBJ_DIR)/%_TEST: src/%.cpp $(DIST_TST_OBJS) $(DIST_GAS_OBJS)
 	@echo "########## $(@) ############"
 	mkdir -p $(@D)
-	$(CB_PATH_Gpp) -MMD $(GPP_TEST_FLAGS) -DTEST $< $(DIST_TST_OBJS) -o $@
+	$(CB_PATH_Gpp) -MMD $(GPP_TEST_FLAGS) -DTEST $< $(DIST_GAS_OBJS) $(DIST_TST_OBJS)  -o $@
 #####################################################################
 $(DIST_OBJ_DIR)/%.o			:	src/%.s Makefile *.mk
 	@echo "########## $(@) ############"

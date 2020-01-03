@@ -1,7 +1,7 @@
 CB_TARGET		 			:= i386-elf
 CB_PREFIX 					:= $(shell pwd)/../BUILD
 CB_DOWNLOADS 				:= $(CB_PREFIX)/downloads
-CB_PATH   					:= $(CB_PREFIX)/bin:$(CB_PATH)
+CB_PATH   					:= $(CB_PREFIX)/bin:$(PATH)
 CB_PATH_Gpp					:= $(CB_PREFIX)/bin/${CB_TARGET}-g++
 CB_PATH_Gas					:= $(CB_PREFIX)/bin/${CB_TARGET}-as
 CB_SRC_DIR 					:= $(CB_PREFIX)/usr/src
@@ -41,8 +41,6 @@ $(CB_BINUTILS_SRC): $(CB_DOWNLOADS) $(CB_SRC_DIR)
 	cd $(CB_DOWNLOADS) && wget -N $(CB_BINUTILS_DOWNLOAD_URL)
 	cd $(CB_SRC_DIR) && tar $(CB_TAR_PARAMS) -xvf $(CB_BINUTILS_DOWNLOAD_TO)
 
-env: env.sh
-	./env.sh
 
 $(CB_BUILD_BINUTILS_DIR):
 	mkdir -p $(CB_BUILD_BINUTILS_DIR)
