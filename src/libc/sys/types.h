@@ -5,15 +5,17 @@
  **/
 #ifndef __LIBBQ__TYPES_HPP
 #define __LIBBQ__TYPES_HPP 1
+#include <sys/cdefs.h>
 #include <stddef.h>
 #include <stdint.h>
 
+
 /*Used for file system block counts.*/
-//LATER: typedef uint32_t                       fsblkcnt_t;
+typedef uint32_t                       fsblkcnt_t;
 /*Used for file system file counts.*/
-//LATER: typedef uint32_t                       fsfilcnt_t;
+typedef uint32_t                       fsfilcnt_t;
 /**Used for file serial numbers.**/
-//LATER: typedef uint32_t                            ino_t;
+typedef uint32_t                            ino_t;
 /**Used as a general identifier; can be used to contain at least a pid_t, uid_t, or gid_t.**/
 typedef int32_t                              id_t;
 /**Used for group IDs.**/
@@ -23,16 +25,18 @@ typedef id_t                                uid_t;
 /**Used for process IDs and process group IDs.**/
 typedef id_t                                pid_t;
 /**Used for file sizes.**/
-//LATER: typedef int32_t                             off_t;
+typedef int32_t                             off_t;
 //LATER: typedef int32_t                           ssize_t;
 /**Used for some file attributes.**/
-//LATER: typedef int32_t                            mode_t;
+typedef int32_t                            mode_t;
 /**Used for link counts.**/
-//LATER: typedef int32_t                           nlink_t;
+typedef int32_t                           nlink_t;
 /**Used for file block counts.**/
-//LATER: typedef int32_t                          blkcnt_t;
+typedef int32_t                          blkcnt_t;
 /**Used for block sizes.**/
-//LATER: typedef int32_t                         blksize_t;
+typedef int32_t                         blksize_t;
+/** Used for device IDs.**/
+typedef int32_t                             dev_t;
 /**Used for system times in clock ticks or CLOCKS_PER_SEC; see <time.h>.**/
 //LATER: typedef int32_t                           clock_t;//TODO: Maybe make 64 bits? or a float
 /**Used for time in microseconds.**/
@@ -43,8 +47,8 @@ typedef id_t                                pid_t;
 //LATER: typedef int32_t                           timer_t;
 /**Used for clock ID type in the clock and timer functions.**/
 //LATER: typedef int32_t                         clockid_t;
-/** Used for device IDs.**/
-//LATER: typedef int32_t                             dev_t;
+
+
 
 
 

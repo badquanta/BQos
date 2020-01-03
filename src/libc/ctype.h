@@ -27,10 +27,20 @@
 #define C_PUNCT4_START 0x7B
 #define C_PUNCT4_END 0x7E
 #define C_DEL 0x7F
+#define _U	0x01	/* upper */
+#define _L	0x02	/* lower */
+#define	_N	0x04
+#define _D	0x04	/* digit */
+#define _C	0x08	/* cntrl */
+#define _P	0x10	/* punct */
+#define _S	0x20	/* white space (space/lf/tab) */
+#define _X	0x40	/* hex digit */
+#define	_B	0x80
+#define _SP	0x80	/* hard space (0x20) */
 #ifdef __cplusplus
 extern "C" {
 #endif
- 
+extern char 	_ctype_ [];
 /**http://www.cplusplus.com/reference/cctype/isalnum/**/
 int isalnum(int);
 /**http://www.cplusplus.com/reference/cctype/isalpha/**/

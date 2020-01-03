@@ -22,10 +22,10 @@ CB_GCC_SRC 					:= $(CB_SRC_DIR)/$(CB_GCC_NAME_VERSION)
 CB_BINUTILS_SRC 			:= $(CB_SRC_DIR)/$(CB_BINUTILS_NAME_VERSION)
 CB_BUILD_BINUTILS_DIR 		:= $(CB_BUILD_DIR)/binutils
 CB_BUILD_GCC_DIR 			:= $(CB_BUILD_DIR)/gcc
-
 CB_TAR_PARAMS				:= -m --keep-newer-files
+MAKE_JOBS					:= -j 32
 #############################################################################################
-cb-all: cb-get-sources cb-binutils env cb-gcc cb-gpp
+cb-all: cb-get-sources cb-binutils env cb-gcc #cb-gpp
 
 $(CB_DOWNLOADS):
 	mkdir -p $(CB_DOWNLOADS)
@@ -54,7 +54,7 @@ cb-binutils: env $(CB_BUILD_BINUTILS_DIR) $(CB_DOWNLOADS)
 		--with-sysroot \
 		--disable-nls \
 		--disable-werror
-	cd $(CB_BUILD_BINUTILS_DIR) && make -j 16
+	cd $(CB_BUILD_BINUTILS_DIR) && make $(MAKE_JOBS)
 	cd $(CB_BUILD_BINUTILS_DIR) && make install
 
 sysroot:
@@ -79,15 +79,16 @@ cb-gcc: cb-headers env $(CB_BUILD_GCC_DIR) $(CB_DOWNLOADS)
 		--disable-nls \
 		--disable-bootstrap \
 		--disable-multilib \
-		--enable-languages=c
+		--with-newlib \
+		--enable-languages=c,c++
 
-	./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-gcc -j 
-	./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-target-libgcc -j 
+	./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-gcc $(MAKE_JOBS)
+	./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-target-libgcc $(MAKE_JOBS)
 	./env.sh && cd $(CB_BUILD_GCC_DIR) && make install-gcc 
 	./env.sh && cd $(CB_BUILD_GCC_DIR) && make install-target-libgcc
-
-cb-gpp: cb-headers
-	./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-gas
+	./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-target-libstdc++-v3 $(MAKE_JOBS)
+	./env.sh && cd $(CB_BUILD_GCC_DIR) && make install-target-libstdc++-v3
+cb-gpp-configure: cb-headers 
 	./env.sh && cd $(CB_BUILD_GCC_DIR) && $(CB_GCC_SRC)/configure \
 		--target=$(CB_TARGET) --prefix="$(CB_PREFIX)" --with-sysroot  \
 		--with-sysroot-build=$(CB_TARGET) \
@@ -96,9 +97,14 @@ cb-gpp: cb-headers
 		--disable-multilib \
 		--with-newlib \
 		--enable-languages=c,c++
-  	#./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-gcc -j
-	./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-target-libstdc++-v3 -j 
+cb-gpp-make: cb-headers cb-gpp-configure
+	./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-target-libstdc++-v3 $(MAKE_JOBS)
+cb-gpp-install: cb-headers cb-gpp-make
 	./env.sh && cd $(CB_BUILD_GCC_DIR) && make install-target-libstdc++-v3
+cb-gpp: cb-gcc
+	#./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-gas
+  	#./env.sh && cd $(CB_BUILD_GCC_DIR) && make all-gcc -j
+	
 
 
 $(CB_PATH_Gpp): cb-gcc cb-gpp
