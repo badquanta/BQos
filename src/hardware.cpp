@@ -4,7 +4,7 @@
  *  Created on: Dec 27, 2019
  *      Author: badquanta
  */
-#include <BQos/hardware.hpp>
+#include "../../system/BQos/hardware.hpp"
 using namespace BQos;
 
 hardware* hardware::active{NULL};

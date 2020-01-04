@@ -1,6 +1,7 @@
-#include <BQos/multiboot_main.hpp>
-#include <BQos/ARCH/i386.hpp>
-#include <BQos/Memory.hpp>
+#include "../../system/BQos/multiboot_main.hpp"
+
+#include "../../system/BQos/ARCH/i386.hpp"
+#include "../../system/BQos/Memory.hpp"
 static uint8_t bootMem[1024]{0};
 extern "C" {
 void multiboot_main(multiboot_info_t* info, uint32_t magic){

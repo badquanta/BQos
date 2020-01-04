@@ -5,8 +5,8 @@
  *      Author: badquanta
  */
 
-#ifndef SRC_BQOS_ASCII_DEFS_HPP_
-#define SRC_BQOS_ASCII_DEFS_HPP_
+#ifndef SYSTEM_BQOS_ASCII_DEFS_HPP_
+#define SYSTEM_BQOS_ASCII_DEFS_HPP_
 
 
 
@@ -48,4 +48,4 @@
 #define ASCII_Delete    				0x7F
 
 
-#endif /* SRC_BQOS_ASCII_DEFS_HPP_ */
+#endif /* SYSTEM_BQOS_ASCII_DEFS_HPP_ */

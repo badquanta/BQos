@@ -2,7 +2,7 @@
 #define BQos_HW_a_tty_hpp 1
 #include <sys/types.h>
 #include <libBQ/XY.hpp>
-#include <BQos/ascii_defs.hpp>
+#include "../../system/BQos/ascii_defs.hpp"
 namespace BQos
 {
     using namespace BQ;

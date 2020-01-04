@@ -5,8 +5,8 @@
  *      Author: badquanta
  */
 
-#ifndef SRC_BQOS_MEMORY_HPP_
-#define SRC_BQOS_MEMORY_HPP_
+#ifndef SYSTEM_BQOS_MEMORY_HPP_
+#define SYSTEM_BQOS_MEMORY_HPP_
 #include <sys/types.h>
 namespace BQos {
 /**
@@ -65,4 +65,4 @@ public:
 
 void* operator new(size_t size);
 
-#endif /* SRC_BQOS_MEMORY_HPP_ */
+#endif /* SYSTEM_BQOS_MEMORY_HPP_ */
