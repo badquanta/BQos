@@ -95,7 +95,7 @@ extern "C" {
                 size_t nmemb, size_t size, 
                 int (*compar)(const void *a, const void *b));
         /**qsort Sort elements of array (function )**/
-        void qsort(void* aBase, size_t aCount, size_t aSize, int (*aComparator)(const void*,const void*));
+        void qsort(void* aBase, size_t aCount, size_t aSize, int (*aComparator)(void*,void*));
     /**Integer arithmetics**/
         /** abs Absolute value (function ) **/
         int abs(int);

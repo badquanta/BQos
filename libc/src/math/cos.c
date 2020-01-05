@@ -47,7 +47,7 @@ double cos_73(double x){
 
 	x=fmod(x, twopi);				// Get rid of values > 2* pi
 	if(x<0)x=-x;					// cos(-x) = cos(x)
-	quad=int(x * two_over_pi);			// Get quadrant # (0 to 3) we're in
+	quad=(x * two_over_pi);			// Get quadrant # (0 to 3) we're in
 	switch (quad){
 	case 0: return  cos_73s(x);
 	case 1: return -cos_73s(pi-x);

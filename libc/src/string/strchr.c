@@ -4,7 +4,7 @@
 //    return strchr(pointer, aCharacter);
 //}
 
-char * strchr ( char *aString, int aCharacter){
+char * strchr (const char *aString, int aCharacter){
     char* pointer = aString;
     while(*pointer!=aCharacter&&*pointer!='\0'){
         ++pointer;

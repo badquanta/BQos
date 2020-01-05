@@ -1,5 +1,5 @@
 #include <stdio.h>
 
-int fopen(FILE* aFile){
+FILE *fopen(const char* aPath, const char* aMode){
     //TODO: Filesystems
 }

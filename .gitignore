@@ -7,3 +7,8 @@
 /bqos/
 .vscode/
 log.txt
+graph
+make.Bdn
+make.dot
+Makefile.svg
+logs/*
