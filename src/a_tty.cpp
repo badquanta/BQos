@@ -1,4 +1,4 @@
-#include "../../system/BQos/a_tty.hpp"
+#include <BQos/a_tty.hpp>
 
 using namespace BQos;
 

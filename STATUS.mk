@@ -24,7 +24,6 @@ status-xgcc:
 	@echo XBINUTILS_CONFIGURE_PARAMS $(XBINUTILS_CONFIGURE_PARAMS)
 	@echo XAR $(XAR)
 	@echo XAS $(XAS)
-
 status-libc:
 	@./status.sh $(LIBC_DIR) LIBC_DIR
 	@./status.sh $(LIBC_SRC_DIR) LIBC_SRC_DIR
@@ -57,6 +56,11 @@ status-libk-objs:
 status-libc-dst-h:	
 	@./status.sh "$(LIBC_H_DST)"
 
+status-BQos:
+	@echo BQos_CPP_SRC_DIR "$(BQos_CPP_SRC_DIR)" 
+	@./status.sh "$(BQos_CPP_SRCS)" BQos_CPP_SRCS
+	@./status.sh "$(BQos_OBJS)" BQos_OBJS
+
 status-config:
 	@echo XJOBS: $(XJOBS)
 	@echo "PROJECT_NAME:" $(PROJECT_NAME)
@@ -73,4 +77,7 @@ status-config:
 	@echo LIBC_DIR: $(LIBC_DIR)
 	@#@echo LIBC_H_SRCS: $(LIBC_H_SRCS)
 	@#@echo LIBC_H_DST: $(LIBC_H_DST)
-  
+
+
+status: status-config
+	

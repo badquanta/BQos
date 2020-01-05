@@ -1,7 +1,7 @@
 #ifndef __BQos__X86_HPP
 #define __BQos__X86_HPP 1
-#include "../../../system/BQos/hardware.hpp"
-#include "../../../system/BQos/HW/VGA/text_mode.hpp"
+#include <BQos/hardware.hpp>
+#include <BQos/HW/VGA/text_mode.hpp>
 #include "../../vendor/GNU/multiboot.h"
 namespace BQos::ARCH {
     /** Support of x86_32 class hardware **/

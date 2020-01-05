@@ -5,7 +5,7 @@
  *      Author: badquanta
  */
 
-#include "../../system/BQos/Memory.hpp"
+#include <BQos/Memory.hpp>
 
 namespace BQos {
 

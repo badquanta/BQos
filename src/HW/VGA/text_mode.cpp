@@ -1,4 +1,4 @@
-#include "../../../../system/BQos/HW/VGA/text_mode.hpp"
+#include <BQos/HW/VGA/text_mode.hpp>
 using namespace BQos::HW::VGA;
 
 text_mode::text_mode(){
