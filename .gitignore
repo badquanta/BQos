@@ -12,3 +12,4 @@ make.Bdn
 make.dot
 Makefile.svg
 logs/*
+make.status.svg
