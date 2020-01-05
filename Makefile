@@ -2,7 +2,7 @@ default: all
 PROJECT_SRC_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 PROJECT_NAME    := BQos
 LOGS_DIR := $(PROJECT_SRC_DIR)logs
-UPDATE_STATUS := #make update-status-svg
+UPDATE_STATUS := make update-status-svg
 include CONFIG.mk
 #REDIRECT := 2>&1 | tee --output-error=warn -a
 REDIRECT := | cat 2>&1 >>
@@ -154,7 +154,7 @@ $(LIBC_INC_DST_DIR): $(LIBC_H_DST)
 $(LIBC_INC_DST_DIR)/%.h : $(LIBC_INC_DIR)/%.h 
 	mkdir -p $(@D)
 	cp -fv $< $@
-	$(UPDATE_STATUS)
+	@#$(UPDATE_STATUS)
 	#touch $@
 	#touch $(@D)
 
@@ -162,24 +162,24 @@ $(LIBC_INC_DST_DIR)/%.h : $(LIBC_INC_DIR)/%.h
 $(LIBC_DST_DIR)/%.o:  $(LIBC_SRC_DIR)/%.c |  $(XGCC)
 	mkdir -p $(@D)
 	$(XGCC) $(LIBC_GCFLAGS)  -MD -c $< -o $@
-	$(UPDATE_STATUS)
+	@#$(UPDATE_STATUS)
 ##### how to make sysroot libk objects
 $(LIBK_DST_DIR)/%.libk: $(LIBC_SRC_DIR)/%.c |  $(XGCC)
 	mkdir -p $(@D)
 	$(XGCC) $(LIBC_GCFLAGS)  -MD -c $< -o $@
-	$(UPDATE_STATUS)
+	@#$(UPDATE_STATUS)
 
 
 ##### how to make sysroot libc objects
 $(LIBC_DST_DIR)/%.o:  $(LIBC_SRC_DIR)/%.s |  $(XGCC)
 	mkdir -p $(@D)
 	$(XAS) $(LIBC_GASFLAGS)  -MD -c $< -o $@
-	$(UPDATE_STATUS)
+	@#$(UPDATE_STATUS)
 ##### how to make sysroot libk objects
 $(LIBK_DST_DIR)/%.libk: $(LIBC_SRC_DIR)/%.s |  $(XGCC)
 	mkdir -p $(@D)
 	$(XAS) $(LIBC_GASFLAGS)  -MD -c $< -o $@
-	$(UPDATE_STATUS)
+	@#$(UPDATE_STATUS)
 
 
 libc: $(LIBC_DST)
@@ -204,7 +204,7 @@ $(LOGS_DIR) $(PROJECT_DST_DIR) $(SYSROOT) $(XGCC_BUILD_DIR) $(XBINUTILS_BUILD_DI
 clean-all:
 	mkdir -p $(LOGS_DIR)
 	rm -rf $(PROJECT_DST_DIR) $(LOGS_DIR)/*.log
-	@$(UPDATE_STATUS)
+	@#$(UPDATE_STATUS)
 XALL_PHONY += clean-all
 
 BQos_CPP_SRC_DIR		:= $(PROJECT_SRC_DIR)src
