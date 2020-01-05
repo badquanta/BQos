@@ -225,7 +225,8 @@ BQos_S_SRCS				+= $(wildcard $(BQos_S_SRC_DIR)/*/*/*/*/*.s)
 BQos_DST_DIR			:= $(PROJECT_DST_DIR)/lib
 BQos_OBJS				:= $(BQos_CPP_SRCS:$(BQos_CPP_SRC_DIR)/%.cpp=$(BQos_DST_DIR)/%.o)
 BQos_OBJS				+= $(BQos_S_SRCS:$(BQos_S_SRC_DIR)/%.s=$(BQos_DST_DIR)/%.o)
-BQos_DST_BOOT_KERNEL	:= $(SYSROOT)/boot/$(XARCH).kernel
+BQos_BOOT				:= $(SYSROOT)/boot
+BQos_BOOT_KERNEL		:= $(BQos_BOOT)/$(XARCH).kernel
 BQos_GCFLAGS			:= $(PROJECT_GCFLAGS)
 BQos_GASFLAGS			:= $(PROJECT_GASFLAGS)
 BQos_GCFLAGS			+= \
@@ -245,17 +246,34 @@ $(BQos_DST_DIR)/%.o : $(BQos_S_SRC_DIR)/%.s
 	$(XAS) $(BQos_GASFLAGS) -o $@ -c $<
 BQos_KERNEL_LINK_FLAGS:=		-T linker.ld -m32 -O2 -lgcc -nostdlib -ffreestanding
 
-$(BQos_DST_BOOT_KERNEL): $(BQos_OBJS) $(LIBK_DST) | $(linker.ld)
+$(BQos_BOOT_KERNEL): $(BQos_OBJS) $(LIBK_DST) | $(linker.ld)
 	mkdir -p $(@D)
 	$(XGPP) $(BQos_KERNEL_LINK_FLAGS) -o $@ $^
+
+run-BQos-KERNEL: $(BQos_BOOT_KERNEL)
+	qemu-system-i386 -kernel $<
+
 
 clean-BQos-OBJS:
 	rm -f $(BQos_OBJS)
 clean-BQos-KERNELS:
-	rm -f $(BQos_DST_BOOT_KERNEL)
+	rm -f $(BQos_BOOT_KERNEL)
 clean-BQos: clean-BQos-OBJS clean-BQos-KERNELS
 XALL_PHONY += clean-BQos-OBJS clean-BQos-KERNELS clean-BQos
-XALL_DEFAULTS += $(BQos_DST_BOOT_KERNEL)
+#XALL_DEFAULTS += $(BQos_BOOT_KERNEL)
+###############################################################################
+BQos_ISO:= $(PROJECT_DST_DIR).iso
+BQos_BOOT_GRUB := $(BQos_BOOT)/grub
+BQos_BOOT_GRUB_CONFIG := $(BQos_BOOT_GRUB)/grub.cfg
+
+$(BQos_ISO): $(BQos_BOOT_GRUB_CONFIG)
+	grub-mkrescue -o $@ $(SYSROOT)
+
+$(BQos_BOOT_GRUB_CONFIG): $(BQos_BOOT_KERNEL)
+	@echo "########## $(@) ############"
+	mkdir -p $(@D)
+	echo "menuentry \"Operating System\" {\n  multiboot $(BQos_BOOT_KERNEL)\n }\n" >> $(BQos_BOOT_GRUB_CONFIG)
+XALL_DEFAULTS += $(BQos_ISO)
 include STATUS.mk
 
 update-status-svg: 
