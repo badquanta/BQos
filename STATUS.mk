@@ -27,7 +27,8 @@ status-xgcc:
 status-libc:
 	@./status.sh $(LIBC_DIR) LIBC_DIR
 	@./status.sh $(LIBC_SRC_DIR) LIBC_SRC_DIR
-	@./status.sh $(LIBC_DST_DIR) LIBC_DST_DIR
+	@./status.sh $(LIBC_BUILD_DIR) LIBK_BUILD_DIR
+	@./status.sh $(LIBK_BUILD_DIR) LIBC_BUILD_DIR
 	@./status.sh $(LIBC_INC_DIR) LIBC_INC_DIR
 	@./status.sh $(LIBC_INC_DST_DIR) LIBC_INC_DST_DIR
 	@./status.sh $(LIBC_DST) LIBC
@@ -63,9 +64,10 @@ status-BQos:
 
 status-config:
 	@echo XJOBS: $(XJOBS)
+	@echo PATH: $$PATH
 	@echo "PROJECT_NAME:" $(PROJECT_NAME)
 	@echo PROJECT_SRC_DIR: $(PROJECT_SRC_DIR)
-	@echo PROJECT_DST_DIR: $(PROJECT_DST_DIR)
+	@echo XPREFIX: $(XPREFIX)
 	@echo SYSROOT: $(SYSROOT)
 	@echo XPREFIX: $(XPREFIX)
 	@echo XPATH_DIR: $(XPATH_DIR)
@@ -77,7 +79,8 @@ status-config:
 	@echo LIBC_DIR: $(LIBC_DIR)
 	@#@echo LIBC_H_SRCS: $(LIBC_H_SRCS)
 	@#@echo LIBC_H_DST: $(LIBC_H_DST)
-
+status-env:
+	@env
 
 status: status-config
 	
