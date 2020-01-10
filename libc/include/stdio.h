@@ -26,7 +26,7 @@ typedef struct {int unused;} FILE;
 /** Compliclation has required the definition of fpos_t **/
 typedef struct {char* path; int unused;} fpos_t;
 /** Required by GCC; TODO: implement stderr `FILE` pointer. **/
-FILE * stderr,*stdin,*stdout;
+extern FILE * stderr,*stdin,*stdout;
 /** FILE ACCESS ROUTINES **/
 int remove(const char* filename);
 int rename(const char* old, const char* aNew);
