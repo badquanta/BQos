@@ -23,7 +23,7 @@ PROJECT_SRC_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 # where progress is tracked
 TARGETS := $(PROJECT_SRC_DIR)logs
 ## XPREFIX the folder where everything will be assembled.
-XPREFIX ?= $(realpath $(PROJECT_SRC_DIR))/X
+XPREFIX ?= $(realpath $(PROJECT_SRC_DIR)../)/X
 ## The XPREFIX bin directory; where all cross compilers and binutils will live.
 XPATH_DIR 		:= $(XPREFIX)/bin
 export PATH		:= $(XPATH_DIR):$(PATH)
@@ -33,7 +33,7 @@ XBINUTILS_SRC_DIR := $(XSRC_DIR)/binutils
 XGCC_SRC_DIR := $(XSRC_DIR)/gcc
 ## Where bintuils & gcc will be built
 ## @note XGCC uses this as it's SYSTOOT as well; and expects libc headers to be present.
-SYSROOT := $(PROJECT_SRC_DIR)/SYSROOT
+SYSROOT := $(realpath $(PROJECT_SRC_DIR)../)/SYSROOT
 #SYSROOT ?= $(XPREFIX)/$(XARCH)/sys-root
 XBUILD_DIR		:= $(XPREFIX)/$(XARCH)/build
 XBUILD_GCC		:= $(XBUILD_DIR)/gcc
@@ -48,10 +48,13 @@ LIBC_SRC_DIR		:= $(LIBC_DIR)/src
 
 LIBC_TST_DIR		:= $(XPREFIX)/tests
 LIBC_INC_DIR		:= $(LIBC_DIR)/include
-LIBC_INC_DST_DIR	:= $(SYSROOT)/usr/include
+SYS_USR_INC			:= $(SYSROOT)/usr/include
 BQos_CPP_SRC_DIR		:= $(PROJECT_SRC_DIR)src
 BQos_S_SRC_DIR			:= $(PROJECT_SRC_DIR)src
 BQos_HPP_SRC_DIR		:= $(PROJECT_SRC_DIR)src
+libBQ_HPP_SRC_DIR		:= $(PROJECT_SRC_DIR)libBQ
+BQos_HPP_DST_DIR		:= $(SYSROOT)/usr/include/BQos
+libBQ_HPP_DST_DIR		:= $(SYSROOT)/usr/include/libBQ
 BQos_DST_DIR			:= $(XPREFIX)/lib
 BQos_BOOT				:= $(SYSROOT)/boot
 BQos_BOOT_GRUB			:= $(BQos_BOOT)/grub
@@ -72,19 +75,20 @@ PROJECT_GCFLAGS := \
 	-Winline \
 	-Wno-long-long \
 	-Wconversion \
-	-Wno-write-strings
-LIBC_GCFLAGS				:=	$(PROJECT_GCFLAGS) \
-								-MD
+	-Wno-write-strings \
+	-MD
+LIBC_GCFLAGS				:=	$(PROJECT_GCFLAGS)
 LIBC_TEST_FLAGS				:=	$(PROJECT_CFLAGS)
 BQos_GCFLAGS			:= $(PROJECT_GCFLAGS)
 BQos_GCFLAGS				+=\
-								-I$(PROJECT_SRC_DIR) \
 								-fno-leading-underscore \
 								-fcheck-new \
 								-fno-use-cxa-atexit \
 								-nostdlib \
 								-fno-rtti \
 								-fno-exceptions
+LIBK_GCFLAGS			:= $(BQos_GCFLAGS)
+LIBK_GCFLAGS			:= -D__is_libk							
 
 BQos_GASFLAGS			:= $(PROJECT_GASFLAGS)							
 ################################################################### FILES $(XPATH_DIR))
@@ -130,10 +134,12 @@ XGCC_CONFIGURE_TARGET		:= $(TARGETS)/xgcc-configure.tag
 XGCC_MAKE_INSTALL_TARGET	:= $(TARGETS)/xgcc-make-install.tag
 XGPP_MAKE_INSTALL_TARGET 		:= $(TARGETS)/xgpp-make-install.tag
 XALL_SUFFIXES				+= .tag
+SYS_INCLUDES		:=
 ############################################# *.c
 LIBC_C_SRCS			:= $(wildcard $(LIBC_SRC_DIR)/*.c)
 LIBC_C_SRCS			+= $(wildcard $(LIBC_SRC_DIR)/*/*.c)
 XALL_SUFFIXES				+= .c
+
 ############################################# *.cpp
 BQos_CPP_SRCS		:= $(wildcard $(BQos_CPP_SRC_DIR)/*.cpp)
 BQos_CPP_SRCS		+= $(wildcard $(BQos_CPP_SRC_DIR)/*/*.cpp)
@@ -151,20 +157,34 @@ XALL_SUFFIXES				+= .s
 ############################################# *.h
 LIBC_H_SRCS			:= $(wildcard $(LIBC_INC_DIR)/*.h)
 LIBC_H_SRCS			+= $(wildcard $(LIBC_INC_DIR)/*/*.h)
-LIBC_H_DST			:= $(LIBC_H_SRCS:$(LIBC_INC_DIR)/%.h=$(LIBC_INC_DST_DIR)/%.h)
+LIBC_H_DST			:= $(LIBC_H_SRCS:$(LIBC_INC_DIR)/%.h=$(SYS_USR_INC)/%.h)
+SYS_INCLUDES		+= $(LIBC_H_DST)
 XALL_SUFFIXES		+= .h
 ############################################# *.hpp
 BQos_HPP_SRCS		:= $(wildcard $(BQos_HPP_SRC_DIR)/*.hpp)
 BQos_HPP_SRCS		+= $(wildcard $(BQos_HPP_SRC_DIR)/*/*.hpp)
+BQos_HPP_SRCS		+= $(wildcard $(BQos_HPP_SRC_DIR)/*/*.h)
 BQos_HPP_SRCS		+= $(wildcard $(BQos_HPP_SRC_DIR)/*/*/*.hpp)
 BQos_S_SRCS			+= $(wildcard $(BQos_S_SRC_DIR)/*/*/*/*/*.s)
+BQos_HPP_DST		:= $(BQos_HPP_SRCS:$(BQos_HPP_SRC_DIR)/%.hpp=$(BQos_HPP_DST_DIR)/%.hpp)
+BQos_HPP_DST		+= $(BQos_HPP_SRCS:$(BQos_HPP_SRC_DIR)/%.h=$(BQos_HPP_DST_DIR)/%.h)
+SYS_INCLUDES		+= $(BQos_HPP_DST)
+libBQ_HPP_SRCS		:= $(wildcard $(libBQ_HPP_SRC_DIR)/*.hpp)
+libBQ_HPP_SRCS		+= $(wildcard $(libBQ_HPP_SRC_DIR)/*/*.hpp)
+libBQ_HPP_DST		:= $(libBQ_HPP_SRCS:$(libBQ_HPP_SRC_DIR)/%.hpp=$(libBQ_HPP_DST_DIR)/%.hpp)
+SYS_INCLUDES		+= $(libBQ_HPP_DST)
 XALL_SUFFIXES		+= .hpp
+
+XALL_DS				:= $(wildcard $(LIBC_BUILD_DIR)/**.d)
+XALL_DS				+= $(wildcard $(BQos_DST_DIR)/**.d)
+XALL_DS				+= $(wildcard $(libBQ_DST_DIR)/**.d)
 ############################################# *.o
 LIBC_OBJS			:= $(LIBC_C_SRCS:$(LIBC_SRC_DIR)/%.c=$(LIBC_BUILD_DIR)/%.o)
 LIBC_OBJS			+= $(LIBC_S_SRCS:$(LIBC_SRC_DIR)/%.s=$(LIBC_BUILD_DIR)/%.o)
 BQos_OBJS			:= $(BQos_CPP_SRCS:$(BQos_CPP_SRC_DIR)/%.cpp=$(BQos_DST_DIR)/%.o)
 BQos_OBJS			+= $(BQos_S_SRCS:$(BQos_S_SRC_DIR)/%.s=$(BQos_DST_DIR)/%.o)
 XALL_SUFFIXES		+= .o
+
 ############################################# *.libk
 LIBK_OBJS			:= $(LIBC_C_SRCS:$(LIBC_SRC_DIR)/%.c=$(LIBK_BUILD_DIR)/%.libk)
 LIBK_OBJS			+= $(LIBC_S_SRCS:$(LIBC_SRC_DIR)/%.s=$(LIBK_BUILD_DIR)/%.libk)
