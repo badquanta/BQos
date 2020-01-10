@@ -4,65 +4,61 @@ include CONFIG.mk
 
 
 $(XBINUTILS_SRC_DIR):
-	$(GIT_SHALLOW) $(BINUTILS_GIT_BRANCH)  $(BINUTILS_GIT) $(XBINUTILS_SRC_DIR)
+	$(GIT_SHALLOW) $(BINUTILS_GIT_BRANCH)  $(BINUTILS_GIT) $(XBINUTILS_SRC_DIR) >> $(TARGETS)/build.log 2>&1
 	$(UPDATE_STATUS)
 
 xbinutils-configure $(XBINUTILS_CONFIGURE_TARGET) $(XBINUTILS_MAKEFILE): $(XBINUTILS_SRC_DIR)  
 	rm -f $(XBINUTILS_CONFIGURE_TARGET)
 	mkdir -p $(XBUILD_BINUTILS)
-	cd $(XBUILD_BINUTILS) && $(XBINUTILS_SRC_DIR)/configure $(XBINUTILS_CONFIGURE_PARAMS) #$(REDIRECT)$(XBINUTILS_CONFIGURE_TARGET)
+	cd $(XBUILD_BINUTILS) && $(XBINUTILS_SRC_DIR)/configure $(XBINUTILS_CONFIGURE_PARAMS) #$(REDIRECT)$(XBINUTILS_CONFIGURE_TARGET) >> $(TARGETS)/build.log 2>&1
 	$(UPDATE_STATUS)
 	@echo "XBINUTILS configured"
 xbinutils-make $(XBINUTILS_MAKE_TARGET): $(XBINUTILS_MAKEFILE)
 	rm -f $(XBINUTILS_MAKE_TARGET)
-	cd $(XBUILD_BINUTILS) && make -j $(XJOBS) 
+	cd $(XBUILD_BINUTILS) && make -j $(XJOBS) >> $(TARGETS)/build.log 2>&1
 	touch $(XBINUTILS_MAKE_TARGET)
 # $(REDIRECT)   $(XBINUTILS_MAKE_TARGET)
 	$(UPDATE_STATUS)
 xbinutils-install $(XBINUTILS_INSTALL_TARGET): $(XBINUTILS_MAKE_TARGET)
-	cd $(XBUILD_BINUTILS) && make install
+	cd $(XBUILD_BINUTILS) && make install >> $(TARGETS)/build.log 2>&1
 # $(REDIRECT)  $(XBINUTILS_INSTALL_TARGET)
 	touch $(XBINUTILS_INSTALL_TARGET)
 	$(UPDATE_STATUS)
 	@echo "XBINUTILS installed"
 $(XBINUTILS_TARGETS): $(XBINUTILS_INSTALL_TARGET)
 
-$(XGCC_TARGETS): $(XGCC_INSTALL_TARGET) 
+$(XGCC_TARGETS): $(XGCC_MAKE_INSTALL_TARGET)
 
 $(XGCC_SRC_DIR): 
-	$(GIT_SHALLOW) $(GCC_BRANCH) $(GCC_GIT) $(XGCC_SRC_DIR)
+	$(GIT_SHALLOW) $(GCC_BRANCH) $(GCC_GIT) $(XGCC_SRC_DIR) >> $(TARGETS)/build.log 2>&1
 	$(UPDATE_STATUS)
 
 xgcc-configure $(XGCC_MAKEFILE) $(XGCC_CONFIGURE_TARGET):$(LIBC_INC_DST_DIR) $(XBINUTILS_INSTALL_TARGET) $(XGCC_SRC_DIR) 
 	rm -f $(XGCC_CONFIGURE_TARGET)
 	mkdir -p $(XBUILD_GCC)
-	cd $(XBUILD_GCC) && $(XGCC_SRC_DIR)/configure $(XGCC_CONFIGURE_PARAMS)
+	cd $(XBUILD_GCC) && $(XGCC_SRC_DIR)/configure $(XGCC_CONFIGURE_PARAMS)>> $(TARGETS)/build.log 2>&1
 # $(REDIRECT)  $(XGCC_CONFIGURE_TARGET)
 	$(UPDATE_STATUS)
 	@echo "XGCC Configured."
 
-xgcc-make $(XGCC_MAKE_TARGET):$(XGCC_MAKEFILE)
-	rm -f $(XGCC_MAKE_TARGET)
-	cd $(XBUILD_GCC) && make all-gcc -j $(XJOBS)
-# $(REDIRECT)  $(XGCC_MAKE_TARGET)
-	cd $(XBUILD_GCC) && make all-target-libgcc -j $(XJOBS) 
-	# $(REDIRECT) $(XGCC_MAKE_TARGET)
-	#cd $(XBUILD_GCC) && make all-target-libstdc++-v3 -j $(XJOBS)
-# $(REDIRECT)  $(XGCC_MAKE_TARGET)
+xgcc-make-install $(XGCC_MAKE_INSTALL_TARGET):$(XGCC_MAKEFILE)
+	rm -f $(XGCC_MAKE_INSTALL_TARGET)
+	cd $(XBUILD_GCC) && make all-gcc -j $(XJOBS)>> $(TARGETS)/build.log 2>&1
+	cd $(XBUILD_GCC) && make install-gcc>> $(TARGETS)/build.log 2>&1
+	cd $(XBUILD_GCC) && make all-target-libgcc -j $(XJOBS)>> $(TARGETS)/build.log 2>&1
+	cd $(XBUILD_GCC) && make install-target-libgcc>> $(TARGETS)/build.log 2>&1
 	$(UPDATE_STATUS)
-	touch $(XGCC_MAKE_TARGET)
+	touch $(XGCC_MAKE_INSTALL_TARGET)
 	@echo "XGCC Built."
 
-xgcc-install $(XGCC_INSTALL_TARGET): $(XGCC_MAKE_TARGET)  
-	rm -f $(XGCC_INSTALL_TARGET)
-	cd $(XBUILD_GCC) && make install-gcc
-# $(REDIRECT)  $(XGCC_INSTALL_TARGET)
-	cd $(XBUILD_GCC) && make install-target-libgcc 
-	# $(REDIRECT) $(XGCC_INSTALL_TARGET)
-	#cd $(XBUILD_GCC) && make install-target-libstdc++-v3 #$(REDIRECT)$(XGCC_INSTALL_TARGET)	
-	touch $(XGCC_INSTALL_TARGET)
+xstdcpp-make-install  $(XSTDCPP_MAKE_INSTALL_TARGET): $(XGCC_MAKE_INSTALL_TARGET) $(LIBC_DST)
+	rm -f $(XSTDCPP_MAKE_INSTALL_TARGET)
+	cd $(XBUILD_GCC) && make all-target-libstdc++-v3 -j $(XJOBS) >> $(TARGETS)/build.log 2>&1
+	cd $(XBUILD_GCC) && make install-target-libstdc++-v3 #$(REDIRECT)$(XSTDCPP_MAKE_INSTALL_TARGET)	>> $(TARGETS)/build.log 2>&1
+	touch $(XSTDCPP_MAKE_INSTALL_TARGET)
 	$(UPDATE_STATUS)
 	@echo "XGCC Installed."
+
 #
 
 
@@ -84,12 +80,12 @@ $(LIBC_INC_DST_DIR)/%.h : $(LIBC_INC_DIR)/%.h
 ##### how to make sysroot libc objects
 $(LIBC_BUILD_DIR)/%.o:  $(LIBC_SRC_DIR)/%.c | $(XGCC) #$(LIBC_INC_DST_DIR)
 	mkdir -p $(@D)
-	$(XGCC) $(LIBC_GCFLAGS) $< -o $@
+	$(XGCC) $(LIBC_GCFLAGS) -c $< -o $@
 	@#$(UPDATE_STATUS)
 ##### how to make sysroot libk objects
 $(LIBK_BUILD_DIR)/%.libk: $(LIBC_SRC_DIR)/%.c | $(XGCC) #$(LIBC_INC_DST_DIR)
 	mkdir -p $(@D)
-	$(XGCC) $(LIBC_GCFLAGS) $< -o $@
+	$(XGCC) $(LIBC_GCFLAGS) -c $< -o $@
 	@#$(UPDATE_STATUS)
 	
 $(LIBC_TST_DIR)/%.t: $(LIBC_SRC_DIR)/%.c | $(XGCC)
@@ -126,7 +122,7 @@ libk: $(LIBK_DST)
 #	$(UPDATE_STATUS)
 
 XALL_PHONY += libc libk
-XALL_DEFAULTS += libc libk
+#XALL_DEFAULTS += libc libk
 
 $(LIBC_DST): $(LIBC_OBJS) $(XAR)
 	mkdir -p $(@D)
@@ -148,9 +144,9 @@ clean-all:
 XALL_PHONY += clean-all
 
 # src/**.cpp -> *.o
-$(BQos_DST_DIR)/%.o : $(BQos_CPP_SRC_DIR)/%.cpp | $(XGPP)
+$(BQos_DST_DIR)/%.o : $(BQos_CPP_SRC_DIR)/%.cpp | $(XGPP) $(XSTDCPP_MAKE_INSTALL_TARGET)
 	mkdir -p $(@D)
-	$(XGPP) $(BQos_GCFLAGS) -o $@ $<
+	$(XGPP) $(BQos_GCFLAGS) -o $@ -c $<
 # src/**.s -> *.o
 $(BQos_DST_DIR)/%.o : $(BQos_S_SRC_DIR)/%.s | $(XAS)
 	mkdir -p $(@D)
@@ -197,7 +193,10 @@ update-status-svg:
 	dot -T svg -o make.status.svg
 	cat make.Bnd | makefile2graph  -f L
 XALL_PHONY+=update-status-svg
-
+XALL_SUFFIXES+= .svg
 
 .PHONY: $(XALL_PHONY)
 all: $(XALL_DEFAULTS)
+SHELL = /bin/sh
+.SUFFIXES:
+.SUFFIXES: $(XALL_SUFFIXES)
