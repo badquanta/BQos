@@ -33,7 +33,6 @@ extern "C" {
     // TODO: Review why I had to do this in stddef instead? 
 /**Functions:**/
         void initialize_standard_library();
-        void exit();
     /**String conversion **/
         /** atof* Convert string to double (function )**/
         double atof(const char* nptr);
