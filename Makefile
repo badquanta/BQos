@@ -36,7 +36,7 @@ $(XGCC_SRC_DIR):
 	$(GIT_SHALLOW) $(GCC_BRANCH) $(GCC_GIT) $(XGCC_SRC_DIR) >> $(TARGETS)/build.log 2>&1
 	$(UPDATE_STATUS)
 
-xgcc-configure $(XGCC_MAKEFILE) $(XGCC_CONFIGURE_TARGET):$(LIBC_INC_DST_DIR) $(XBINUTILS_INSTALL_TARGET) $(XGCC_SRC_DIR) 
+xgcc-configure $(XGCC_MAKEFILE) $(XGCC_CONFIGURE_TARGET):$(SYS_INCLUDES) $(XBINUTILS_INSTALL_TARGET) $(XGCC_SRC_DIR) 
 	rm -f $(XGCC_CONFIGURE_TARGET)
 	mkdir -p $(XBUILD_GCC)
 	cd $(XBUILD_GCC) && $(XGCC_SRC_DIR)/configure $(XGCC_CONFIGURE_PARAMS)>> $(TARGETS)/build.log 2>&1
@@ -54,7 +54,7 @@ xgcc-make-install $(XGCC_MAKE_INSTALL_TARGET):$(XGCC_MAKEFILE)
 	touch $(XGCC_MAKE_INSTALL_TARGET)
 	@echo "XGCC Built."
 
-xstdcpp-make-install  $(XGPP_MAKE_INSTALL_TARGET): $(LIBC_DST)
+xgpp-make-install  $(XGPP_MAKE_INSTALL_TARGET): $(LIBC_DST)
 	rm -f $(XGPP_MAKE_INSTALL_TARGET)
 	cd $(XBUILD_GCC) && make all-target-libstdc++-v3 -j $(XJOBS) >> $(TARGETS)/build.log 2>&1
 	cd $(XBUILD_GCC) && make install-target-libstdc++-v3 #$(REDIRECT)$(XGPP_MAKE_INSTALL_TARGET)	>> $(TARGETS)/build.log 2>&1
@@ -66,9 +66,6 @@ xstdcpp-make-install  $(XGPP_MAKE_INSTALL_TARGET): $(LIBC_DST)
 
 
 ##### how to make sysroot libc headers
-$(LIBC_INC_DST_DIR): $(LIBC_H_DST) 
-	touch $@
-	$(UPDATE_STATUS)
 
 
 libc-h-dst: $(LIBC_H_DST)
@@ -76,19 +73,29 @@ libc-h-dst: $(LIBC_H_DST)
 clean-libc-h-dst:
 	@rm -f $(LIBC_H_DST)
 	@./status.sh "$(LIBC_H_DST)"
-$(LIBC_INC_DST_DIR)/%.h : $(LIBC_INC_DIR)/%.h 
+	
+$(SYS_USR_INC)/%.h : $(LIBC_INC_DIR)/%.h 
 	mkdir -p $(@D)
 	cp -fv $< $@
-	
+$(BQos_HPP_DST_DIR): $(BQos_HPP_DST)
+
+$(BQos_HPP_DST_DIR)/%.hpp : $(BQos_HPP_SRC_DIR)/%.hpp
+	mkdir -p $(@D)
+	cp -fv $< $@
+$(libBQ_HPP_DST_DIR): $(libBQ_HPP_DST)
+
+$(libBQ_HPP_DST_DIR)/%.hpp : $(libBQ_HPP_SRC_DIR)/%.hpp
+	mkdir -p $(@D)
+	cp -fv $< $@	
 ##### how to make sysroot libc objects
-$(LIBC_BUILD_DIR)/%.o:  $(LIBC_SRC_DIR)/%.c | $(XGCC) #$(LIBC_INC_DST_DIR)
+$(LIBC_BUILD_DIR)/%.o:  $(LIBC_SRC_DIR)/%.c | $(XGCC) #$(SYS_USR_INC)
 	mkdir -p $(@D)
 	$(XGCC) $(LIBC_GCFLAGS) -c $< -o $@
 	@#$(UPDATE_STATUS)
 ##### how to make sysroot libk objects
-$(LIBK_BUILD_DIR)/%.libk: $(LIBC_SRC_DIR)/%.c | $(XGCC) #$(LIBC_INC_DST_DIR)
+$(LIBK_BUILD_DIR)/%.libk $(LIBK_BUILD_DIR)/%.d: $(LIBC_SRC_DIR)/%.c | $(XGCC) #$(SYS_USR_INC)
 	mkdir -p $(@D)
-	$(XGCC) $(LIBC_GCFLAGS) -c $< -o $@
+	$(XGPP) $(LIBK_GCFLAGS) -c $< -o $@ 
 	@#$(UPDATE_STATUS)
 	
 $(LIBC_TST_DIR)/%.t: $(LIBC_SRC_DIR)/%.c | $(XGCC)
@@ -98,25 +105,25 @@ $(LIBC_TST_DIR)/%.t: $(LIBC_SRC_DIR)/%.c | $(XGCC)
 $(LIBC_TST_DIR)/%_TEST: $(LIBC_SRC_DIR)/%.c $(LIBC_DST) | $(XGCC)
 	mkdir -p $(@D)
 	$(XGCC) $(LIBC_TEST_FLAGS) -DTEST $< $(LIBC_DST) -o $@
-	$@
+	
 
 libc-tests: $(LIBC_TESTS)
 	@#@echo "########## CHECK ############"
-	@#-@rc=0; count=0; \
-	#for file in $(LIBC_TESTS); do \
-	#	echo "TST		$$file"; ./$$file; \
-	#	rc=`expr $$rc +$$?`; count=`expr $$count + 1`; \
-	#	done; \
-	#	echo; echo "Test executed: $$count		Tests failed: $$rc"
+	@rc=0; count=0; \
+	for file in $(LIBC_TESTS); do \
+		echo "TST		$$file"; ./$$file; \
+		rc=`expr $$rc +$$?`; count=`expr $$count + 1`; \
+		done; \
+		echo; echo "Test executed: $$count		Tests failed: $$rc"
 
-XALL_DEFAULTS += libc-tests	
+#XALL_DEFAULTS += libc-tests	
 ##### how to make sysroot libc objects
 $(LIBC_BUILD_DIR)/%.o:  $(LIBC_SRC_DIR)/%.s |  $(XAS)
 	mkdir -p $(@D)
 	$(XAS) $(LIBC_GASFLAGS)  $< -o $@
 	@#$(UPDATE_STATUS)
 ##### how to make sysroot libk objects
-$(LIBK_BUILD_DIR)/%.libk: $(LIBC_SRC_DIR)/%.s |  $(XAS)
+$(LIBK_BUILD_DIR)/%.libk:  $(LIBC_SRC_DIR)/%.s |  $(XAS)
 	mkdir -p $(@D)
 	$(XAS) $(LIBC_GASFLAGS)  $< -o $@
 	@#$(UPDATE_STATUS)
@@ -124,7 +131,7 @@ $(LIBK_BUILD_DIR)/%.libk: $(LIBC_SRC_DIR)/%.s |  $(XAS)
 libc: $(LIBC_DST)
 	$(UPDATE_STATUS)
 libk: $(LIBK_DST) 
-#	$(UPDATE_STATUS)
+	$(UPDATE_STATUS)
 
 XALL_PHONY += libc libk
 #XALL_DEFAULTS += libc libk
@@ -134,11 +141,14 @@ $(LIBC_DST): $(LIBC_OBJS) $(XAR)
 	$(XAR) rcs $@ $(LIBC_OBJS)
 	$(UPDATE_STATUS)
 
-$(LIBK_DST): $(LIBK_OBJS) $(XAR)
+$(LIBK_DST): $(LIBK_OBJS) $(BQos_OBJS) $(XAR)
 	mkdir -p $(@D)
-	$(XAR) rcs $@ $(LIBK_OBJS)
+	$(XAR) rcs $@ $(LIBK_OBJS) $(BQos_OBJS)
 	$(UPDATE_STATUS)
-
+clean-libk:
+	rm -f $(LIBK_DST) $(LIBK_OBJS)
+clean-libc:
+	rm -f $(LIBC_DST) $(LIBC_OBJS)
 $(TARGETS) $(XPREFIX) $(SYSROOT) $(XBUILD_GCC) $(XBUILD_BINUTILS):
 	mkdir -p $@
 
@@ -160,43 +170,49 @@ $(BQos_DST_DIR)/%.o : $(BQos_S_SRC_DIR)/%.s | $(XAS)
 $(BQos_BOOT_KERNEL): $(BQos_OBJS) $(LIBK_DST) | $(linker.ld)
 	mkdir -p $(@D)
 	$(XGPP) $(BQos_KERNEL_LINK_FLAGS) -o $@ $^
+	$(UPDATE_STATUS)
 
 run-BQos-KERNEL: $(BQos_BOOT_KERNEL)
 	qemu-system-i386 -kernel $<
 
-
+run-BQos-iso: $(BQos_ISO)
+	qemu-system-i386 -cdrom $(BQos_ISO)
+	
 clean-BQos-OBJS:
 	rm -f $(BQos_OBJS)
+	$(UPDATE_STATUS)
 clean-BQos-KERNELS:
 	rm -f $(BQos_BOOT_KERNEL)
+	$(UPDATE_STATUS)
 clean-BQos: clean-BQos-OBJS clean-BQos-KERNELS
+	$(UPDATE_STATUS)
 XALL_PHONY += clean-BQos-OBJS clean-BQos-KERNELS clean-BQos
+clean: clean-BQos clean-libc clean-libk
 #XALL_DEFAULTS += $(BQos_BOOT_KERNEL)
 ###############################################################################
 
-$(BQos_ISO): $(BQos_BOOT_GRUB_CONFIG)
+BQos-iso $(BQos_ISO): $(BQos_BOOT_GRUB_CONFIG)
 	grub-mkrescue -o $@ $(SYSROOT)
 
 $(BQos_BOOT_GRUB_CONFIG): $(BQos_BOOT_KERNEL)
 	@echo "########## $(@) ############"
 	mkdir -p $(@D)
-	echo "menuentry \"Operating System\" {\n  multiboot $(BQos_BOOT_KERNEL)\n }\n" >> $(BQos_BOOT_GRUB_CONFIG)
+	echo "menuentry \"Operating System\" {\n  multiboot $(BQos_BOOT_KERNEL:$(SYSROOT)%=%)\n }\n" > $(BQos_BOOT_GRUB_CONFIG)
+	$(UPDATE_STATUS)
+	
 XALL_DEFAULTS += $(BQos_ISO)
 include STATUS.mk
-
+include $(XALL_DS)
 update-status-svg: 
 	@rm -f make.status.svg
 	@make -nd | \
 	tee make.Bnd | \
 	make2graph |\
 	unflatten |\
-	sed "s@$(SYSROOT)@S@g" |\
-	sed "s@$(XPREFIX)@X@g" |\
-	sed "s@$(PROJECT_SRC_DIR)@./@g" |\
-	sed "s@$(HOME)/Work/@@g" |\
 	tee make.status.dot |\
 	dot -y -T svg -o make.status.svg
-	@cat make.Bnd | makefile2graph  -f L
+	@cat make.Bnd | make2graph  -fx > make.status.gexf
+
 XALL_PHONY+=update-status-svg
 XALL_SUFFIXES+= .svg
 
