@@ -11,58 +11,24 @@ The goal is to learn.  I've programmed a lot; but rarely in C or C++.  This will
 My current implementation goals are:
 
 # Status
-* [~] Boot
-  * [x] i386 "P/S 2"
-  * [ ] ARM "RaspberryPie 3B+"
-* [ ] "TTY"
-  * [~] V.G.A./E.G.A. TTY
-  * [X] "Hello World"
-  * [ ] Keyboard input
-* [~] Cross compiler
-  * [~] Make-based cross compiler builder
-  * [~] "libc"
-* [ ] Automated tests
+
+Barely boots.
 
 ## Upcoming:
 
-* Interrupts
-* Drivers
-  * Mouse
-  * Keyboard
-* Multitasking
-* 
+More functions.
 
 # How to build:
-
-I've tried to automate everything.
-
-1) Dependencies.
-
-First ensure that the system has the dependencies intalled: (I'm assuming Ubuntu; raise an issue if another linux distro is desired. I'll collaborate.)
-
-        someone@somewhere:~/.../BQos$ make build-deps
-
-2) Cross-built GPP/GCC/GAS
-
-This will take a while as it's downloading and compiling a compiler for the operating system; as well as all the utilities the compiler will need.  This step is important because it will being the process of building the `sysroot` directory.
-
-        someone@somewhere:~/.../BQos$ make cb-all
-
-3) Build the system.
-
-The default make target will build the iso image that can be run by an emulator or real hardware.
 
         someone@somewhere:~/.../BQos$ make
 
 ### Running the OS
 
-Running `run-deps` will ensure that all qemu deps are installed (again assuming Ubuntu.)
+        someone@somewhere:~/.../BQos$ make run-BQos-KERNEL
 
-        someone@somewhere:~/.../BQos$ make run-deps
+Or one can run:
 
-Then one can run
-
-        someone@somewhere:~/.../BQos$ make run-iso
+        someone@somewhere:~/.../BQos$ make run-BQos-iso
 
 which will run the operating system. Which one should probably not do. As I have no idea what will happen.
 
