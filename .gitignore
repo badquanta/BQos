@@ -6,15 +6,6 @@ X/
 .project
 .settings/
 .vscode/
-log.txt
-graph
-make.Bdn
-make.dot
-Makefile.svg
 logs/*
-make.status.*
-BQos
-make.Bnd
-MAKE.BND.LOG
-make2.dot
 config.status
+CONFIG.mk

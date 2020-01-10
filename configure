@@ -1,44 +1,93 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -iS bash --noprofile --norc
 
 args=("$@")
 
 # get length of an array
 argc=${#args[@]}
 
-ARCH="i386-BQos"
-PREFIX=../PREFIX
+ARCH=
+PREFIX=
 SYSROOT=
-function sysroot() {
-    if [ !$SYSROOT ]; then
-        SYSROOT="$PREFIX/$ARCH/sysroot"
-    fi
-}
+BINDIR=
+
+function defaults() {
+    
+    if [ -z $BRAND ];           then BRAND="BQos";                          fi
+    export BRAND
+    if [ -z $ARCH ];            then ARCH="i386-BQos";                      fi
+    export ARCH
+    if [ -z $PREFIX ];          then PREFIX="../PREFIX";                    fi
+    export PREFIX
+    if [ -z $EXECPREFIX ];      then EXECPREFIX="$PREFIX/usr/local";        fi
+    export EXECPREFIX
+    if [ -z $SYSROOT ];         then SYSROOT="$PREFIX/$ARCH/sysroot";       fi
+    export SYSROOT
+    if [ -z $BINDIR ];          then BINDIR="$PREFIX/bin";                  fi
+    export BINDIR
+    if [ -z $SBINDIR ];         then SBINDIR="$PREFIX/sbin";                fi
+    export SBINDIR
+    if [ -z $LIBEXECDIR ];      then LIBEXECDIR="$EXECPREFIX/libexec";      fi
+    export LIBEXECDIR
+    if [ -z $DATAROOTDIR ];     then DATAROOTDIR="$PREFIX/share/$BRAND";    fi
+    export DATAROOTDIR
+    if [ -z $DATADIR ];         then DATADIR="$DATAROOTDIR";                fi
+    export DATADIR
+    if [ -z $SYSCONFDIR ];      then SYSCONFDIR="$PREFIX/etc/$BRAND";       fi
+    export SYSCONFDIR
+    if [ -z $SHAREDSTATEDIR ];  then SHAREDSTATEDIR="$PREFIX/com/$BRAND";   fi
+    export SHAREDSTATEDIR
+    if [ -z $LOCALSTATEDIR  ];  then LOCALSTATEDIR="$PREFIX/var/$BRAND";    fi
+    export LOCALSTATEDIR    
+    if [ -z $RUNSTATEDIR    ];  then RUNSTATEDIR="$LOCALSTATEDIR/run";      fi
+    export RUNSTATEDIR
+    if [ -z $INCLUDEDIR     ];  then INCLUDEDIR="$PREFIX/include";          fi
+    export INCLUDEDIR
+    #if [ -z $OLDINCLUDEDIR  ];  then OLDINCLUDEDIR=
+    export OLDINCLUDEDIR
+    if [ -z $DOCDIR         ];  then DOCDIR="$DATAROOTDIR/doc/BQ";          fi
+    export DOCDIR
+    if [ -z $INFODIR        ];  then INFODIR="$DATAROOTDIR/info/BQ";        fi
+    export INFODIR
+
+    echo "EXPORTS:"
+    export -p
+    cat CONFIG.in | envsubst | more
+}   
 # use for loop read all nameservers
 for ((i = 0; i < ${argc}; i++)); do
     arg=${args[$i]}
     next_arg=${args[$i + 1]}
-    ###################################################### VERBOSE
-
-    if [ "$arg" == "--prefix" ]; then
-        PREFIX="$next_arg"
-        i=$i+1
-    fi
-    if [ "$arg" == "--exec-prefix" ]; then
-        exit "Unsupproted option $arg"
-    fi
+    if [ "$arg" == "--prefix" ]; then PREFIX="$next_arg"; i=$i+1;           fi
+    if [ "$arg" == "--exec-prefix" ];then EXECPREFIX="$next_arg"; i=$i+1;   fi
+    if [ "$arg" == "--bindir" ]; then BINDIR="$next_arg"; i=$i+1;           fi
+    if [ "$arg" == "--sbindir" ]; then SBINDIR="$next_arg"; i=$i+1;         fi
+    if [ "$arg" == "--libexecdir" ]; then LIBEXECDIR="$next_arg"; i=$1+1;            fi
+	if [ "$arg" == "--sysconfdir" ]; then SYSCONFDIR="$next_arg"; i=$1+1;            fi
+	if [ "$arg" == "--sharedstatedir" ]; then SHAREDSTATEDIR="$next_arg"; i=$1+1;        fi
+	if [ "$arg" == "--localstatedir" ]; then LOCALSTATEDIR="$next_arg"; i=$1+1;         fi
+	if [ "$arg" == "--runstatedir" ]; then RUNSTATEDIR="$next_arg"; i=$1+1;           fi
+	if [ "$arg" == "--libdir" ]; then LIBDIR="$next_arg"; i=$1+1;                fi
+	if [ "$arg" == "--includedir" ]; then INCLUDEDIR="$next_arg"; i=$1+1;            fi
+	if [ "$arg" == "--oldincludedir" ]; then OLDINCLUDEDIR="$next_arg"; i=$1+1;         fi
+	if [ "$arg" == "--datarootdir" ]; then DATAROOTDIR="$next_arg"; i=$1+1;           fi
+	if [ "$arg" == "--datadir" ]; then DATADIR="$next_arg"; i=$1+1;               fi
+	if [ "$arg" == "--infodir" ]; then INFODIR="$next_arg"; i=$1+1;               fi
+	if [ "$arg" == "--localedir" ]; then LOCALEDIR="$next_arg"; i=$1+1;             fi
+	if [ "$arg" == "--mandir" ]; then MANDIR="$next_arg"; i=$1+1;                fi
+	if [ "$arg" == "--docdir" ]; then DOCDIR="$next_arg"; i=$1+1;                fi
+	if [ "$arg" == "--htmldir" ]; then HTMLDIR="$next_arg"; i=$1+1;               fi
+	if [ "$arg" == "--dvidir" ]; then DVIDIR="$next_arg"; i=$1+1;                fi
+	if [ "$arg" == "--pdfdir" ]; then PDFDIR="$next_arg"; i=$1+1;                fi
+	if [ "$arg" == "--psdir" ]; then PSDIR="$next_arg"; i=$1+1;             fi
+    if [[ "$arg" =~ ^(.+)(\-.+)+$ ]]; then echo "asdfg"; ARCH="$arg"; fi # DO NOT INC $i
 done
-
-PREFIX=$(realpath $PREFIX)
-sysroot;
+defaults;
 
 echo -n "Writing config.status..."
 echo '#!/usr/bin/env bash' >config.status
-echo -n "./configure " >>config.status
-echo -n " $ARCH "
-echo -n " --prefix \"$PREFIX\" "
-echo -n " --sysroot \"$SYSROOT\" "
-
-echo "Done, contents = EOC<<<"
-cat config.status
+echo "./configure $@ " >>config.status
 chmod a+x config.status
-echo "EOC>>>"
+echo "Done."
+
+
+
