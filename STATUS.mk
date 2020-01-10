@@ -30,7 +30,7 @@ status-libc:
 	@./status.sh $(LIBC_BUILD_DIR) LIBK_BUILD_DIR
 	@./status.sh $(LIBK_BUILD_DIR) LIBC_BUILD_DIR
 	@./status.sh $(LIBC_INC_DIR) LIBC_INC_DIR
-	@./status.sh $(LIBC_INC_DST_DIR) LIBC_INC_DST_DIR
+	@./status.sh $(SYS_USR_INC) SYS_USR_INC
 	@./status.sh $(LIBC_DST) LIBC
 	@./status.sh $(LIBK_DST) LIBK
 status-libc-src-c:
@@ -61,6 +61,9 @@ status-BQos:
 	@echo BQos_CPP_SRC_DIR "$(BQos_CPP_SRC_DIR)" 
 	@./status.sh "$(BQos_CPP_SRCS)" BQos_CPP_SRCS
 	@./status.sh "$(BQos_OBJS)" BQos_OBJS
+
+status-BQos-includes:
+	@./status.sh "$(BQos_HPP_DST)" BQos_HPP_DST
 
 status-config:
 	@echo XJOBS: $(XJOBS)
