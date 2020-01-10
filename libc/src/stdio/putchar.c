@@ -21,3 +21,12 @@ int putchar(int ic){
     #endif
     return ic;    
 }
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif
+

@@ -35,3 +35,11 @@ void qsort(void *array, size_t nitems, size_t size, int (*cmp)(void*,void*)) {
       sort((char*)array, size, cmp, 0, (nitems-1)*size);
    }
 }
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif

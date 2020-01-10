@@ -16,3 +16,11 @@ void abort(void){
     }
     __builtin_unreachable();
 }
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif

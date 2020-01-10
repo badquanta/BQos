@@ -8,3 +8,11 @@ void *memset(void *bufptr, int value, size_t size){
     }
     return bufptr;
 }
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif

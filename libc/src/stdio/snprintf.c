@@ -78,3 +78,12 @@ int snprintf(char *aBuffer, size_t aNumBytes, char *aFormat, ...){
   *bufferPointer='\0';
   return written;
 };
+
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif

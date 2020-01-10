@@ -13,3 +13,11 @@ void* malloc(size_t aSize){
         // TODO: Handle user space malloc.
     #endif
 }
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif

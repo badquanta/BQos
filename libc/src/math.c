@@ -9,3 +9,12 @@ double const four_over_pi=4.0/pi;		// 4/pi, used in tan routines
 double const qtrpi=pi/4.0;			// pi/4.0, used in tan routines
 double const sixthpi=pi/6.0;			// pi/6.0, used in atan routines
 double const twelfthpi=pi/12.0;			// pi/12.0, used in atan routines
+
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif

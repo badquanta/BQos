@@ -93,7 +93,8 @@ XAS				:= $(XPATH_DIR)/$(XARCH)-as
 XBINUTILS_TARGETS:= $(XAR) $(XAS)
 XGPP			:= $(XPATH_DIR)/$(XARCH)-g++
 XGCC			:= $(XPATH_DIR)/$(XARCH)-gcc
-XGCC_TARGETS	:= $(XGPP) $(XGCC)
+XGCC_TARGETS	:= $(XGCC)
+XGPP_TARGETS    := $(XGPP)
 ############################################################# $(XSRC_DIR)/<xyz>/Makefile
 XBINUTILS_MAKEFILE := $(XBUILD_BINUTILS)/Makefile
 XGCC_MAKEFILE := $(XBUILD_GCC)/Makefile
@@ -127,7 +128,7 @@ XBINUTILS_MAKE_TARGET 		:= $(TARGETS)/xbinutils-make.tag
 XBINUTILS_INSTALL_TARGET	:= $(TARGETS)/xbinutils-install.tag
 XGCC_CONFIGURE_TARGET		:= $(TARGETS)/xgcc-configure.tag
 XGCC_MAKE_INSTALL_TARGET	:= $(TARGETS)/xgcc-make-install.tag
-XSTDCPP_MAKE_INSTALL_TARGET 		:= $(TARGETS)/stdcpp-make-install.tag
+XGPP_MAKE_INSTALL_TARGET 		:= $(TARGETS)/xgpp-make-install.tag
 XALL_SUFFIXES				+= .tag
 ############################################# *.c
 LIBC_C_SRCS			:= $(wildcard $(LIBC_SRC_DIR)/*.c)
@@ -185,7 +186,7 @@ XALL_SUFFIXES				+= .iso
 BQos_BOOT_GRUB_CONFIG := $(BQos_BOOT_GRUB)/grub.cfg
 ################################################################### MACROS
 # Some macros used for debugging/output/status.
-UPDATE_STATUS := ##make update-status-svg
+UPDATE_STATUS := make update-status-svg
 REDIRECT := #| cat 2>&1 >>
 ## ^ OR v  ##
 #REDIRECT := 2>&1 | tee --output-error=warn -a

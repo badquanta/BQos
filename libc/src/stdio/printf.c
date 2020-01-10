@@ -85,3 +85,12 @@ int printf(const char* format, ...) {
   return written;
 
 }
+
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif

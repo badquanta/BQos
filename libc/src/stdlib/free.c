@@ -13,3 +13,11 @@ void free(void* aPointer){
         // TODO: Handle user space free.
     #endif
 }
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif

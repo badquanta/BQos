@@ -8,3 +8,11 @@ char* strcpy(char*aDestination, const char *aSource){
     memcpy(aDestination,aSource,length);
     return aDestination;
 }
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif

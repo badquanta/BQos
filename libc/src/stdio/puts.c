@@ -4,3 +4,11 @@
 int puts(const char* string){
     return printf("%s\n",string);
 }
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif

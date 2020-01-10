@@ -60,3 +60,12 @@ double cos_73(double x){
 double cos(double v){
     return cos_73(v);
 }
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif
+

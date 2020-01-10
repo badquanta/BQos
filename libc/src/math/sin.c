@@ -4,3 +4,11 @@
 double sin(double x){
     return cos(halfpi-x);
 }
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif

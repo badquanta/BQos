@@ -4,3 +4,11 @@ int atoi(const char*str){
     //TODO: ATOI
     return 0;
 }
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif

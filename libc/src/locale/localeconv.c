@@ -10,3 +10,12 @@ const lconv BQlocale={".",",","\003",
 lconv *localeconv(void){
     return (lconv*)&BQlocale;
 }
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif
+

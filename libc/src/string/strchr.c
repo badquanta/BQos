@@ -15,3 +15,12 @@ char * strchr (const char *aString, int aCharacter){
         return NULL;
     }
 }
+
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif

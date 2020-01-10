@@ -13,3 +13,12 @@ int memcmp(const void* aptr, const void *bptr, size_t size){
     }
     return 0;
 }
+
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif

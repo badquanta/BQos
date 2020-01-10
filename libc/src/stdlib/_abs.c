@@ -29,3 +29,11 @@ long long llabs(long long x){
 intmax_t imaxabs(intmax_t x){
     return abs64(x);
 }
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif

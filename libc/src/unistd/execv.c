@@ -6,3 +6,12 @@
 int          execv(const char * aPath, char *const aArgs[]){
     // TODO: process exec.
 }
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif
+

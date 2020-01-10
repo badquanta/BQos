@@ -8,3 +8,11 @@ void *memcpy(void *dstptr, const void* srcptr, size_t size){
     }
     return dstptr;
 }
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif

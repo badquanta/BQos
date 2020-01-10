@@ -7,3 +7,13 @@ int ispunct(int c){
         (C_PUNCT3_START <= c <= C_PUNCT3_END) ||
         (C_PUNCT4_START <= c <= C_PUNCT4_END);
 }
+
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif
+

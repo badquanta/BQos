@@ -9,3 +9,11 @@ size_t strlen(const char* str){
     }
     return len;
 }
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif

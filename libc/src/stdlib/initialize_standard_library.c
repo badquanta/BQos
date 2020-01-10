@@ -2,11 +2,10 @@
 /**
  * @todo http://www.cplusplus.com/reference/cstdlib/atexit/
  **/
-int atexit(void(*func)(void)){
+void initialize_standard_library(){
     //TODO IMPLEMENT ME:
-    return 0;
+    
 }
-
 
 #ifdef TEST
 

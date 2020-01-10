@@ -6,3 +6,12 @@
 int          execvp(const char * aPath, char *const aArguments[]){
     //TODO Execvp    
 }
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif
+

@@ -14,3 +14,12 @@ int fprintf(FILE *file, const char*c,...){
     #endif
     return 0;    
 }
+
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif

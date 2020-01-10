@@ -10,3 +10,11 @@ int rand(){
     seeds[count%SEED_COUNT]=current;
     return current; // TODO: Rand()
 }
+
+
+#ifdef TEST
+
+int main(){
+    return 1;
+}
+#endif

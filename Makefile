@@ -2,9 +2,11 @@ default: all
 
 include CONFIG.mk
 
+Makefile: CONFIG.mk
 
-$(XBINUTILS_SRC_DIR):
-	$(GIT_SHALLOW) $(BINUTILS_GIT_BRANCH)  $(BINUTILS_GIT) $(XBINUTILS_SRC_DIR) >> $(TARGETS)/build.log 2>&1
+$(XBINUTILS_SRC_DIR): CONFIG.mk
+	$(GIT_SHALLOW) $(BINUTILS_GIT_BRANCH)  $(BINUTILS_GIT) $(XBINUTILS_SRC_DIR) >> $(TARGETS)/build.log 2>&1 || cd $(XBINUTILS_SRC_DIR) && git pull
+	touch $(XBINUTILS_SRC_DIR)
 	$(UPDATE_STATUS)
 
 xbinutils-configure $(XBINUTILS_CONFIGURE_TARGET) $(XBINUTILS_MAKEFILE): $(XBINUTILS_SRC_DIR)  
@@ -28,6 +30,7 @@ xbinutils-install $(XBINUTILS_INSTALL_TARGET): $(XBINUTILS_MAKE_TARGET)
 $(XBINUTILS_TARGETS): $(XBINUTILS_INSTALL_TARGET)
 
 $(XGCC_TARGETS): $(XGCC_MAKE_INSTALL_TARGET)
+$(XGPP_TARGETS): $(XGPP_MAKE_INSTALL_TARGET)
 
 $(XGCC_SRC_DIR): 
 	$(GIT_SHALLOW) $(GCC_BRANCH) $(GCC_GIT) $(XGCC_SRC_DIR) >> $(TARGETS)/build.log 2>&1
@@ -51,11 +54,11 @@ xgcc-make-install $(XGCC_MAKE_INSTALL_TARGET):$(XGCC_MAKEFILE)
 	touch $(XGCC_MAKE_INSTALL_TARGET)
 	@echo "XGCC Built."
 
-xstdcpp-make-install  $(XSTDCPP_MAKE_INSTALL_TARGET): $(XGCC_MAKE_INSTALL_TARGET) $(LIBC_DST)
-	rm -f $(XSTDCPP_MAKE_INSTALL_TARGET)
+xstdcpp-make-install  $(XGPP_MAKE_INSTALL_TARGET): $(LIBC_DST)
+	rm -f $(XGPP_MAKE_INSTALL_TARGET)
 	cd $(XBUILD_GCC) && make all-target-libstdc++-v3 -j $(XJOBS) >> $(TARGETS)/build.log 2>&1
-	cd $(XBUILD_GCC) && make install-target-libstdc++-v3 #$(REDIRECT)$(XSTDCPP_MAKE_INSTALL_TARGET)	>> $(TARGETS)/build.log 2>&1
-	touch $(XSTDCPP_MAKE_INSTALL_TARGET)
+	cd $(XBUILD_GCC) && make install-target-libstdc++-v3 #$(REDIRECT)$(XGPP_MAKE_INSTALL_TARGET)	>> $(TARGETS)/build.log 2>&1
+	touch $(XGPP_MAKE_INSTALL_TARGET)
 	$(UPDATE_STATUS)
 	@echo "XGCC Installed."
 
@@ -94,17 +97,19 @@ $(LIBC_TST_DIR)/%.t: $(LIBC_SRC_DIR)/%.c | $(XGCC)
 ##### how to make libc test executables
 $(LIBC_TST_DIR)/%_TEST: $(LIBC_SRC_DIR)/%.c $(LIBC_DST) | $(XGCC)
 	mkdir -p $(@D)
-	$(XGCC) $(LIBC_TEST_FLAGS) -DTEST $< $(LIBC_DST)
+	$(XGCC) $(LIBC_TEST_FLAGS) -DTEST $< $(LIBC_DST) -o $@
+	$@
 
 libc-tests: $(LIBC_TESTS)
-	@echo "########## CHECK ############"
-	-@rc=0; count=0; \
-	for file in $(LIBC_TESTS); do \
-		echo "TST		$$file"; ./$$file; \
-		rc=`expr $$rc +$$?`; count=`expr $$count + 1`; \
-		done; \
-		echo; echo "Test executed: $$count		Tests failed: $$rc"
-#XALL_DEFAULTS += libc-tests	
+	@#@echo "########## CHECK ############"
+	@#-@rc=0; count=0; \
+	#for file in $(LIBC_TESTS); do \
+	#	echo "TST		$$file"; ./$$file; \
+	#	rc=`expr $$rc +$$?`; count=`expr $$count + 1`; \
+	#	done; \
+	#	echo; echo "Test executed: $$count		Tests failed: $$rc"
+
+XALL_DEFAULTS += libc-tests	
 ##### how to make sysroot libc objects
 $(LIBC_BUILD_DIR)/%.o:  $(LIBC_SRC_DIR)/%.s |  $(XAS)
 	mkdir -p $(@D)
@@ -144,7 +149,7 @@ clean-all:
 XALL_PHONY += clean-all
 
 # src/**.cpp -> *.o
-$(BQos_DST_DIR)/%.o : $(BQos_CPP_SRC_DIR)/%.cpp | $(XGPP) $(XSTDCPP_MAKE_INSTALL_TARGET)
+$(BQos_DST_DIR)/%.o : $(BQos_CPP_SRC_DIR)/%.cpp | $(XGPP) 
 	mkdir -p $(@D)
 	$(XGPP) $(BQos_GCFLAGS) -o $@ -c $<
 # src/**.s -> *.o
@@ -180,8 +185,8 @@ XALL_DEFAULTS += $(BQos_ISO)
 include STATUS.mk
 
 update-status-svg: 
-	rm -f make.status.svg
-	make -nd | \
+	@rm -f make.status.svg
+	@make -nd | \
 	tee make.Bnd | \
 	make2graph |\
 	unflatten |\
@@ -190,8 +195,8 @@ update-status-svg:
 	sed "s@$(PROJECT_SRC_DIR)@./@g" |\
 	sed "s@$(HOME)/Work/@@g" |\
 	tee make.status.dot |\
-	dot -T svg -o make.status.svg
-	cat make.Bnd | makefile2graph  -f L
+	dot -y -T svg -o make.status.svg
+	@cat make.Bnd | makefile2graph  -f L
 XALL_PHONY+=update-status-svg
 XALL_SUFFIXES+= .svg
 
