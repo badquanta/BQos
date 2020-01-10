@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+args=("$@")
+
+# get length of an array
+argc=${#args[@]}
+
+ARCH="i386-BQos"
+PREFIX=../PREFIX
+SYSROOT=
+function sysroot() {
+    if [ !$SYSROOT ]; then
+        SYSROOT="$PREFIX/$ARCH/sysroot"
+    fi
+}
+# use for loop read all nameservers
+for ((i = 0; i < ${argc}; i++)); do
+    arg=${args[$i]}
+    next_arg=${args[$i + 1]}
+    ###################################################### VERBOSE
+
+    if [ "$arg" == "--prefix" ]; then
+        PREFIX="$next_arg"
+        i=$i+1
+    fi
+    if [ "$arg" == "--exec-prefix" ]; then
+        exit "Unsupproted option $arg"
+    fi
+done
+
+PREFIX=$(realpath $PREFIX)
+sysroot;
+
+echo -n "Writing config.status..."
+echo '#!/usr/bin/env bash' >config.status
+echo -n "./configure " >>config.status
+echo -n " $ARCH "
+echo -n " --prefix \"$PREFIX\" "
+echo -n " --sysroot \"$SYSROOT\" "
+
+echo "Done, contents = EOC<<<"
+cat config.status
+chmod a+x config.status
+echo "EOC>>>"
