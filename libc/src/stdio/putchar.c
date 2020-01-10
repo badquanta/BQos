@@ -9,10 +9,10 @@
 int putchar(int ic){
     #if defined(__is_libk)
         char c = (char)ic;
-        hardware* active = hardware::get_active();
+        BQos::hardware* active = BQos::hardware::get_active();
         if(active!=NULL){
-            a_tty* tty = active->get_tty(0);
-            if(a_tty!=NULL){
+        	BQos::a_tty* tty = active->tty(0);
+            if(tty!=NULL){
                 tty->put(c);
             }
         }

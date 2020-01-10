@@ -8,7 +8,7 @@
 
 void free(void* aPointer){
     #if defined(__is_libk)
-        return Memory::free(aPointer);
+        return BQos::Memory::free(aPointer);
     #else
         // TODO: Handle user space free.
     #endif

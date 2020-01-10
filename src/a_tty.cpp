@@ -124,7 +124,7 @@ bool a_tty::valid_index(int idx){
 }
 /** Base implementation will handle control characters. **/
 int a_tty::put(char c){
-    if((c<0x20) && line_discipline[c]!=NULL){
+    if((c<(char)0x20) && line_discipline[c]!=NULL){
         return line_discipline[c](this);
     } else {
         return cursor_move(put_at(cursor_index(),c));

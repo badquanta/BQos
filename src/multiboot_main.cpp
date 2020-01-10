@@ -2,6 +2,7 @@
 
 #include <BQos/ARCH/i386.hpp>
 #include <BQos/Memory.hpp>
+#include <stdio.h>
 static uint8_t bootMem[1024]{0};
 extern "C" {
 void multiboot_main(multiboot_info_t* info, uint32_t magic){
@@ -12,7 +13,7 @@ void multiboot_main(multiboot_info_t* info, uint32_t magic){
     BQos::a_tty* out = hw.tty(0);
     out->put("Hello World.\n");
     out->put("New line.");
-
+    printf("Testing...\n");
 }
 }
 

@@ -5,12 +5,12 @@
 //}
 
 char * strchr (const char *aString, int aCharacter){
-    char* pointer = aString;
+    const char* pointer = aString;
     while(*pointer!=aCharacter&&*pointer!='\0'){
         ++pointer;
     }
     if(*pointer==aCharacter){
-        return pointer;
+        return (char*)pointer;
     } else {
         return NULL;
     }
