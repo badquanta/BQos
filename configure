@@ -11,7 +11,8 @@ SYSROOT=
 BINDIR=
 
 function defaults() {
-    
+    if [ -z $JOBS ];			then JOBS=`nproc`;							fi
+    export JOBS;
     if [ -z $BRAND ];           then BRAND="BQos";                          fi
     export BRAND
     if [ -z $ARCH ];            then ARCH="i386-BQos";                      fi
@@ -49,39 +50,47 @@ function defaults() {
     if [ -z $INFODIR        ];  then INFODIR="$DATAROOTDIR/info/BQ";        fi
     export INFODIR
 
-    echo "EXPORTS:"
-    export -p
-    cat CONFIG.in | envsubst | more
-}   
-# use for loop read all nameservers
+    
+}
+# use for loop read all args
 for ((i = 0; i < ${argc}; i++)); do
     arg=${args[$i]}
     next_arg=${args[$i + 1]}
-    if [ "$arg" == "--prefix" ]; then PREFIX="$next_arg"; i=$i+1;           fi
-    if [ "$arg" == "--exec-prefix" ];then EXECPREFIX="$next_arg"; i=$i+1;   fi
-    if [ "$arg" == "--bindir" ]; then BINDIR="$next_arg"; i=$i+1;           fi
-    if [ "$arg" == "--sbindir" ]; then SBINDIR="$next_arg"; i=$i+1;         fi
-    if [ "$arg" == "--libexecdir" ]; then LIBEXECDIR="$next_arg"; i=$1+1;            fi
-	if [ "$arg" == "--sysconfdir" ]; then SYSCONFDIR="$next_arg"; i=$1+1;            fi
-	if [ "$arg" == "--sharedstatedir" ]; then SHAREDSTATEDIR="$next_arg"; i=$1+1;        fi
-	if [ "$arg" == "--localstatedir" ]; then LOCALSTATEDIR="$next_arg"; i=$1+1;         fi
-	if [ "$arg" == "--runstatedir" ]; then RUNSTATEDIR="$next_arg"; i=$1+1;           fi
-	if [ "$arg" == "--libdir" ]; then LIBDIR="$next_arg"; i=$1+1;                fi
-	if [ "$arg" == "--includedir" ]; then INCLUDEDIR="$next_arg"; i=$1+1;            fi
-	if [ "$arg" == "--oldincludedir" ]; then OLDINCLUDEDIR="$next_arg"; i=$1+1;         fi
-	if [ "$arg" == "--datarootdir" ]; then DATAROOTDIR="$next_arg"; i=$1+1;           fi
-	if [ "$arg" == "--datadir" ]; then DATADIR="$next_arg"; i=$1+1;               fi
-	if [ "$arg" == "--infodir" ]; then INFODIR="$next_arg"; i=$1+1;               fi
-	if [ "$arg" == "--localedir" ]; then LOCALEDIR="$next_arg"; i=$1+1;             fi
-	if [ "$arg" == "--mandir" ]; then MANDIR="$next_arg"; i=$1+1;                fi
-	if [ "$arg" == "--docdir" ]; then DOCDIR="$next_arg"; i=$1+1;                fi
-	if [ "$arg" == "--htmldir" ]; then HTMLDIR="$next_arg"; i=$1+1;               fi
-	if [ "$arg" == "--dvidir" ]; then DVIDIR="$next_arg"; i=$1+1;                fi
-	if [ "$arg" == "--pdfdir" ]; then PDFDIR="$next_arg"; i=$1+1;                fi
-	if [ "$arg" == "--psdir" ]; then PSDIR="$next_arg"; i=$1+1;             fi
-    if [[ "$arg" =~ ^(.+)(\-.+)+$ ]]; then echo "asdfg"; ARCH="$arg"; fi # DO NOT INC $i
+    if [ "$arg" == "--prefix" ]; then PREFIX="$next_arg"; i=$i+1; continue ;          fi
+    if [ "$arg" == "--exec-prefix" ];then EXECPREFIX="$next_arg"; i=$i+1; continue ;  fi
+    if [ "$arg" == "--bindir" ]; then BINDIR="$next_arg"; i=$i+1; continue ;          fi
+    if [ "$arg" == "--sbindir" ]; then SBINDIR="$next_arg"; i=$i+1; continue ;        fi
+    if [ "$arg" == "--libexecdir" ]; then LIBEXECDIR="$next_arg"; i=$i+1; continue ;           fi
+	if [ "$arg" == "--sysconfdir" ]; then SYSCONFDIR="$next_arg"; i=$i+1; continue ;           fi
+	if [ "$arg" == "--sharedstatedir" ]; then SHAREDSTATEDIR="$next_arg"; i=$i+1; continue ;       fi
+	if [ "$arg" == "--localstatedir" ]; then LOCALSTATEDIR="$next_arg"; i=$i+1; continue ;        fi
+	if [ "$arg" == "--runstatedir" ]; then RUNSTATEDIR="$next_arg"; i=$i+1; continue ;          fi
+	if [ "$arg" == "--libdir" ]; then LIBDIR="$next_arg"; i=$i+1; continue ;               fi
+	if [ "$arg" == "--includedir" ]; then INCLUDEDIR="$next_arg"; i=$i+1; continue ;           fi
+	if [ "$arg" == "--oldincludedir" ]; then OLDINCLUDEDIR="$next_arg"; i=$i+1; continue ;        fi
+	if [ "$arg" == "--datarootdir" ]; then DATAROOTDIR="$next_arg"; i=$i+1; continue ;          fi
+	if [ "$arg" == "--datadir" ]; then DATADIR="$next_arg"; i=$i+1; continue ;              fi
+	if [ "$arg" == "--infodir" ]; then INFODIR="$next_arg"; i=$i+1; continue ;              fi
+	if [ "$arg" == "--localedir" ]; then LOCALEDIR="$next_arg"; i=$i+1; continue ;            fi
+	if [ "$arg" == "--mandir" ]; then MANDIR="$next_arg"; i=$i+1; continue ;               fi
+	if [ "$arg" == "--docdir" ]; then DOCDIR="$next_arg"; i=$i+1; continue ;               fi
+	if [ "$arg" == "--htmldir" ]; then HTMLDIR="$next_arg"; i=$i+1; continue ;              fi
+	if [ "$arg" == "--dvidir" ]; then DVIDIR="$next_arg"; i=$i+1; continue ;               fi
+	if [ "$arg" == "--pdfdir" ]; then PDFDIR="$next_arg"; i=$i+1; continue ;               fi
+	if [ "$arg" == "--psdir" ]; then PSDIR="$next_arg"; i=$i+1; continue ;            fi
+	if [ "$arg" == "--jobs"  ]; then JOBS="$next_arg";  i=$i+1; continue ; fi 
+	if [[ "$arg" =~ ^\-\-.*$ ]]; then
+		echo "UNSUPPORTED ARG: $arg"
+		exit 127
+	fi
+    if [[ "$arg" =~ ^(.+)(\-.+)+$ ]]; then echo "asdfg"; ARCH="$arg"; continue ;fi # DO NOT INC $i
 done
 defaults;
+echo "EXPORTS:"
+export -p
+echo -n "Creating CONFIG.mk"
+cat CONFIG.mk.IN | envsubst > CONFIG.mk
+echo "Done."
 
 echo -n "Writing config.status..."
 echo '#!/usr/bin/env bash' >config.status

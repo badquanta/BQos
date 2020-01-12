@@ -10,7 +10,7 @@ x86_32::~x86_32(){
 
 }
 /** TODO: Current implementation only returns VGA TTY if idx=0; else NULL **/
-BQos::a_tty *x86_32::tty(int idx){
+BQ::a_tty *x86_32::tty(int idx){
     if(idx==0){
         return &_tty;
     } else {

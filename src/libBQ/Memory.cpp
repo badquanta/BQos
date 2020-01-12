@@ -5,9 +5,9 @@
  *      Author: badquanta
  */
 
-#include <BQos/Memory.hpp>
+#include <libBQ/Memory.hpp>
 
-namespace BQos {
+namespace BQ {
 
 MemoryRegion::MemoryRegion(size_t start, size_t size){
   if(size<sizeof(memory_chunk)){
@@ -118,11 +118,11 @@ void Memory::free(void* allocated){
 } /* namespace BQos */
 
 void *operator new(size_t size){
-  return BQos::Memory::malloc(size);
+  return BQ::Memory::malloc(size);
 }
 
 void operator delete(void* allocated){
-  return BQos::Memory::free(allocated);
+  return BQ::Memory::free(allocated);
 }
 
 /** Todo: Right now I'm ignoring the size specified.*/
@@ -130,7 +130,7 @@ void operator delete(void* allocated, size_t){
   // TODO: Should we match the allocated & free sizes?
   // Todo: Should we return only part of the allocated size?
   // Todo: What happens if it tries to delete more than it allocated?
-  return BQos::Memory::free(allocated);
+  return BQ::Memory::free(allocated);
 }
 
 

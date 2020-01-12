@@ -30,7 +30,7 @@ status-libc:
 	@./status.sh $(LIBC_BUILD_DIR) LIBK_BUILD_DIR
 	@./status.sh $(LIBK_BUILD_DIR) LIBC_BUILD_DIR
 	@./status.sh $(LIBC_INC_DIR) LIBC_INC_DIR
-	@./status.sh $(SYS_USR_INC) SYS_USR_INC
+	@./status.sh $(SYS_INC) SYS_INC
 	@./status.sh $(LIBC_DST) LIBC
 	@./status.sh $(LIBK_DST) LIBK
 status-libc-src-c:
@@ -66,16 +66,16 @@ status-BQos-includes:
 	@./status.sh "$(BQos_HPP_DST)" BQos_HPP_DST
 
 status-config:
-	@echo XJOBS: $(XJOBS)
+	@echo JOBS: $(JOBS)
 	@echo PATH: $$PATH
-	@echo "PROJECT_NAME:" $(PROJECT_NAME)
-	@echo PROJECT_SRC_DIR: $(PROJECT_SRC_DIR)
-	@echo XPREFIX: $(XPREFIX)
+	@echo "BRAND:" $(BRAND)
+	@echo REPO_DIR: $(REPO_DIR)
+	@echo PREFIX: $(PREFIX)
 	@echo SYSROOT: $(SYSROOT)
-	@echo XPREFIX: $(XPREFIX)
-	@echo XPATH_DIR: $(XPATH_DIR)
+	@echo PREFIX: $(PREFIX)
+	@echo BINDIR: $(BINDIR)
 	@echo XGCC_SRC_DIR: $(XGCC_SRC_DIR)
-	@echo XARCH: $(XARCH)
+	@echo ARCH: $(ARCH)
 	@echo XAS: $(XAS)
 	@echo XGCC: $(XGCC)
 	@echo "XG++:" $(XGPP)

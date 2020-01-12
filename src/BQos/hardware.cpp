@@ -16,7 +16,7 @@ hardware::~hardware(){
         // on second thought nothing should be alive at this point.
     }
 }
-a_tty *hardware::tty(int){
+BQ::a_tty *hardware::tty(int){
 	return NULL;
 }
 

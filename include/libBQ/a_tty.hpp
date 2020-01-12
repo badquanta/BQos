@@ -1,9 +1,11 @@
 #ifndef BQos_HW_a_tty_hpp
 #define BQos_HW_a_tty_hpp 1
 #include <sys/types.h>
+#include <stddef.h>
+#include <stdint.h>
 #include <libBQ/XY.hpp>
-#include <BQos/ascii_defs.hpp>
-namespace BQos
+#include <libBQ/ascii_defs.hpp>
+namespace BQ
 {
     using namespace BQ;
     class a_tty;
@@ -60,7 +62,7 @@ namespace BQos
         public:virtual int32_xy cursor_position();
         /**
          * @brief attempt to set the position of the tty cursor;
-         * @returns the actuall value of the cursor position after the attempt.
+         * @returns the actual value of the cursor position after the attempt.
          * @note may be ignored
          * @note may be clipped to nearest valid position
          */

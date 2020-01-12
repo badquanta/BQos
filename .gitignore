@@ -9,3 +9,5 @@ X/
 logs/*
 config.status
 CONFIG.mk
+.*project*
+*.svg

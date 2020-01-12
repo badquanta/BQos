@@ -8,7 +8,7 @@
 #ifndef SYSTEM_BQOS_MEMORY_HPP_
 #define SYSTEM_BQOS_MEMORY_HPP_
 #include <sys/types.h>
-namespace BQos {
+namespace BQ {
 /**
  * Individual chunk of managed memory.
  * next prev should be continuous regions

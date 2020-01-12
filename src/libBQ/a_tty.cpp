@@ -1,13 +1,13 @@
-#include <BQos/a_tty.hpp>
+#include <libBQ/a_tty.hpp>
 
-using namespace BQos;
+using namespace BQ;
 
 
 
 /** handle a new line by advancing the cursor position
  * @returns `0`
  ***/
-int BQos::ASCII_LineFeed_handler(a_tty*tty){
+int BQ::ASCII_LineFeed_handler(a_tty*tty){
     tty->cursor_position({
         // Set X to start of line
         0,
@@ -23,7 +23,7 @@ int BQos::ASCII_LineFeed_handler(a_tty*tty){
  * @param tty* A specific tty to control
  * @return int `0`
  */
-int  BQos::ASCII_CarriageReturn_handler(a_tty*tty){
+int  BQ::ASCII_CarriageReturn_handler(a_tty*tty){
     tty->cursor_position({
         // Start of line
         0,

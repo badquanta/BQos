@@ -1,6 +1,6 @@
 #ifndef BQos_HW_VGA_hpp
 #define BQos_HW_VGA_hpp 1
-#include <BQos/a_tty.hpp>
+#include <libBQ/a_tty.hpp>
 /**
  * VGA/EGA Text mode implementation of a TTY
  */
@@ -19,7 +19,7 @@ namespace BQos::HW::VGA
         uint8_t fg:4,bg:4;
     } __attribute__((__packed__));
     /** Simple implementation using the EGA hardware memory address. **/
-    class text_mode:    public BQos::a_tty
+    class text_mode:    public BQ::a_tty
     {
         /** Create a VGA TextMode class.
          * TODO: Make this private/protected/etc and constructed by a driver.
