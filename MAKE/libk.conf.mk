@@ -6,15 +6,16 @@
 # LIBK objects are differentiated from libc objects by the `libk` extenstion
 #	Created on: Jan 11, 2020
 #		Author: badquanta
-include LIBC.mk
-include KERNELS.mk
+include MAKE/libc.conf.mk
+include MAKE/kernels.conf.mk
 
-LIBK_GCFLAGS			:= $(KERNEL_GCFLAGS)
-LIBK_GCFLAGS			:= -D__is_libk
+LIBK_GCFLAGS			:= $(KERNEL_CFLAGS)
+LIBK_GCFLAGS			+= -D__is_libk
 LIBK_DST				:= $(LIBK_BUILD_DIR)/libk.a
 ALL_SUFFIXES			+= .a
 LIBK_OBJS				:= $(LIBC_C_SRCS:$(LIBC_SRC_DIR)/%.c=$(LIBK_BUILD_DIR)/%.libk)
-LIBK_OBJS				+= $(LIBC_S_SRCS:$(LIBC_SRC_DIR)/%.s=$(LIBK_BUILD_DIR)/%.libk)
+# TODO: Right now we just don't include any assembler sources in the kernel Libk?
+#LIBK_OBJS				+= $(LIBC_I386_SRCS:$(LIBC_SRC_DIR)/%.s=$(LIBK_BUILD_DIR)/%.libk)
 ALL_SUFFIXES			+= .libk
 ALL_OBJS				+= $(LIBK_OBJS)
 ALL_CLEAN				+= $(LIBK_OBJS)

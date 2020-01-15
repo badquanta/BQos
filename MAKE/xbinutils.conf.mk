@@ -1,9 +1,9 @@
-include DIRS.mk
+include MAKE/dirs.conf.mk
 BINUTILS_GIT := https://github.com/badquanta/binutils-gdb.git
 BINUTILS_GIT_BRANCH := BQos
 XBINUTILS_SRC_DIR := $(XSRC_DIR)/binutils
 XBUILD_BINUTILS := $(XBUILD_DIR)/binutils
-include CONFIG.mk
+include MAKE/config.mk
 XAR				:= $(BINDIR)/$(ARCH)-ar
 XAS				:= $(BINDIR)/$(ARCH)-as
 XBINUTILS_TARGETS:= $(XAR) $(XAS)

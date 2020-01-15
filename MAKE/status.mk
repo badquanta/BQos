@@ -38,9 +38,9 @@ status-libc-src-c:
 	@./status.sh "$(LIBC_C_SRCS)" 
 	@echo =================== LIBC_C_SRCS end
 status-libc-src-s:
-	@echo =================== LIBC_S_SRCS start
-	@./status.sh "$(LIBC_S_SRCS)"
-	@echo =================== LIBC_S_SRCS end
+	@echo =================== LIBC_I386_SRCS start
+	@./status.sh "$(LIBC_I386_SRCS)"
+	@echo =================== LIBC_I386_SRCS end
 status-libc-src-h:
 	@echo =================== LIBC_H_SRCS start
 	@./status.sh "$(LIBC_H_SRCS)"

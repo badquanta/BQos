@@ -1,10 +1,10 @@
 #LIBBQ.mk
 #	Created on: Jan 11, 2020
 #		Author: badquanta
-include DIRS.mk
-include COMMON.mk
-include ALL.mk
-include KERNELS.mk
+include MAKE/dirs.conf.mk
+include MAKE/common.conf.mk
+include MAKE/all.conf.mk
+include MAKE/kernels.conf.mk
 libBQ_GPPFLAGS			:= $(KERNEL_CFLAGS)
 libBQ_HPP_SRC_DIR		:= $(REPO_DIR)include/libBQ
 libBQ_CPP_SRC_DIR		:= $(REPO_DIR)src/libBQ

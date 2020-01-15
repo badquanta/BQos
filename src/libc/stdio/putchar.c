@@ -11,7 +11,7 @@ int putchar(int ic){
         char c = (char)ic;
         BQos::hardware* active = BQos::hardware::get_active();
         if(active!=NULL){
-        	BQos::a_tty* tty = active->tty(0);
+        	BQ::a_tty* tty = active->tty(0);
             if(tty!=NULL){
                 tty->put(c);
             }

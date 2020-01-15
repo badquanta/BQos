@@ -2,7 +2,7 @@
 # DIRS.mk should define the directories CONFIG.mk doesn't explicitly.#
 ######################################################################
 # Get the current CONFIG##############################################
-include CONFIG.mk #and start adding to it...##########################
+include MAKE/config.mk #and start adding to it...##########################
 ######################################################################
 ######################################################## DIRECTORIES #
 # 	like where is the repository where are working from?

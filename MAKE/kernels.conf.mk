@@ -1,5 +1,5 @@
-include COMMON.mk
-KERNEL_CFLAGS :=	$(PROJECT_CFLAGS) \
+include MAKE/common.conf.mk
+KERNEL_CFLAGS :=	$(CFLAGS) \
 					-fno-leading-underscore \
 					-fcheck-new \
 					-fno-use-cxa-atexit \

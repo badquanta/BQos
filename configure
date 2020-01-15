@@ -89,7 +89,7 @@ defaults;
 echo "EXPORTS:"
 export -p
 echo -n "Creating CONFIG.mk"
-cat CONFIG.mk.IN | envsubst > CONFIG.mk
+cat MAKE/config.in.mk | envsubst > MAKE/config.mk
 echo "Done."
 
 echo -n "Writing config.status..."

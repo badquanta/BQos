@@ -1,4 +1,14 @@
-include LIBC.mk
+status-libc:
+	@echo LIBC_GCFLAGS: $(LIBC_GCFLAGS)
+	$(STATUS) $(LIBC_DST)
+status-libc-objs:
+	$(STATUS) "$(LIBC_OBJS)"
+status-libc-all: status-libc
+	@echo LIBC_GCFLAGS $(LIBC_GCFLAGS)
+	@echo LIBC_GASFLAGS $(LIBC_GASFLAGS)
+	@echo LIBC_SRC_DIR $(LIBC_SRC_DIR)
+	
+include MAKE/libc.conf.mk
 libc-h-dst: $(LIBC_H_DST)
 	@./status.sh "$(LIBC_H_DST)"
 clean-libc-h-dst:
@@ -8,7 +18,7 @@ $(SYS_INC)/%.h : $(LIBC_INC_DIR)/%.h
 	mkdir -p $(@D)
 	cp -fv $< $@
 # LIBC depends on XGCC being installed.
-include XGCC.mk
+include MAKE/xgcc.conf.mk
 $(LIBC_BUILD_DIR)/%.o:  $(LIBC_SRC_DIR)/%.c | $(XGCC) #$(SYS_INC)
 	mkdir -p $(@D)
 	$(XGCC) $(LIBC_GCFLAGS) -c $< -o $@

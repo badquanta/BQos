@@ -1,5 +1,12 @@
 # libk's config...
-include LIBK.mk
+include MAKE/libk.conf.mk
+status-libk:
+	$(STATUS) $(LIBK_DST)
+status-libk-objs:
+	$(STATUS) "$(LIBK_OBJS)"
+status-libk-all: status-libk status-libk-objs
+	
+	@echo LIBK_GCFLAGS $(LIBK_GCFLAGS)
 ##### how to make sysroot libk objects
 $(LIBK_BUILD_DIR)/%.libk $(LIBK_BUILD_DIR)/%.d: $(LIBC_SRC_DIR)/%.c | $(XGCC) #$(SYS_INC)
 	mkdir -p $(@D)
@@ -9,7 +16,7 @@ $(LIBK_BUILD_DIR)/%.libk $(LIBK_BUILD_DIR)/%.d: $(LIBC_SRC_DIR)/%.c | $(XGCC) #$
 ##### how to make sysroot libk objects
 $(LIBK_BUILD_DIR)/%.libk:  $(LIBC_SRC_DIR)/%.s |  $(XAS)
 	mkdir -p $(@D)
-	$(XAS) $(LIBC_GASFLAGS)  $< -o $@
+	$(XAS) $(LIBK_GASFLAGS)  $< -o $@
 	@#$(UPDATE_STATUS)
 
 libk $(LIBK_DST): $(LIBK_OBJS) $(BQos_OBJS) $(XAR)
@@ -18,7 +25,7 @@ libk $(LIBK_DST): $(LIBK_OBJS) $(BQos_OBJS) $(XAR)
 	$(UPDATE_STATUS)	
 	
 ALL_MOSTLYCLEAN += clean-libk-objs
-clean-libk:
+clean-libk: clean-libk-objs
 	$(CLEAN) $(LIBK_DST)
 ALL_CLEAN += clean-libk
 clean-libk-objs:

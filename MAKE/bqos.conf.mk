@@ -1,4 +1,4 @@
-include DIRS.mk
+include MAKE/dirs.conf.mk
 BQos_CPP_SRC_DIR		:= $(REPO_DIR)src
 BQos_S_SRC_DIR			:= $(REPO_DIR)src
 BQos_HPP_SRC_DIR		:= $(REPO_DIR)include/BQos
@@ -6,8 +6,8 @@ BQos_HPP_DST_DIR		:= $(SYSROOT)/usr/include/BQos
 BQos_DST_DIR			:= $(PREFIX)/lib
 BQos_BOOT				:= $(SYSROOT)/boot
 BQos_BOOT_GRUB			:= $(BQos_BOOT)/grub
-#include COMMON.mk
-include KERNELS.mk
+#include MAKE/common.conf.mk
+include MAKE/kernels.conf.mk
 BQos_GCFLAGS				:= $(KERNEL_CFLAGS)
 BQos_GASFLAGS				:= $(PROJECT_GASFLAGS)							
 BQos_KERNEL_LINK_FLAGS		:=	-T linker.ld -m32 -O2 -lgcc -nostdlib -ffreestanding

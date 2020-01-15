@@ -2,8 +2,8 @@
 #	Created on: Jan 11, 2020
 #		Author: badquanta
 ############################################################ *CLEAN*
-include ALL.mk # We'll define some extreme clean scenarios.
-include DIRS.mk
+include MAKE/all.conf.mk # We'll define some extreme clean scenarios.
+include MAKE/dirs.conf.mk
 $(SYS_INC) $(TARGETS):
 	mkdir -p $@
 

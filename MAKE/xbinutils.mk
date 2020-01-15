@@ -1,5 +1,5 @@
-include COMMON.mk
-include XBINUTILS.mk
+include MAKE/common.conf.mk
+include MAKE/xbinutils.conf.mk
 ############################################################################# RULES:
 #	git clone the binutils source
 $(XBINUTILS_SRC_DIR): $(CONFIG_STATUS)

@@ -1,4 +1,4 @@
-include DIRS.mk
+include MAKE/dirs.conf.mk
 # Where do we get the source?
 GCC_GIT := https://github.com/badquanta/gcc.git
 # Which branch?
@@ -7,7 +7,7 @@ GCC_BRANCH := BQos
 XGCC_SRC_DIR := $(XSRC_DIR)/gcc
 # Where does gcc &etc get built?
 XGCC_BUILD_DIR		:= $(XBUILD_DIR)/gcc
-include CONFIG.mk
+include MAKE/config.mk
 # Which cross built g++?
 XGPP			:= $(BINDIR)/$(ARCH)-g++
 # Which cross built gcc?

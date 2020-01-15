@@ -1,16 +1,16 @@
 #include <stdlib.h>
 
 #if defined(__is_libk)
-#include <BQos/Memory.hpp>
+#include <libBQ/Memory.hpp>
 #else
     // TODO:: Handle user space
 #endif
 
-void free(void* aPointer){
+void* malloc(size_t aSize){
     #if defined(__is_libk)
-        return BQos::Memory::free(aPointer);
+        return BQ::Memory::malloc(aSize);
     #else
-        // TODO: Handle user space free.
+        // TODO: Handle user space malloc.
     #endif
 }
 

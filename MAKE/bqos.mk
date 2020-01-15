@@ -1,5 +1,5 @@
-include ALL.mk
-include BQOS.mk
+include MAKE/all.conf.mk
+include MAKE/bqos.conf.mk
 status-bqos-includes:
 	$(STATUS)"$(BQos_HPP_DST)"
 status-bqos-includes-src:
@@ -29,7 +29,7 @@ $(BQos_DST_DIR)/%.o : $(BQos_S_SRC_DIR)/%.s | $(XAS)
 	@mkdir -p $(@D)
 	$(XAS) $(BQos_GASFLAGS) -o $@ $<
 ################################################################################ Boot Kernel/loader
-$(BQos_BOOT_KERNEL): $(BQos_OBJS) $(LIBK_DST) $(libBQ_DST) | $(linker.ld)
+$(BQos_BOOT_KERNEL): $(BQos_OBJS) $(libBQ_DST) | $(linker.ld)
 	mkdir -p $(@D)
 	$(XGPP) $(BQos_KERNEL_LINK_FLAGS) -o $@ $^
 	$(UPDATE_STATUS)

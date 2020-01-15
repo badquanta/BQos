@@ -1,14 +1,14 @@
 # The collections with here we will use
-include ALL.mk 
+include MAKE/all.conf.mk 
 # but each (should) be added too by the following includes
-include dirs.mk
-include xbinutils.mk
-include xgcc.mk
-include libc.mk
-include libk.mk
-include libbq.mk
-include bqos.mk
-include status-all.mk
+include MAKE/dirs.mk
+include MAKE/xbinutils.mk
+include MAKE/xgcc.mk
+include MAKE/libc.mk
+include MAKE/libk.mk
+include MAKE/libbq.mk
+include MAKE/bqos.mk
+include MAKE/status-all.mk
 #####################################################################
 #	Compile the entire program. This should be the default target. This target need not rebuild any documentation files; Info files should normally be included in the distribution, and DVI (and other documentation format) files should be made only when explicitly asked for.
 #	By default, the Make rules should compile and link with ‘-g’, so that executable programs have debugging symbols. Otherwise, you are essentially helpless in the face of a crash, and it is often far from easy to reproduce with a fresh build.

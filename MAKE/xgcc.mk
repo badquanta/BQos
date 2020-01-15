@@ -1,5 +1,5 @@
-include XGCC.mk
-include LIBC.mk
+include MAKE/xgcc.conf.mk
+include MAKE/libc.conf.mk
 #xgcc.mk
 #	Created on: Jan 11, 2020
 #		Author: badquanta
