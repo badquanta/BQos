@@ -39,7 +39,7 @@ GIT_SHALLOW		= git clone --depth 1 --single-branch --branch
 CLEAN			= - rm -frv
 REACHED 		= @ date >>  
 STATUS			= @./scripts/status.sh 
-STATUSVG		= ./scripts/status.svg.sh 
+STATUSVG		= ./scripts/make-target-graph.sh 
 export function if_e { if [ -e $1 ]; then $2 $1; else echo "$1 does not exist."; fi; }
 ## ^ OR v  ##
 #REDIRECT := 2>&1 | tee --output-error=warn -a

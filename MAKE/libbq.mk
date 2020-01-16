@@ -24,9 +24,10 @@ clean-libbq-includes:
 	$(CLEAN) $(LIBBQ_HPP_DST)
 clean-libbq-objs:
 	$(CLEAN) $(LIBBQ_OBJS)
-clean-libbq: clean-libbq-includes clean-libbq-objs
+clean-libbq: clean-libbq-objs
 	$(CLEAN) $(LIBBQ_DST)
-
+ALL_CLEAN += clean-libbq
+ALL_MOSTLYCLEAN += clean-libbq-includes 
 $(LIBBQ_HPP_DST_DIR)/%.hpp : $(LIBBQ_HPP_SRC_DIR)/%.hpp
 	@mkdir -p $(@D)
 	$(info "making $@...")

@@ -18,7 +18,6 @@ LIBK_OBJS				:= $(LIBC_C_SRCS:$(LIBC_SRC_DIR)/%.c=$(LIBK_BUILD_DIR)/%.libk)
 #LIBK_OBJS				+= $(LIBC_I386_SRCS:$(LIBC_SRC_DIR)/%.s=$(LIBK_BUILD_DIR)/%.libk)
 ALL_SUFFIXES			+= .libk
 ALL_OBJS				+= $(LIBK_OBJS)
-ALL_CLEAN				+= $(LIBK_OBJS)
 
 	
 	

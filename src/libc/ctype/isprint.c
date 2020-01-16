@@ -2,7 +2,7 @@
 
 
 int isprint(int c){
-    return (C_SPACE <= c <= C_PUNCT4_END);
+    return ((C_SPACE <= c) && (c <= C_PUNCT4_END));
 }
 
 #ifdef TEST

@@ -19,6 +19,9 @@ xgcc-configure $(XGCC_CONFIGURE_TARGET):$(ALL_INCLUDES) $(XBINUTILS_INSTALL_TARG
 	$(REACHED) $(XGCC_CONFIGURE_TARGET)
 	@echo "XGCC Configured."
 
+xgcc-make-shell:
+	cd $(XGCC_BUILD_DIR) && bash
+
 xgcc-make-install $(XGCC_MAKE_INSTALL_TARGET):$(XGCC_CONFIGURE_TARGET)
 	$(CLEAN) $(XGCC_MAKE_INSTALL_TARGET)
 	@echo -n "making $@..."
@@ -30,6 +33,11 @@ xgcc-make-install $(XGCC_MAKE_INSTALL_TARGET):$(XGCC_CONFIGURE_TARGET)
 	$(UPDATE_STATUS)
 	$(REACHED) $(XGCC_MAKE_INSTALL_TARGET)
 	@echo "XGCC Built."
+
+clean-xgcc clean-xgpp: 
+	cd $(XGCC_BUILD_DIR) && make uninstall
+	$(CLEAN) $(XGCC_MAKE_INSTALL_TARGET)
+	$(CLEAN) $(XGPP_MAKE_INSTALL_TARGET)
 
 xgpp-make-install  $(XGPP_MAKE_INSTALL_TARGET): $(LIBC_DST)
 	$(CLEAN) $(XGPP_MAKE_INSTALL_TARGET)

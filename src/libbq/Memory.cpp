@@ -6,7 +6,7 @@
  */
 
 #include <libbq/Memory.hpp>
-
+#include <stddef.h>
 namespace BQ {
 
 MemoryRegion::MemoryRegion(size_t start, size_t size){

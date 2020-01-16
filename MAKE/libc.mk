@@ -49,7 +49,6 @@ ALL_PHONY 		+= clean-libc
 ###################################################################
 clean-libc-objs:
 	@$(CLEAN) $(LIBC_OBJS)
-ALL_CLEAN += clean-libc-objs
 ALL_PHONY += clean-libc-objs
 
 ############################################# *.t

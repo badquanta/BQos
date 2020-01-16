@@ -11,9 +11,9 @@ config.status
 CONFIG.mk
 .*project*
 *.svg
-docs/**.map
-docs/**.md5
-docs/**.js
-docs/**.html
-docs/**.css
-docs/**.png
+docs/**/*.map
+docs/**/*.md5
+docs/**/*.js
+docs/**/*.html
+docs/**/*.css
+docs/**/*.png

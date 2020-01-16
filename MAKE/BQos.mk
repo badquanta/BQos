@@ -15,7 +15,8 @@ status-BQos:
 	$(STATUS) "$(BQos_BOOT)" "boot"
 	$(STATUS) "$(BQos_BOOT_GRUB)" "grub config"
 	$(STATUS) "$(BQos_BOOT_KERNEL)" "Kernel"
-	
+status-BQos-nm:
+	$(XNM) $(BQos_OBJS)	
 $(BQos_HPP_DST_DIR): $(BQos_HPP_DST)
 
 $(BQos_HPP_DST_DIR)/%.hpp : $(BQos_HPP_SRC_DIR)/%.hpp
@@ -58,6 +59,7 @@ clean-BQos: clean-BQos-OBJS clean-BQos-KERNELS
 	$(UPDATE_STATUS)
 ALL_PHONY += clean-BQos-OBJS clean-BQos-KERNELS clean-BQos
 clean: clean-BQos clean-libc clean-libk
+ALL_CLEAN += clean-BQos
 #ALL_TARGETS += $(BQos_BOOT_KERNEL)
 ###############################################################################
 

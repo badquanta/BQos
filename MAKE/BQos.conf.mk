@@ -33,8 +33,7 @@ ALL_INCLUDES 		+= $(BQos_H_DST)
 BQos_OBJS			:= $(BQos_CPP_SRCS:$(BQos_CPP_SRC_DIR)/%.cpp=$(BQos_DST_DIR)/%.o)
 BQos_OBJS			+= $(BQos_S_SRCS:$(BQos_S_SRC_DIR)/%.s=$(BQos_DST_DIR)/%.o)
 ALL_SUFFIXES		+= .o
-ALL_OBJS			+= $(BQos_OBJS)
-ALL_CLEAN			+= $(BQos_OBJS)
+
 ALL_DEP_FILES		+= $(wildcard $(BQos_DST_DIR)/**.d)
 ############################################# .kernel(s)
 BQos_BOOT_KERNEL			:= $(BQos_BOOT)/$(ARCH).kernel
