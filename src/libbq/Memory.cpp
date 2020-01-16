@@ -5,7 +5,7 @@
  *      Author: badquanta
  */
 
-#include <libBQ/Memory.hpp>
+#include <libbq/Memory.hpp>
 
 namespace BQ {
 

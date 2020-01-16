@@ -2,8 +2,8 @@
 #ifndef _BQLIBC_STRING_H
 #define _BQLIBC_STRING_H 1
 
-#include <stddef.h>
-#include <sys/cdefs.h>
+//#include <stddef.h>
+//#include <sys/cdefs.h>
 #include <sys/types.h>
 
 #ifdef __cplusplus

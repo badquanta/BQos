@@ -6,7 +6,7 @@
 #ifndef __LIBBQ__TYPES_HPP
 #define __LIBBQ__TYPES_HPP 1
 #include <sys/cdefs.h>
-#include <stddef.h>
+//#include <stddef.h>
 #include <stdint.h>
 
 

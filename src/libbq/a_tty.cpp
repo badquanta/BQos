@@ -1,4 +1,4 @@
-#include <libBQ/a_tty.hpp>
+#include <libbq/a_tty.hpp>
 
 using namespace BQ;
 

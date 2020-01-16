@@ -1,6 +1,6 @@
 #ifndef BQos_hardware__hpp
 #define BQos_hardware__hpp 1
-#include <libBQ/a_tty.hpp>
+#include <libbq/a_tty.hpp>
 namespace BQos {
     /** Abstract class representing common features
      * of different hardware.

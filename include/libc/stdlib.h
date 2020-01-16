@@ -2,7 +2,7 @@
 #ifndef _BQLIBC_STLIB_H
 #define _BQLIBC_STLIB_H 1
 #include <sys/cdefs.h>
-#include <stddef.h>
+//#include <stddef.h>
 #include <stdint.h>
 #ifdef __cplusplus
 extern "C" {

@@ -9,7 +9,9 @@ $(SYS_INC) $(TARGETS):
 
 clean-XSRC:
 	$(CLEAN) $(XSRC_DIR)
-ALL_CLOBBER	+= clean-XSRC
+clean-PREFIX:
+	$(CLEAN) $(PREFIX)
+ALL_CLOBBER	+= clean-PREFIX
 clean-XBUILD:
 	$(CLEAN) $(XBUILD_DIR)
 ALL_REAL_CLEAN	+= clean-XBUILD

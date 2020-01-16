@@ -43,7 +43,7 @@ Top level "projects."  Each of these defines how to go about building them.  The
 2. `XGCC` is `configure`d, `make`d, and `install`ed.
 3. `libc` is actually `make`d and `install`ed now, using the fresh `XCC`.
 4. `XGPP` is `make`d and `install`ed.
-5. `libBQ` is `make`d and `install`ed.
+5. `libbq` is `make`d and `install`ed.
 6. `libk` is `make`d and `install`ed.
 7. `BQos` is `make`d and `install`ed.
 

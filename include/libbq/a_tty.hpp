@@ -1,10 +1,10 @@
 #ifndef BQos_HW_a_tty_hpp
 #define BQos_HW_a_tty_hpp 1
-#include <sys/types.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <libBQ/XY.hpp>
-#include <libBQ/ascii_defs.hpp>
+//#include <sys/types.h>
+//##include <stddef.h>
+//#include <stdint.h>
+#include <libbq/XY.hpp>
+#include <libbq/ascii_defs.hpp>
 namespace BQ
 {
     using namespace BQ;

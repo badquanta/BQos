@@ -7,10 +7,12 @@ include MAKE/xgcc.mk
 include MAKE/libc.mk
 include MAKE/libk.mk
 include MAKE/libbq.mk
-include MAKE/bqos.mk
+include MAKE/BQos.mk
 include MAKE/status-all.mk
+
 shell: 
-	PS1="make$$ " bash -l
+	export PS1="make$$ " 
+	bash
 #####################################################################
 #	Compile the entire program. This should be the default target. This target need not rebuild any documentation files; Info files should normally be included in the distribution, and DVI (and other documentation format) files should be made only when explicitly asked for.
 #	By default, the Make rules should compile and link with ‘-g’, so that executable programs have debugging symbols. Otherwise, you are essentially helpless in the face of a crash, and it is often far from easy to reproduce with a fresh build.

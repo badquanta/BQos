@@ -1,12 +1,12 @@
 include MAKE/all.conf.mk
-include MAKE/bqos.conf.mk
-status-bqos-objs:
+include MAKE/BQos.conf.mk
+status-BQos-objs:
 	$(STATUS) "$(BQos_OBJS)"
-status-bqos-includes:
+status-BQos-includes:
 	$(STATUS)"$(BQos_HPP_DST)"
-status-bqos-includes-src:
+status-BQos-includes-src:
 	$(STATUS) "$(BQos_HPP_SRCS)"
-status-bqos:
+status-BQos:
 	$(STATUS) "$(BQos_CPP_SRC_DIR)" "cpp src"
 	$(STATUS) "$(BQos_S_SRC_DIR)" "assembler src"
 	$(STATUS) "$(BQos_HPP_SRC_DIR)" "hpp includes"
@@ -24,7 +24,7 @@ $(BQos_HPP_DST_DIR)/%.hpp : $(BQos_HPP_SRC_DIR)/%.hpp
 # src/**.cpp -> *.o
 $(BQos_DST_DIR)/%.o : $(BQos_CPP_SRC_DIR)/%.cpp | $(XGPP) $(ALL_INCLUDES)
 	@mkdir -p $(@D)
-	@echo "XGPP $<"
+	@echo "XGPP -c $< -o $@"
 	@$(XGPP) $(BQos_GCFLAGS) -o $@ -c $<
 
 
@@ -36,7 +36,8 @@ $(BQos_DST_DIR)/%.o : $(BQos_S_SRC_DIR)/%.s | $(XAS)
 ################################################################################ Boot Kernel/loader
 $(BQos_BOOT_KERNEL): $(BQos_OBJS) $(LIBBQ_DST) $(LIBK_DST) | $(linker.ld)
 	@mkdir -p $(@D)
-	@echo "XGPP $<"
+	@echo "KERNEL XGPP -o $@"
+	@echo "KERNEL INPUTS: $^"
 	@$(XGPP) $(BQos_KERNEL_LINK_FLAGS) -o $@ $^
 	$(UPDATE_STATUS)
 ALL_DEFAULTS += $(BQos_BOOT_KERNEL)

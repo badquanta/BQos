@@ -1,7 +1,7 @@
 #include <BQos/multiboot_main.hpp>
 
 #include <BQos/ARCH/i386.hpp>
-#include <libBQ/Memory.hpp>
+#include <libbq/Memory.hpp>
 #include <stdio.h>
 static uint8_t bootMem[1024]{0};
 extern "C" {

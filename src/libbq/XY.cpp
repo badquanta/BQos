@@ -1,5 +1,5 @@
 #include <sys/types.h>
-#include <libBQ/XY.hpp>
+#include <libbq/XY.hpp>
 using namespace BQ;
 
 /**************** TESTING**************************/

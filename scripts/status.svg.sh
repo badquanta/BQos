@@ -16,4 +16,6 @@ fi
 
 echo "Creating SVG graph of target: $TARGET as $FILE"
 rm -f $FILE
-make $TARGET -nd | make2graph | unflatten | dot -y -T svg -o $FILE
+
+echo $PREFIX
+make $TARGET -nd | make2graph | unflatten | sed s@$PREFIX@\$PREFIX@ | sed s@\/@\/\\n@g | dot -y -T svg -o $FILE

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 
 #if defined(__is_libk)
-#include <libBQ/Memory.hpp>
+#include <libbq/Memory.hpp>
 #else
     // TODO:: Handle user space
 #endif

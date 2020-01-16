@@ -1,6 +1,6 @@
 #ifndef BQos_HW_VGA_hpp
 #define BQos_HW_VGA_hpp 1
-#include <libBQ/a_tty.hpp>
+#include <libbq/a_tty.hpp>
 /**
  * VGA/EGA Text mode implementation of a TTY
  */

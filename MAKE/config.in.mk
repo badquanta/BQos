@@ -3,7 +3,7 @@
 
 # what target environment we are assembling for
 ARCH				=$ARCH
-JOBS				=$JOBS || false
+JOBS				=$JOBS
 
 BRAND				=$BRAND
 BINDIR				=$(abspath $BINDIR)

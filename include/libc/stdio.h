@@ -5,8 +5,8 @@
 #ifndef _BQLIBC_STDIO_H
 #define _BQLIBC_STDIO_H 1
 //#include <sys/fcntl.h>
-#include <sys/cdefs.h>
-#include <sys/types.h> 
+//#include <sys/cdefs.h>
+//#include <sys/types.h> 
 #include <stdarg.h>
 #include <fcntl.h>
 #define EOF (-1)
