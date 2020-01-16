@@ -33,12 +33,13 @@ CXXFLAGS := $(CFLAGS)
 PROJECT_GASFLAGS +=	
 ################################################################### MACROS
 # Some macros used for debugging/output/status.
-UPDATE_STATUS = mkdir -p "./logs$(@D)"; $(STATUSVG) "$@" "./logs$@.svg"
+UPDATE_STATUS 	= mkdir -p "./logs/$(@D)"; $(STATUSVG) "$@" "./logs/$@.svg"
 #REDIRECT :=  >> $(PREFIX)/build.log 2>&1
-GIT_SHALLOW		:= git clone --depth 1 --single-branch --branch
-CLEAN	:= - rm -frv
-REACHED := @ date >>  
-STATUS	:= @./scripts/status.sh 
-STATUSVG:= ./scripts/status.svg.sh 
+GIT_SHALLOW		= git clone --depth 1 --single-branch --branch
+CLEAN			= - rm -frv
+REACHED 		= @ date >>  
+STATUS			= @./scripts/status.sh 
+STATUSVG		= ./scripts/status.svg.sh 
+export function if_e { if [ -e $1 ]; then $2 $1; else echo "$1 does not exist."; fi; }
 ## ^ OR v  ##
 #REDIRECT := 2>&1 | tee --output-error=warn -a

@@ -1,6 +1,6 @@
 include MAKE/dirs.conf.mk
-BQos_CPP_SRC_DIR		:= $(REPO_DIR)src
-BQos_S_SRC_DIR			:= $(REPO_DIR)src
+BQos_CPP_SRC_DIR		:= $(REPO_DIR)src/BQos
+BQos_S_SRC_DIR			:= $(REPO_DIR)src/BQos
 BQos_HPP_SRC_DIR		:= $(REPO_DIR)include/BQos
 BQos_HPP_DST_DIR		:= $(SYSROOT)/usr/include/BQos
 BQos_DST_DIR			:= $(PREFIX)/lib

@@ -1,5 +1,7 @@
 include MAKE/all.conf.mk
 include MAKE/bqos.conf.mk
+status-bqos-objs:
+	$(STATUS) "$(BQos_OBJS)"
 status-bqos-includes:
 	$(STATUS)"$(BQos_HPP_DST)"
 status-bqos-includes-src:
@@ -13,6 +15,7 @@ status-bqos:
 	$(STATUS) "$(BQos_BOOT)" "boot"
 	$(STATUS) "$(BQos_BOOT_GRUB)" "grub config"
 	$(STATUS) "$(BQos_BOOT_KERNEL)" "Kernel"
+	
 $(BQos_HPP_DST_DIR): $(BQos_HPP_DST)
 
 $(BQos_HPP_DST_DIR)/%.hpp : $(BQos_HPP_SRC_DIR)/%.hpp
@@ -21,17 +24,20 @@ $(BQos_HPP_DST_DIR)/%.hpp : $(BQos_HPP_SRC_DIR)/%.hpp
 # src/**.cpp -> *.o
 $(BQos_DST_DIR)/%.o : $(BQos_CPP_SRC_DIR)/%.cpp | $(XGPP) $(ALL_INCLUDES)
 	@mkdir -p $(@D)
-	$(XGPP) $(BQos_GCFLAGS) -o $@ -c $<
+	@echo "XGPP $<"
+	@$(XGPP) $(BQos_GCFLAGS) -o $@ -c $<
 
 
 # src/**.s -> *.o
 $(BQos_DST_DIR)/%.o : $(BQos_S_SRC_DIR)/%.s | $(XAS)
 	@mkdir -p $(@D)
-	$(XAS) $(BQos_GASFLAGS) -o $@ $<
+	@echo "XAS $<"
+	@$(XAS) $(BQos_GASFLAGS) -o $@ $<
 ################################################################################ Boot Kernel/loader
-$(BQos_BOOT_KERNEL): $(BQos_OBJS) $(libBQ_DST) | $(linker.ld)
-	mkdir -p $(@D)
-	$(XGPP) $(BQos_KERNEL_LINK_FLAGS) -o $@ $^
+$(BQos_BOOT_KERNEL): $(BQos_OBJS) $(LIBBQ_DST) $(LIBK_DST) | $(linker.ld)
+	@mkdir -p $(@D)
+	@echo "XGPP $<"
+	@$(XGPP) $(BQos_KERNEL_LINK_FLAGS) -o $@ $^
 	$(UPDATE_STATUS)
 ALL_DEFAULTS += $(BQos_BOOT_KERNEL)
 

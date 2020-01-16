@@ -9,10 +9,11 @@ else
 fi
 if [ -z $2 ]; then
     FILE=$TARGET.svg
+    FILE=${FILE//\//__}
 else
     FILE=$2
 fi
-FILE=${FILE//\//__}
+
 echo "Creating SVG graph of target: $TARGET as $FILE"
 rm -f $FILE
 make $TARGET -nd | make2graph | unflatten | dot -y -T svg -o $FILE

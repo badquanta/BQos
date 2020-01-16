@@ -1,5 +1,5 @@
-#ifndef libBQ_XY_hpp
-#define libBQ_XY_hpp 1
+#ifndef LIBBQ_XY_hpp
+#define LIBBQ_XY_hpp 1
 #include <sys/types.h>
 namespace BQ {
     template<typename Dimension>

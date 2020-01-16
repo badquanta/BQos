@@ -1,8 +1,13 @@
-status-libc:
-	@echo LIBC_GCFLAGS: $(LIBC_GCFLAGS)
+status-libc: $(XNM)
+	@echo LIBC_GCFLAGS: $(LIBC_GCFLAGS)	
+	@$(XNM) $(LIBC_DST)
 	$(STATUS) $(LIBC_DST)
+	$(STATUS) "$(LIBC_SRC_DIR)" "LIB_C_SRCS"
+	$(STATUS) "$(LIBC_INC_DIR)" "LIB_C_INC"
+	$(STATUS) "$(LIBC_BUILD_DIR)" "LIBC_BUILD_DIR"
 status-libc-objs:
 	$(STATUS) "$(LIBC_OBJS)"
+	
 status-libc-all: status-libc
 	@echo LIBC_GCFLAGS $(LIBC_GCFLAGS)
 	@echo LIBC_GASFLAGS $(LIBC_GASFLAGS)
@@ -15,33 +20,35 @@ clean-libc-h-dst:
 	@rm -f $(LIBC_H_DST)
 	@./status.sh "$(LIBC_H_DST)"
 $(SYS_INC)/%.h : $(LIBC_INC_DIR)/%.h 
-	mkdir -p $(@D)
-	cp -fv $< $@
+	@mkdir -p $(@D)
+	@cp -fv $< $@
 # LIBC depends on XGCC being installed.
 include MAKE/xgcc.conf.mk
 $(LIBC_BUILD_DIR)/%.o:  $(LIBC_SRC_DIR)/%.c | $(XGCC) #$(SYS_INC)
-	mkdir -p $(@D)
-	$(XGCC) $(LIBC_GCFLAGS) -c $< -o $@
+	@mkdir -p $(@D)
+	@echo "XGCC $<"
+	@$(XGCC) $(LIBC_GCFLAGS) -c $< -o $@
 	@#$(UPDATE_STATUS)
 #ALL_TARGETS += libc-tests	
 ##### how to make sysroot libc objects
 $(LIBC_BUILD_DIR)/%.o:  $(LIBC_SRC_DIR)/%.s |  $(XAS)
-	mkdir -p $(@D)
-	$(XAS) $(LIBC_GASFLAGS)  $< -o $@
+	@mkdir -p $(@D)
+	@echo "XAS $<"
+	@$(XAS) $(LIBC_GASFLAGS)  $< -o $@
 	@#$(UPDATE_STATUS)
 
 
-$(LIBC_DST): $(LIBC_OBJS) $(XAR)
-	mkdir -p $(@D)
-	$(XAR) rcs $@ $(LIBC_OBJS)
-	$(UPDATE_STATUS)
-clean-libc:
-	$(CLEAN) $(LIBC_DST)
+libc $(LIBC_DST): $(LIBC_OBJS) $(XAR)
+	@mkdir -p $(@D)
+	@$(XAR) rcs $@ $(LIBC_OBJS)
+	@$(UPDATE_STATUS)
+clean-libc: clean-libc-objs
+	@$(CLEAN) $(LIBC_DST)
 ALL_MOSTLYCLEAN	+= clean-libc
 ALL_PHONY 		+= clean-libc
 ###################################################################
 clean-libc-objs:
-	$(CLEAN) $(LIBC_OBJS)
+	@$(CLEAN) $(LIBC_OBJS)
 ALL_CLEAN += clean-libc-objs
 ALL_PHONY += clean-libc-objs
 

@@ -5,22 +5,22 @@ include MAKE/dirs.conf.mk
 include MAKE/common.conf.mk
 include MAKE/all.conf.mk
 include MAKE/kernels.conf.mk
-libBQ_GPPFLAGS			:= $(KERNEL_CFLAGS)
-libBQ_HPP_SRC_DIR		:= $(REPO_DIR)include/libBQ
-libBQ_CPP_SRC_DIR		:= $(REPO_DIR)src/libBQ
-libBQ_C_SRC_DIR			:= $(REPO_DIR)src/libBQ
-libBQ_HPP_DST_DIR		:= $(SYSROOT)/usr/include/libBQ
-libBQ_H_DST_DIR			:= $(SYSROOT)/usr/include/libBQ
-libBQ_DST_DIR			:= $(SYSROOT)/lib
-libBQ_DST				:= $(libBQ_DST_DIR)/libBQ.a
-libBQ_CPP_SRCS			:= $(wildcard $(libBQ_CPP_SRC_DIR)/**/*.cpp)
-libBQ_C_SRCS			:= $(wildcard $(libBQ_C_SRC_DIR)/**/*.c)
-libBQ_OBJS				:= $(libBQ_CPP_SRCS:$(libBQ_CPP_SRC_DIR)/%.cpp=$(libBQ_DST_DIR)/%.o)
-libBQ_OBJS				+= $(libBQ_C_SRCS:$(libBQ_C_SRC_DIR)/%.cpp=$(libBQ_DST_DIR)/%.o)
-libBQ_HPP_SRCS			:= $(wildcard $(libBQ_HPP_SRC_DIR)/*.hpp)
-libBQ_HPP_SRCS			+= $(wildcard $(libBQ_HPP_SRC_DIR)/*/*.hpp)
-libBQ_HPP_DST			:= $(libBQ_HPP_SRCS:$(libBQ_HPP_SRC_DIR)/%.hpp=$(libBQ_HPP_DST_DIR)/%.hpp)
+LIBBQ_GPPFLAGS			:= $(KERNEL_CFLAGS)
+LIBBQ_HPP_SRC_DIR		:= $(REPO_DIR)include/libBQ
+LIBBQ_CPP_SRC_DIR		:= $(REPO_DIR)src/libBQ
+LIBBQ_C_SRC_DIR			:= $(REPO_DIR)src/libBQ
+LIBBQ_HPP_DST_DIR		:= $(SYSROOT)/usr/include/libBQ
+LIBBQ_H_DST_DIR			:= $(SYSROOT)/usr/include/libBQ
+LIBBQ_DST_DIR			:= $(SYSROOT)/lib
+LIBBQ_DST				:= $(LIBBQ_DST_DIR)/libBQ.a
+LIBBQ_CPP_SRCS			:= $(wildcard $(LIBBQ_CPP_SRC_DIR)/**/*.cpp)
+LIBBQ_C_SRCS			:= $(wildcard $(LIBBQ_C_SRC_DIR)/**/*.c)
+LIBBQ_OBJS				:= $(LIBBQ_CPP_SRCS:$(LIBBQ_CPP_SRC_DIR)/%.cpp=$(LIBBQ_DST_DIR)/%.o)
+LIBBQ_OBJS				+= $(LIBBQ_C_SRCS:$(LIBBQ_C_SRC_DIR)/%.cpp=$(LIBBQ_DST_DIR)/%.o)
+LIBBQ_HPP_SRCS			:= $(wildcard $(LIBBQ_HPP_SRC_DIR)/*.hpp)
+LIBBQ_HPP_SRCS			+= $(wildcard $(LIBBQ_HPP_SRC_DIR)/*/*.hpp)
+LIBBQ_HPP_DST			:= $(LIBBQ_HPP_SRCS:$(LIBBQ_HPP_SRC_DIR)/%.hpp=$(LIBBQ_HPP_DST_DIR)/%.hpp)
 ALL_SUFFIXES			+= .hpp
-ALL_INCLUDES			+= $(libBQ_HPP_DST)
-ALL_DEP_FILES			+= $(wildcard $(libBQ_DST_DIR)/**.d)
+ALL_INCLUDES			+= $(LIBBQ_HPP_DST)
+ALL_DEP_FILES			+= $(wildcard $(LIBBQ_DST_DIR)/**.d)
 	

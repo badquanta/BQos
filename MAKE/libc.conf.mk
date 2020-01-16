@@ -2,7 +2,7 @@ include MAKE/all.conf.mk
 include MAKE/dirs.conf.mk
 LIBC_BUILD_DIR	:= $(SYSROOT)/usr/lib
 LIBC_SRC_DIR	:= $(REPO_SRC)/libc
-LIBC_INC_DIR	:= $(REPO_INC)libc
+LIBC_INC_DIR	:= $(REPO_INC)/libc
 # TODO: LIBC_TST_DIR		:= $(PREFIX)/tests
 LIBK_BUILD_DIR	:= $(XBUILD_DIR)/libk
 include MAKE/common.conf.mk
