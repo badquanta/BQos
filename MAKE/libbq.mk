@@ -33,12 +33,12 @@ $(LIBBQ_HPP_DST_DIR)/%.hpp : $(LIBBQ_HPP_SRC_DIR)/%.hpp
 	$(info "making $@...")
 	@cp -fv $< $@
 
-$(LIBBQ_DST_DIR)/%.o : $(LIBBQ_CPP_SRC_DIR)/%.cpp | $(XGPP) install-libbq-includes
+$(LIBBQ_DST_DIR)/%.o : $(LIBBQ_CPP_SRC_DIR)/%.cpp | $(XGPP) # install-libbq-includes
 	@mkdir -p $(@D)
 	@echo "XGPP $<"
 	@$(XGPP) $(LIBBQ_GPPFLAGS) -c $< -o $@
 	
-$(LIBBQ_DST_DIR)/%.o : $(LIBBQ_CPP_SRC_DIR)/%.c | $(XGPP) install-libbq-includes
+$(LIBBQ_DST_DIR)/%.o : $(LIBBQ_CPP_SRC_DIR)/%.c | $(XGPP) # install-libbq-includes
 	@mkdir -p $(@D)
 	@echo "XGPP $<"
 	@$(XGPP) $(LIBBQ_GPPFLAGS) -c $< -o $@	
