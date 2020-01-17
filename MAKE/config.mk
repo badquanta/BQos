@@ -3,7 +3,7 @@
 
 # what target environment we are assembling for
 ARCH				=i386-BQos
-JOBS				=16 || false
+JOBS				=16
 
 BRAND				=BQos
 BINDIR				=$(abspath ../PREFIX/bin)

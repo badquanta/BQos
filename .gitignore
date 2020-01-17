@@ -18,3 +18,5 @@ docs/**/*.html
 docs/**/*.css
 docs/**/*.png
 BQos-iso
+docs/man/*
+docs/latex/*

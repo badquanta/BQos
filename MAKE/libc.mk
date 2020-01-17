@@ -22,6 +22,9 @@ clean-libc-h-dst:
 $(SYS_INC)/%.h : $(LIBC_INC_DIR)/%.h 
 	@mkdir -p $(@D)
 	@cp -fv $< $@
+
+install-libc-include:
+	@cp -ruv $(LIBC_INC_DIR)/* $(LIBC_H_DST)
 # LIBC depends on XGCC being installed.
 include MAKE/xgcc.conf.mk
 $(LIBC_BUILD_DIR)/%.o:  $(LIBC_SRC_DIR)/%.c | $(XGCC) #$(SYS_INC)
