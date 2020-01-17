@@ -1,3 +1,9 @@
+/**
+ * BQos Project
+ * WARNING: DO NOT USE THIS PROJECT; NOT FIT FOR ANY PURPOSE; MAY DAMAGE SYSTEMS.
+ * GNU-GPLv3
+ * For self educational purposes.
+ */
 #ifndef __BQos__X86_HPP
 #define __BQos__X86_HPP 1
 #include <BQos/hardware.hpp>

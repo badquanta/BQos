@@ -1,5 +1,4 @@
-# HW
-### short for hardware
+##### Hardware `HW`
 
 This namespace contains the components that handle specific types and classes of hardware.
 

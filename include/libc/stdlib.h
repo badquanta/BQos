@@ -2,15 +2,16 @@
 #ifndef _BQLIBC_STLIB_H
 #define _BQLIBC_STLIB_H 1
 #include <sys/cdefs.h>
+#include <sys/types.h>
 //#include <stddef.h>
 #include <stdint.h>
 #ifdef __cplusplus
 extern "C" {
 #endif
-#define NULL 0
+//#define NULL 0
 #define EXIT_FAILURE 1
 #define EXIT_SUCCESS 0
-// TODO: Increase RAND_MAX from c reference minimum
+/** @todo Increase RAND_MAX from c reference minimum **/
 #define RAND_MAX 32767
 
 /* Unsigned.  */
@@ -30,8 +31,8 @@ extern "C" {
     /** lldiv_t Structure returned by lldiv (type ) **/
     typedef struct lldiv_t {long long quot; long long rem;} lldiv_t;
     /** size_t Unsigned integral type (type ) **/
-    // TODO: Review why I had to do this in stddef instead? 
-/**Functions:**/
+    /** @todo Review why I had to do this in stddef instead?  **/
+/** Functions: **/
         void initialize_standard_library();
     /**String conversion **/
         /** atof* Convert string to double (function )**/
@@ -70,7 +71,7 @@ extern "C" {
         void* malloc(size_t);
         /**realloc Reallocate memory block (function )**/
         void* realloc(void* ptr, size_t size);
-    /**Environment**/
+    /** Environment **/
        /**  abort* Abort current process (function )**/
         __attribute__((__noreturn__)) void abort(void);        
         /** atexitSet function to be executed on exit (function ) **/

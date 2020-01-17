@@ -1,6 +1,6 @@
 #ifndef __OPEN__CTYPE_H
 #define __OPEN__CTYPE_H 1
-/**http://www.cplusplus.com/reference/cctype/**/
+/** http://www.cplusplus.com/reference/cctype/ **/
 
 #define C_NUL 0x00
 #define C_TAB 0x09
@@ -41,28 +41,28 @@
 extern "C" {
 #endif
 extern char 	_ctype_ [];
-/**http://www.cplusplus.com/reference/cctype/isalnum/**/
+/** http://www.cplusplus.com/reference/cctype/isalnum/ **/
 int isalnum(int);
-/**http://www.cplusplus.com/reference/cctype/isalpha/**/
+/** http://www.cplusplus.com/reference/cctype/isalpha/ **/
 int isalpha(int);
-/**http://www.cplusplus.com/reference/cctype/isblank/**/
+/** http://www.cplusplus.com/reference/cctype/isblank/ **/
 int isblank(int);
-/**http://www.cplusplus.com/reference/cctype/iscntrl/**/
+/** http://www.cplusplus.com/reference/cctype/iscntrl/ **/
 int iscntrl(int);
-/**http://www.cplusplus.com/reference/cctype/isdigit/**/    
+/** http://www.cplusplus.com/reference/cctype/isdigit/ **/    
 int isdigit(int);
 int isgraph(int);
-/**http://www.cplusplus.com/reference/cctype/islower/**/
+/** http://www.cplusplus.com/reference/cctype/islower/ **/
 int islower(int);
-/**http://www.cplusplus.com/reference/cctype/isprint/**/
+/** http://www.cplusplus.com/reference/cctype/isprint/ **/
 int isprint(int);
-/**http://www.cplusplus.com/reference/cctype/ispunct/**/
+/** http://www.cplusplus.com/reference/cctype/ispunct/ **/
 int ispunct(int);
-/**http://www.cplusplus.com/reference/cctype/isspace/**/
+/** http://www.cplusplus.com/reference/cctype/isspace/ **/
 int isspace(int);
-/**http://www.cplusplus.com/reference/cctype/isupper/**/
+/** http://www.cplusplus.com/reference/cctype/isupper/ **/
 int isupper(int);
-/**http://www.cplusplus.com/reference/cctype/isdigit/**/
+/** http://www.cplusplus.com/reference/cctype/isdigit/ **/
 int isxdigit(int);
 
 int tolower(int);

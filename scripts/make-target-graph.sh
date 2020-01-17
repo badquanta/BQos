@@ -24,6 +24,6 @@ fi
 rm -f $FILE
 
 
-make $TARGET -nd | make2graph | unflatten | sed s@\/@\/\\n@g | dot -y -T svg -o $FILE
+make $TARGET -nd | make2graph | sed s@$PWD\/@@g | sed s@\/@\/\\n@g | dot -y -T svg -o $FILE
 
 echo $FILE

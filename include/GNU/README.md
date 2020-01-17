@@ -1,1 +1,0 @@
-# TODO: Give proper thanks to the GNU foundation for Libc; GCC; and Multiboot.

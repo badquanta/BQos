@@ -1,7 +1,9 @@
 # libk's config...
 include MAKE/libk.conf.mk
 status-libk:
+	@echo "LIBK_GCFLAGS" $(LIBK_GCFLAGS)
 	$(STATUS) $(LIBK_DST)
+status-libk-nm:	
 	$(XNM) $(LIBK_DST)
 status-libk-objs:
 	$(STATUS) "$(LIBK_OBJS)"
@@ -12,15 +14,13 @@ $(LIBK_BUILD_DIR)/%.libk $(LIBK_BUILD_DIR)/%.d: $(LIBC_SRC_DIR)/%.c | $(XGCC) #$
 	@mkdir -p $(@D)
 	@echo LIBK XGPP $< -> $@
 	@$(XGPP) $(LIBK_GCFLAGS) -c $< -o $@ 
-	@#$(UPDATE_STATUS)
-	
+	@#	
 ##### how to make sysroot libk objects
 $(LIBK_BUILD_DIR)/%.libk:  $(LIBC_SRC_DIR)/%.s |  $(XAS)
 	@mkdir -p $(@D)
 	@echo LIBK XAS $< -> $@
 	@$(XAS) $(LIBK_GASFLAGS)  $< -o $@
-	@#$(UPDATE_STATUS)
-
+	@#
 libk $(LIBK_DST): $(LIBK_OBJS) $(BQos_OBJS) $(XAR)
 	@mkdir -p $(@D)
 	@$(XAR) rcs $@ $(LIBK_OBJS) $(BQos_OBJS)

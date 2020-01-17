@@ -1,6 +1,6 @@
 #include <ctype.h>
 int isspace(int c){
-    return (C_TAB<=c<=C_RL)||(c==C_SPACE);
+    return ((C_TAB<=c) && (c<=C_RL))||(c==C_SPACE);
 }
 
 

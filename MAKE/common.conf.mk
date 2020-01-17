@@ -37,7 +37,7 @@ UPDATE_STATUS 	= mkdir -p "./logs/$(@D)"; $(STATUSVG) "$@"
 #REDIRECT :=  >> $(PREFIX)/build.log 2>&1
 GIT_SHALLOW		= git clone --depth 1 --single-branch --branch
 CLEAN			= - rm -frv
-REACHED 		= @ date >>  
+REACHED 		= @ mkdir -p $(TARGETS);  date >>  
 STATUS			= @./scripts/status.sh 
 STATUSVG		= ./scripts/make-target-graph.sh 
 export function if_e { if [ -e $1 ]; then $2 $1; else echo "$1 does not exist."; fi; }

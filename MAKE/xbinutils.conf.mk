@@ -1,7 +1,7 @@
 include MAKE/dirs.conf.mk
-BINUTILS_GIT := https://github.com/badquanta/binutils-gdb.git
-BINUTILS_GIT_BRANCH := BQos
-XBINUTILS_SRC_DIR := $(XSRC_DIR)/binutils
+#BINUTILS_GIT := https://github.com/badquanta/binutils-gdb.git
+#BINUTILS_GIT_BRANCH := BQos
+XBINUTILS_SRC_DIR := $(VPATH)src/binutils
 XBUILD_BINUTILS := $(XBUILD_DIR)/binutils
 include MAKE/config.mk
 XAR				:= $(BINDIR)/$(ARCH)-ar

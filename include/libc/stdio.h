@@ -1,6 +1,9 @@
 /** Original code from: 
  * https://wiki.osdev.org/Meaty_Skeleton#libc_and_libk 
- 
+ * BQos Project
+ * WARNING: DO NOT USE THIS PROJECT; NOT FIT FOR ANY PURPOSE; MAY DAMAGE SYSTEMS.
+ * GNU-GPLv3
+ * For self educational purposes.
  * **/
 #ifndef _BQLIBC_STDIO_H
 #define _BQLIBC_STDIO_H 1
@@ -36,7 +39,7 @@ int fclose(FILE*);
 int fflush(FILE*);
 FILE *fopen(const char*,const char*);
 FILE *fdopen(int fildes, const char *mode); 
-// TODO: freopen @link http://www.cplusplus.com/reference/cstdio/freopen/
+/** @todo freopen @link http://www.cplusplus.com/reference/cstdio/freopen/ **/
 FILE* freopen(const char* filename, const char* mode, FILE* stream);
 
 enum SEEK_ORIGINS {
@@ -51,52 +54,52 @@ void setbuf( FILE *aStream, char *aBuffer);
 int setvbuf(FILE* stream, char* buf, int mode, size_t size);
 
 int fprintf(FILE*,const char*,...);
-// TODO: fscanf
+/** @todo fscanf **/
 int printf(const char* __restrict, ...);
 int sprintf(char *aBuffer, const char* aFormat, ...);
 int snprintf(char *aBuffer, size_t aNumBytes, char *aFormat, ...);
-// TODO: http://www.cplusplus.com/reference/cstdio/fscanf/
+/** @todo http://www.cplusplus.com/reference/cstdio/fscanf/ **/
 int fscanf(FILE* stream, const char* format, ...);
-// TODO: http://www.cplusplus.com/reference/cstdio/sscanf/
+/** @todo http://www.cplusplus.com/reference/cstdio/sscanf/ **/
 int sscanf(const char* s, const char* format, ...);
 
-// TODO: http://www.cplusplus.com/reference/cstdio/vfscanf/
+/** @todo http://www.cplusplus.com/reference/cstdio/vfscanf/ **/
 int vfscanf(FILE* stream, const char* format, va_list arg);
-// TODO: http://www.cplusplus.com/reference/cstdio/vprintf/
+/** @todo http://www.cplusplus.com/reference/cstdio/vprintf/ **/
 int vprintf(const char* format, va_list arg);
 int vfprintf ( FILE * aStream, const char * aFormat,...);
-// TODO: http://www.cplusplus.com/reference/cstdio/vscanf/
+/** @todo http://www.cplusplus.com/reference/cstdio/vscanf/ **/
 int vscanf(const char* format, va_list arg);
-// TODO: http://www.cplusplus.com/reference/cstdio/vsnprintf/
+/** @todo http://www.cplusplus.com/reference/cstdio/vsnprintf/ **/
 int vsnprintf(char* s, size_t n, const char* format, va_list arg);
-// TODO: http://www.cplusplus.com/reference/cstdio/vsprintf/
+/** @todo http://www.cplusplus.com/reference/cstdio/vsprintf/ **/
 int vsprintf(char* s, const char* format, va_list arg);
-// TODO: http://www.cplusplus.com/reference/cstdio/vsscanf/
+/** @todo http://www.cplusplus.com/reference/cstdio/vsscanf/ **/
 int vsscanf(const char* s, const char* format, va_list arg);
 
-// TODO: http://www.cplusplus.com/reference/cstdio/fgetc/
+/** @todo http://www.cplusplus.com/reference/cstdio/fgetc/ **/
 int fgetc(FILE* stream);
-// TODO: http://www.cplusplus.com/reference/cstdio/fgets/
+/** @todo http://www.cplusplus.com/reference/cstdio/fgets/ **/
 char* fgets(char* s, int n, FILE* stream);
-// TODO: http://www.cplusplus.com/reference/cstdio/fputc/
+/** @todo http://www.cplusplus.com/reference/cstdio/fputc/ **/
 int fputc(int c, FILE* stream);
-// TODO: http://www.cplusplus.com/reference/cstdio/fputs/
+/** @todo http://www.cplusplus.com/reference/cstdio/fputs/ **/
  int fputs(const char* s, FILE* stream);
-// TODO: http://www.cplusplus.com/reference/cstdio/getc/
+/** @todo http://www.cplusplus.com/reference/cstdio/getc/ **/
   int getc(FILE* stream);
-// TODO: http://www.cplusplus.com/reference/cstdio/getchar/
+/** @todo http://www.cplusplus.com/reference/cstdio/getchar/ **/
   int getchar();
-// TODO: http://www.cplusplus.com/reference/cstdio/gets/
+/** @todo http://www.cplusplus.com/reference/cstdio/gets/ **/
 char * gets ( char * str );
-// TODO: http://www.cplusplus.com/reference/cstdio/putc/
+/** @todo http://www.cplusplus.com/reference/cstdio/putc/ **/
 int putc( int aCharacter, FILE *aStream);
 int putchar(int);
 int puts(const char*);
-// TODO: ungetc http://www.cplusplus.com/reference/cstdio/ungetc/
+/** @todo ungetc http://www.cplusplus.com/reference/cstdio/ungetc/ **/
 int ungetc(int c, FILE* stream);
 
 size_t fread(void *aPointer, size_t aSize, size_t aCount, FILE *aStream);
-// TODO: fwrite http://www.cplusplus.com/reference/cstdio/fwrite/
+/** @todo fwrite http://www.cplusplus.com/reference/cstdio/fwrite/ **/
 size_t fwrite(const void* ptr, size_t size, size_t nmemb, FILE* stream);
 int scanf ( const char * format, ... );
 int fgetpos(FILE* stream, fpos_t* pos);

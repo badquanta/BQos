@@ -8,7 +8,7 @@ int rand(){
         current=(!current)|seeds[idx];
     }
     seeds[count%SEED_COUNT]=current;
-    return current; // TODO: Rand()
+    return current; /** @todo Rand() **/
 }
 
 

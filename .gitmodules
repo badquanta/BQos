@@ -1,0 +1,8 @@
+[submodule "src/binutils"]
+	path = gnusrc/binutils
+	url = https://github.com/badquanta/binutils-gdb.git
+	branch = BQos
+[submodule "gnusrc/gcc"]
+	path = gnusrc/gcc
+	url = https://github.com/badquanta/gcc.git
+	branch = BQos

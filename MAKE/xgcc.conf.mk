@@ -4,7 +4,7 @@ GCC_GIT := https://github.com/badquanta/gcc.git
 # Which branch?
 GCC_BRANCH := BQos
 # Where do we clone it to?
-XGCC_SRC_DIR := $(XSRC_DIR)/gcc
+XGCC_SRC_DIR := $(VPATH)src/gcc
 # Where does gcc &etc get built?
 XGCC_BUILD_DIR		:= $(XBUILD_DIR)/gcc
 include MAKE/config.mk

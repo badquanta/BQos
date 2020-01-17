@@ -6,7 +6,7 @@ extern "C" {
 #endif
 //#include <stddef.h>
 #include <sys/types.h>
-// TODO: time.h
+/** @todo time.h **/
 //typedef unsigned int time_t;
 //typedef unsigned int clock_t;
 typedef long long timespec;

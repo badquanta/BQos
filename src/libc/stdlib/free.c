@@ -10,7 +10,7 @@ void free(void* aPointer){
     #if defined(__is_libk)
         return BQ::Memory::free(aPointer);
     #else
-        // TODO: Handle user space free.
+        /** @todo Handle user space free. **/
     #endif
 }
 

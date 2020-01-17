@@ -3,11 +3,12 @@
 #if defined(__is_libk)
 #include <BQos/hardware.hpp>
 #else
-    // TODO: handle user-space
+    /** @todo handle user-space **/
 #endif
 
 int putchar(int ic){
     #if defined(__is_libk)
+#warning Compling putchar for LIBK
         char c = (char)ic;
         BQos::hardware* active = BQos::hardware::get_active();
         if(active!=NULL){
@@ -17,7 +18,8 @@ int putchar(int ic){
             }
         }
     #else
-        // TODO: Implement stdio for user space via syscall.
+#warning Compling putchar for LIBC    
+        /** @todo Implement stdio for user space via syscall. **/
     #endif
     return ic;    
 }

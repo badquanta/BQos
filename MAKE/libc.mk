@@ -1,10 +1,13 @@
-status-libc: $(XNM)
-	@echo LIBC_GCFLAGS: $(LIBC_GCFLAGS)	
-	@$(XNM) $(LIBC_DST)
+status-libc: 
+	@echo LIBC_GCFLAGS: $(LIBC_GCFLAGS)		
 	$(STATUS) $(LIBC_DST)
 	$(STATUS) "$(LIBC_SRC_DIR)" "LIB_C_SRCS"
 	$(STATUS) "$(LIBC_INC_DIR)" "LIB_C_INC"
 	$(STATUS) "$(LIBC_BUILD_DIR)" "LIBC_BUILD_DIR"
+status-libc-srcs:
+	$(STATUS) "$(LIBC_C_SRCS)" "libc sources"
+status-libc-nm:
+	@$(XNM) $(LIBC_DST)	
 status-libc-objs:
 	$(STATUS) "$(LIBC_OBJS)"
 	
@@ -19,32 +22,31 @@ libc-h-dst: $(LIBC_H_DST)
 clean-libc-h-dst:
 	@rm -f $(LIBC_H_DST)
 	@./status.sh "$(LIBC_H_DST)"
-$(SYS_INC)/%.h : $(LIBC_INC_DIR)/%.h 
-	@mkdir -p $(@D)
-	@cp -fv $< $@
+$(SYS_INC)/%.h : $(LIBC_INSTALL_INCLUDES_TARGET) # $(LIBC_INC_DIR)/%.h 
 
-install-libc-include:
-	@cp -ruv $(LIBC_INC_DIR)/* $(LIBC_H_DST)
+install-libc-include $(LIBC_INSTALL_INCLUDES_TARGET): $(LIBC_H_SRCS)
+	@mkdir -p $(SYS_INC)	
+	@mkdir -p $(TARGETS)
+	cp -ruv $(LIBC_INC_DIR) $(SYS_INC)
+	touch $(LIBC_INSTALL_INCLUDES_TARGET)
+
 # LIBC depends on XGCC being installed.
 include MAKE/xgcc.conf.mk
 $(LIBC_BUILD_DIR)/%.o:  $(LIBC_SRC_DIR)/%.c | $(XGCC) #$(SYS_INC)
 	@mkdir -p $(@D)
 	@echo "XGCC $<"
 	@$(XGCC) $(LIBC_GCFLAGS) -c $< -o $@
-	@#$(UPDATE_STATUS)
-#ALL_TARGETS += libc-tests	
+	@##ALL_TARGETS += libc-tests	
 ##### how to make sysroot libc objects
 $(LIBC_BUILD_DIR)/%.o:  $(LIBC_SRC_DIR)/%.s |  $(XAS)
 	@mkdir -p $(@D)
 	@echo "XAS $<"
 	@$(XAS) $(LIBC_GASFLAGS)  $< -o $@
-	@#$(UPDATE_STATUS)
-
+	@#
 
 libc $(LIBC_DST): $(LIBC_OBJS) $(XAR)
 	@mkdir -p $(@D)
 	@$(XAR) rcs $@ $(LIBC_OBJS)
-	@$(UPDATE_STATUS)
 clean-libc: clean-libc-objs
 	@$(CLEAN) $(LIBC_DST)
 ALL_MOSTLYCLEAN	+= clean-libc

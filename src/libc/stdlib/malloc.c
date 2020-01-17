@@ -10,7 +10,7 @@ void* malloc(size_t aSize){
     #if defined(__is_libk)
         return BQ::Memory::malloc(aSize);
     #else
-        // TODO: Handle user space malloc.
+        /** @todo Handle user space malloc. **/
     #endif
 }
 

@@ -12,7 +12,7 @@ hardware* hardware::active{NULL};
 hardware::~hardware(){
     if(hardware::active==this){
         hardware::active = NULL;
-        // TODO: An event saying hardware is going offline?
+        /** @todo An event saying hardware is going offline? **/
         // on second thought nothing should be alive at this point.
     }
 }

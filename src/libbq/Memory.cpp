@@ -22,7 +22,7 @@ MemoryRegion::MemoryRegion(size_t start, size_t size){
 }
 
 MemoryRegion::~MemoryRegion(){
-  // TODO: What should we do when a memory region goes away??
+  /** @todo What should we do when a memory region goes away?? **/
   // When could that happen?
   // Should we add a "remove" function to `Memory`?
   // What happens to active pointers? Do we ignore the fact that they might still point here?
@@ -40,7 +40,7 @@ void *MemoryRegion::malloc(size_t size){
     if(next!=NULL){
       return next->malloc(size);
     } else {
-      return NULL; // TODO: HANDLE OUT OF MEMORY ERROR!
+      return NULL; /** @todo HANDLE OUT OF MEMORY ERROR! **/
     }
   }// Either we have a result; or we handled that and returned.
   if(result-> size >=size+sizeof(memory_chunk)+1){
@@ -82,7 +82,7 @@ MemoryRegion* Memory::first = NULL;
 
 Memory::Memory()
 {
-  // TODO: Review if we need to initialize anything?
+  /** @todo Review if we need to initialize anything? **/
 }
 
 Memory::~Memory() {
@@ -103,7 +103,7 @@ void* Memory::malloc(size_t size){
   if(first!=NULL){
     return first->malloc(size);
   } else {
-    return NULL; // TODO: Should never return null.
+    return NULL; /** @todo Should never return null. **/
   }
 }
 
@@ -127,7 +127,7 @@ void operator delete(void* allocated){
 
 /** Todo: Right now I'm ignoring the size specified.*/
 void operator delete(void* allocated, size_t){
-  // TODO: Should we match the allocated & free sizes?
+  /** @todo Should we match the allocated & free sizes? **/
   // Todo: Should we return only part of the allocated size?
   // Todo: What happens if it tries to delete more than it allocated?
   return BQ::Memory::free(allocated);

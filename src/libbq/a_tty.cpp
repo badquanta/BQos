@@ -156,11 +156,12 @@ int a_tty::put(const char *buf){
     }
     return cnt;
 }
-
+/** Define the lowest value of a valid index. **/
 int a_tty::min_index(){
   return 0;
 }
 
+/** Return the highest value of a valid index. **/
 int a_tty::max_index(){
   return 1;
 }

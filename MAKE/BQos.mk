@@ -7,6 +7,7 @@ status-BQos-includes:
 status-BQos-includes-src:
 	$(STATUS) "$(BQos_HPP_SRCS)"
 status-BQos:
+	@echo "BQos_GCFLAGS" "$(BQos_GCFLAGS)"
 	$(STATUS) "$(BQos_CPP_SRC_DIR)" "cpp src"
 	$(STATUS) "$(BQos_S_SRC_DIR)" "assembler src"
 	$(STATUS) "$(BQos_HPP_SRC_DIR)" "hpp includes"
@@ -40,8 +41,7 @@ $(BQos_BOOT_KERNEL): $(BQos_OBJS) $(LIBBQ_DST) $(LIBK_DST) | $(linker.ld)
 	@echo "KERNEL XGPP -o $@"
 	@echo "KERNEL INPUTS: $^"
 	@$(XGPP) $(BQos_KERNEL_LINK_FLAGS) -o $@ $^
-	$(UPDATE_STATUS)
-ALL_DEFAULTS += $(BQos_BOOT_KERNEL)
+	ALL_DEFAULTS += $(BQos_BOOT_KERNEL)
 
 run-BQos-KERNEL: $(BQos_BOOT_KERNEL)
 	qemu-system-i386 -kernel $<
@@ -51,13 +51,10 @@ run-BQos-iso: $(BQos_ISO)
 	
 clean-BQos-OBJS:
 	$(CLEAN) $(BQos_OBJS)
-	$(UPDATE_STATUS)
-clean-BQos-KERNELS:
+	clean-BQos-KERNELS:
 	$(CLEAN) $(BQos_BOOT_KERNEL)
-	$(UPDATE_STATUS)
-clean-BQos: clean-BQos-OBJS clean-BQos-KERNELS
-	$(UPDATE_STATUS)
-ALL_PHONY += clean-BQos-OBJS clean-BQos-KERNELS clean-BQos
+	clean-BQos: clean-BQos-OBJS clean-BQos-KERNELS
+	ALL_PHONY += clean-BQos-OBJS clean-BQos-KERNELS clean-BQos
 clean: clean-BQos clean-libc clean-libk
 ALL_CLEAN += clean-BQos
 #ALL_TARGETS += $(BQos_BOOT_KERNEL)
@@ -70,5 +67,4 @@ $(BQos_BOOT_GRUB_CONFIG): $(BQos_BOOT_KERNEL)
 	@echo "########## $(@) ############"
 	mkdir -p $(@D)
 	echo "menuentry \"Operating System\" {\n  multiboot $(BQos_BOOT_KERNEL:$(SYSROOT)%=%)\n }\n" > $(BQos_BOOT_GRUB_CONFIG)
-	$(UPDATE_STATUS)
-	
+		

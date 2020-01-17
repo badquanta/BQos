@@ -119,7 +119,7 @@ long double log1pl( long double arg );//(3)	(since C99)
 
 float       logf(float);
 double      log(double);
-long double logl(long double); // TODO: move to 
+long double logl(long double); /** @todo move to  **/
 float       log10f( float arg );//(1)	(since C99)
 double      log10( double arg );//(2)	
 long double log10l( long double arg );//

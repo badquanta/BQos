@@ -20,3 +20,8 @@ docs/**/*.png
 BQos-iso
 docs/man/*
 docs/latex/*
+libc
+libk
+
+docs/doxygen_objdb_19269.tmp
+docs/html*
