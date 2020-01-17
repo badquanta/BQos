@@ -20,6 +20,9 @@ BQ::a_tty *hardware::tty(int){
 	return NULL;
 }
 
+hardware *hardware::get_active(){
+    return BQos::hardware::active;
+}
 
 
 
